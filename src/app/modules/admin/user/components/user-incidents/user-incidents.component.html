@@ -1,0 +1,53 @@
+<!-- Card header -->
+<div class="card-header pl-0 pb-0 pr-0 border-bottom">
+    <h4 class="main-title mt-2"><span>{{'incidents.title' | translate}}</span></h4>
+</div><!-- Card body -->
+<div class="card-body pt-3 hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="incidents_table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{ 'incidents.columns.id' | translate }}</th>
+                        <th>{{ 'incidents.columns.incident_name' | translate }}</th>
+                        <th>{{ 'incidents.columns.start_date' | translate }}</th>
+                        <th>{{ 'incidents.columns.end_date' | translate }}</th>
+                        <th>{{ 'incidents.columns.type' | translate }}</th>
+                        <th>{{ 'incidents.columns.priority' | translate }}</th>
+                        <th>{{ 'incidents.columns.status' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="incidents?.length != 0">
+                    <tr *ngFor="let incident of incidents">
+                        <td>{{incident.generated_id}}</td>
+                        <td>{{incident.incident_name}}</td>
+                        <td>{{incident.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                        <td>{{incident.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let type of ('incidents.incident_types' | translate)">
+                                <span *ngIf="type.id == incident.incident_type" class="badge badge-secondary">{{type.label}}</span>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                <span *ngIf="priority.id == incident.priority" class="{{priority.class}}">{{priority.label | translate}}</span>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let status of ('incidents.status' | translate)">
+                                <span *ngIf="status.id == incident.status" class="{{status.class}}">{{status.label | translate}}</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot *ngIf="incidents?.length == 0" class="tfoot_dt">
+                    <tr>
+                        <td class="no-data-available" class="text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'users.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <!-- <a *ngxPermissionsOnly="['admin', 'super_admin', 'users_create']" class="btn btn-create mb-0" download="import_users.csv" href="{{ apiUrl }}/csv/import_users.csv" placement="top" tooltip="{{'common.tooltip.user_csv_sample' | translate}}"><i class="fa fa-files-o"></i></a>
+                        <button (click)="openUserImportModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'users_create']" class="btn btn-create mb-0" tooltip="{{'common.import' | translate}}">
+                            <i class="fa fa-upload"></i></button> -->
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'users_create']" [routerLink]="['/users/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="users_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>{{'users.columns.photo' | translate}}</th>
+                                    <th>{{'users.columns.first_name' | translate}}</th>
+                                    <th>{{'users.columns.last_name' | translate}}</th>
+                                    <th>{{'users.columns.username' | translate}}</th>
+                                    <th>{{'users.columns.status' | translate}}</th>
+                                    <th>{{'users.columns.departments_roles' | translate}}</th>
+                                    <th>{{'users.columns.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="users?.length != 0">
+                                <tr *ngFor="let user of users; index as i">
+                                    <td class="people-lists">
+                                        <a [routerLink]="['/users/profile', user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{user.firstname}} {{user.lastname}}">
+                                            <img *ngIf="user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{user.avatar}}"/>
+                                            <img *ngIf="!user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="user.department_role_perm.isEditable; else elseBlock1">
+                                            <inline-edit-input (updateValue)="saveUserDetail(i, 'firstname', $event);" [elementFor]="'users.inline_edit.first_name' | translate" [fieldValue]="user.firstname" [isRequired]="'true'" [maxLength]="20" [name]="'firstname'" [type]="'text'"></inline-edit-input>
+                                        </ng-container>
+                                        <ng-template #elseBlock1>{{user.firstname}}</ng-template>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="user.department_role_perm.isEditable; else elseBlock2">
+                                            <inline-edit-input (updateValue)="saveUserDetail(i, 'lastname', $event);" [elementFor]="'users.inline_edit.last_name' | translate" [fieldValue]="user.lastname" [isRequired]="'true'" [maxLength]="20" [name]="'lastname'" [type]="'text'"></inline-edit-input>
+                                        </ng-container>
+                                        <ng-template #elseBlock2>{{user.lastname}}</ng-template>
+                                    </td>
+                                    <td>
+                                        <a [routerLink]="['profile', user.id]" tooltip="{{'common.view' | translate}}">{{user.username}}</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <ng-container *ngIf="user.department_role_perm.isEditable && user.id != 1; else elseBlock3">
+                                            <ui-switch (valueChange)="setActiveDeactiveUser($event, user)" [checked]="user.is_active == '1' ? true : false"></ui-switch>
+                                        </ng-container>
+                                        <ng-template #elseBlock3>
+                                            <div class="budges-status">
+                                                <span *ngIf="user.is_active == '1'" class="completed">{{'common.status.active' | translate}}</span>
+                                                <span *ngIf="user.is_active == '0'" class="cancel">{{'common.status.deactive' | translate}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </td>
+                                    <td class="budges-status">
+                                        <ng-template *ngIf="user.roles?.length == 0;else elseBlock4">-</ng-template>
+                                        <ng-template #elseBlock4>
+                                            <span *ngFor="let role of departments[user.id]" [ngClass]="{'cancel': role.role_id == 1, 'completed': role.role_id != 1}">{{role.role_name}} ({{role.department_name}})</span>
+                                        </ng-template>
+                                    </td>
+                                    <td class="actions-dropdown">
+                                        <div class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li *ngIf="user.email_verified == '0' || user.email_verified == 0" role="menuitem">
+                                                    <a (click)="sendInviteUserMail(user.id)" *ngxPermissionsOnly="['admin', 'super_admin']" class="dropdown-item btn btn-invite btn-raised" tooltip="{{'common.invite' | translate}}"><i class="fa fa-envelope-o"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a *ngIf="user.department_role_perm.isEditable" [routerLink]="['edit', user.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a (click)="userDelete(user.id)" *ngIf="user.department_role_perm.isDeletable" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="users?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

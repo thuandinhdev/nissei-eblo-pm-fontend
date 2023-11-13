@@ -1,0 +1,51 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.cronjob.title' | translate}}</span></h4>
+</div>
+<form class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="active_cronjob">{{'settings.cronjob.create.fields.active_cronjob' | translate}}</label>
+                    <label class="checkbox-container d-block">
+                        <input [(ngModel)]="settings.active_cronjob" class="form-control" id="active_cronjob" name="active_cronjob" type="checkbox"/>
+                        <span class="checkbox-checkmark"></span>
+                    </label><br/>
+                    <small>{{'settings.cronjob.create.messages.message1' | translate}}</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="automatic_backup">{{'settings.cronjob.create.fields.automatic_backup' | translate}}</label>
+                    <label class="checkbox-container d-block">
+                        <input [(ngModel)]="settings.automatic_backup" class="form-control" id="automatic_backup" name="automatic_backup" type="checkbox"/>
+                        <span class="checkbox-checkmark"></span>
+                    </label><br/>
+                    <small>{{'settings.cronjob.create.messages.message2' | translate}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="automatic_backup">{{'settings.cronjob.create.fields.daily_report_emails' | translate}}</label>
+                    <input [(ngModel)]="settings.daily_report_emails" class="form-control" id="daily_report_emails" name="daily_report_emails" placeholder="{{'settings.cronjob.create.placeholders.placeholder1' | translate}}" type="text"/>
+                    <small>Ex. admin@demo.com,user@demo.com</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="last_cronjob_run">{{'settings.cronjob.create.fields.last_cronjob_run' | translate}}</label><br>
+                    <small>{{settings.last_cronjob_run | dateTimeFormatFilter: loginUser.settings.date_time_format }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button (click)="saveCronjobSettings()" *ngxPermissionsOnly="['admin', 'super_admin', 'cronjob_create', 'cronjob_edit']" class="btn btn-submit" type="button">{{'common.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-paperclip modal-icon"></i>&nbsp;{{'attachments.title' | translate}}</h2>
+    <button (click)="bsCreateAttachmentModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createAttachmentForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="file_name">{{'attachments.create.fields.file_title' | translate }}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && attachment.file_name.errors }" class="form-control" formControlName="file_name" id="file_name" placeholder="{{'attachments.create.placeholders.placeholder1' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && attachment.file_name.errors" class="invalid-feedback">
+                            <div *ngIf="attachment.file_name.errors.required">{{'attachments.create.error_messages.message1' | translate }}</div>
+                            <div *ngIf="attachment.file_name.errors.maxlength">{{'attachments.create.error_messages.message5' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && attachment.file.errors }" class="form-group">
+                        <label for="file">{{'attachments.create.fields.attachment' | translate }}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input formControlName="file" type="hidden">
+                        <div #logodropzone class="dropzone dz-clickable">
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'attachments.create.error_messages.message2' | translate }}</strong></span>
+                            </div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && attachment.file.errors" class="invalid-feedback">
+                            <div *ngIf="attachment.file.errors.required">{{'attachments.create.error_messages.message3' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <input formControlName="file_extension" type="hidden">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.cancel' | translate }}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate }}</button>
+    </div>
+</form>

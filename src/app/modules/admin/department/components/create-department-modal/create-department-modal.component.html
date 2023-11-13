@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-building-o"></i>&nbsp;{{'departments.title' | translate}}</h2>
+    <button (click)="bsCreateModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createDepartmentForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="department_name">{{'departments.create.fields.department_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isSubmitted && departmentControl.department_name.errors }" class="form-control" formControlName="department_name" id="department_name" maxlength="20" placeholder="{{'departments.create.placeholders.placeholder1' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isSubmitted && departmentControl.department_name.errors" class="invalid-feedback">
+                                <div *ngIf="departmentControl.department_name.errors.required">{{'departments.create.error_messages.message1' | translate}}</div>
+                                <div *ngIf="departmentControl.department_name.errors.maxlength">{{'departments.create.error_messages.message2' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isSubmitted && department_roles.length == 0 }" class="form-group">
+                        <label>{{'departments.create.fields.department_roles' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label><br/>
+                        <label *ngFor="let role of roles; index as i" class="checkbox-container font-12 font-bold">
+                            <input [(checklist)]="department_roles" [checklistValue]="role.id" class="form-control" name="department_chk_department_chk_{{i}}" type="checkbox"/>
+                            {{role.name}}&nbsp;&nbsp; <span class="checkbox-checkmark"></span>
+                        </label>
+                        <div *ngIf="isSubmitted && department_roles.length == 0" class="invalid-feedback">{{'departments.create.error_messages.message3' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

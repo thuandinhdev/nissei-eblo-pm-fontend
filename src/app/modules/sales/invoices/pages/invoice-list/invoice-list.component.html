@@ -1,0 +1,78 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'invoices.title' | translate}}</span></h4>
+                    <div *ngxPermissionsOnly="['admin', 'super_admin', 'invoices_create']" class="card-buttons">
+                        <a [routerLink]="['/invoices/create']" class="btn btn-create mb-0" placement="left" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3 pb-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Invoices list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="invoices_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'invoices.columns.invoice_number' | translate}} #</th>
+                                            <th>{{'invoices.columns.customer' | translate}}</th>
+                                            <th>{{'invoices.columns.invoice_date' | translate}}</th>
+                                            <th>{{'invoices.columns.due_date' | translate}}</th>
+                                            <th>{{'invoices.columns.total_amount' | translate}}</th>
+                                            <th>{{'invoices.columns.status' | translate}}</th>
+                                            <th>{{'common.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let invoice of invoices; index as i">
+                                            <td>
+                                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'invoices_view'] else elseBlock1;">
+                                                    <a [routerLink]="['/invoices/detail', invoice.id]" tooltip="{{'common.view' | translate}}">{{invoice.invoice_number}}</a>
+                                                </ng-container>
+                                                <ng-template #elseBlock1>{{invoice.invoice_number}}</ng-template>
+                                            </td>
+                                            <td>{{invoice.client_firstname}} {{invoice.client_lastname}}</td>
+                                            <td>{{invoice.invoice_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{invoice.due_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{loginUser.currency.symbol}}{{invoice.total_amount | number : '1.2-2'}}</td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let status of ('invoices.status' | translate)">
+                                                    <span *ngIf="status.id == invoice.status" class="{{status.class}}">{{status.label}}</span>
+                                                </ng-container>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a *ngxPermissionsOnly="['admin', 'super_admin', 'invoices_edit']" [routerLink]="['edit', invoice.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <a (click)="deleteInvoice(invoice.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'invoices_delete']" class="dropdown-item btn btn-danger btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="invoices?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'seo.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <button (click)="openSeoCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'seo_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                            <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3 pb-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Items list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="seo_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'seo.columns.attr' | translate}}</th>
+                                            <th>{{'seo.columns.value' | translate}}</th>
+                                            <th>{{'seo.columns.type' | translate}}</th>
+                                            <th>{{'seo.columns.default' | translate}}</th>
+                                            <th>{{'seo.columns.page' | translate}}</th>
+                                            <th>{{'common.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let item of seos; index as i">
+                                            <td>{{item.attr}}</td>
+                                            <td>{{item.value}}</td>
+                                            <td>
+                                              {{item.type}}
+                                            </td>
+                                            <td>{{item.default}}</td>
+                                            <td>{{item.symbol}}</td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li *ngxPermissionsOnly="['admin', 'super_admin', 'seo_edit']" role="menuitem">
+                                                            <a (click)="openSeoEditModal(item)" class="dropdown-item btn btn-edit btn-raised"><i class="fa fa-pencil-square-o" tooltip="{{'common.edit' | translate}}"></i></a>
+                                                        </li>
+                                                        <li *ngxPermissionsOnly="['admin', 'super_admin', 'seo_delete']" role="menuitem">
+                                                            <a (click)="deleteSeo(item.id)" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="items?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="6">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,326 @@
+<section *ngIf="isPageLoaded" id="basic-form-layouts">
+    <form (ngSubmit)="onSubmit()" [formGroup]="createClientForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">{{'clients.title1' | translate}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i class="ft-user"></i> {{'clients.headings.head1' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstname">{{'clients.create.fields.first_name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.firstname.errors }" class="form-control" formControlName="firstname" id="firstname" placeholder="{{'clients.create.placeholders.placeholder1' | translate}}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.firstname.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.firstname.errors.required">{{'clients.create.error_messages.message1' | translate}}</div>
+                                                <div *ngIf="clientControl.firstname.errors.maxlength">{{'clients.create.error_messages.message2' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastname">{{'clients.create.fields.last_name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.lastname.errors }" class="form-control" formControlName="lastname" id="lastname" placeholder="{{'clients.create.placeholders.placeholder2' | translate}}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.lastname.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.lastname.errors.required">{{'clients.create.error_messages.message3' | translate}}</div>
+                                                <div *ngIf="clientControl.lastname.errors.maxlength">{{'clients.create.error_messages.message4' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="email">{{'clients.create.fields.email' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.email.errors }" class="form-control" formControlName="email" id="email" placeholder="{{'clients.create.placeholders.placeholder3' | translate}}" type="email"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.email.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.email.errors.required">{{'clients.create.error_messages.message5' | translate}}</div>
+                                                <div *ngIf="clientControl.email.errors.email">{{'clients.create.error_messages.message6' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="password">{{'clients.create.fields.password' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.password.errors }" autocomplete="off" class="form-control" formControlName="password" id="password" placeholder="{{'clients.create.placeholders.placeholder4' | translate}}" type="password"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.password.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.password.errors.required">{{'clients.create.error_messages.message7' | translate}}</div>
+                                                <div *ngIf="clientControl.password.errors.minlength || clientControl.password.errors.maxlength">{{'clients.create.error_messages.message8' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="password_confirmation">{{'clients.create.fields.confirm_password' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.password_confirmation.errors }" autocomplete="off" class="form-control" formControlName="password_confirmation" id="password_confirmation" placeholder="{{'clients.create.placeholders.placeholder5' | translate}}" type="password"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.password_confirmation.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.password_confirmation.errors.required">{{'clients.create.error_messages.message9' | translate}}</div>
+                                                <div *ngIf="clientControl.password_confirmation.errors.mustMatch">{{'clients.create.error_messages.message10' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-user"></i> {{'clients.headings.head2' | translate}}</h4>
+                                <div class="row" formGroupName="clients">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_name">{{'clients.create.fields.company_name' | translate}}</label>
+                                            <input class="form-control" formControlName="company_name" id="company_name" placeholder="{{'clients.create.placeholders.placeholder6' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_email">{{'clients.create.fields.company_email' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.clients.controls.company_email.errors }" class="form-control" formControlName="company_email" id="company_email" placeholder="{{'clients.create.placeholders.placeholder7' | translate}}" type="email"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.clients.controls.company_email.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.clients.controls.company_email.errors.email">{{'clients.create.error_messages.message6' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_phone">{{'clients.create.fields.company_phone' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.clients.controls.company_phone.errors }" class="form-control" formControlName="company_phone" id="company_phone" placeholder="xxxxxxxxxx" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.clients.controls.company_phone.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.clients.controls.company_phone.errors.pattern">{{'clients.create.error_messages.message12' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_mobile">{{'clients.create.fields.company_mobile' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.clients.controls.company_mobile.errors }" class="form-control" formControlName="company_mobile" id="company_mobile" placeholder="xxxxxxxxxx" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.clients.controls.company_mobile.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.clients.controls.company_mobile.errors.pattern">{{'clients.create.error_messages.message14' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_country">{{'clients.create.fields.company_country' | translate}}</label>
+                                            <ng-select [items]="countries" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="code" formControlName="company_country" labelForId="company_country" placeholder="{{'clients.create.placeholders.placeholder8' | translate}}"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_city">{{'clients.create.fields.company_city' | translate}}</label>
+                                            <input class="form-control" formControlName="company_city" id="company_city" placeholder="{{'clients.create.placeholders.placeholder9' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_zipcode">{{'clients.create.fields.zip_code' | translate}}</label>
+                                            <input class="form-control" formControlName="company_zipcode" id="company_zipcode" placeholder="{{'clients.create.placeholders.placeholder10' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_fax">{{'clients.create.fields.company_fax' | translate}}</label>
+                                            <input class="form-control" formControlName="company_fax" id="company_fax" placeholder="{{'clients.create.placeholders.placeholder11' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="website">{{'clients.create.fields.company_website' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.clients.controls.website.errors }" class="form-control" formControlName="website" placeholder="{{'clients.create.placeholders.placeholder12' | translate}}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.clients.controls.website.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.clients.controls.website.errors.pattern">{{'clients.create.error_messages.message15' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="skype_id">{{'clients.create.fields.skype' | translate}}</label>
+                                            <input class="form-control" formControlName="skype_id" placeholder="{{'clients.create.placeholders.placeholder13' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="company_address">{{'clients.create.fields.company_address' | translate}}</label>
+                                            <textarea class="form-control" formControlName="company_address" id="company_address" placeholder="{{'clients.create.placeholders.placeholder14' | translate}}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-server"></i> {{'clients.headings.head3' | translate}}</h4>
+                                <div class="row" formGroupName="clients">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="hosting_company">{{'clients.create.fields.hosting_company' | translate}}</label>
+                                            <input class="form-control" formControlName="hosting_company" id="hosting_company" placeholder="{{'clients.create.placeholders.placeholder15' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="host_username">{{'clients.create.fields.username' | translate}}</label>
+                                            <input class="form-control" formControlName="host_username" id="host_username" placeholder="{{'clients.create.placeholders.placeholder16' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="host_password">{{'clients.create.fields.password' | translate}}</label>
+                                            <input class="form-control" formControlName="host_password" id="host_password" placeholder="{{'clients.create.placeholders.placeholder17' | translate}}" type="password"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="host_port">{{'clients.create.fields.port' | translate}}</label>
+                                            <input class="form-control" formControlName="host_port" id="host_port" placeholder="{{'clients.create.placeholders.placeholder18' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">&nbsp;</div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i class="ft-user"></i> {{'clients.headings.head4' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="user_generated_id">{{'clients.create.fields.client_ID' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.user_generated_id.errors }" class="form-control" formControlName="user_generated_id" id="user_generated_id" placeholder="USR000" readonly type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.user_generated_id.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.user_generated_id.errors.required">{{'clients.create.error_messages.message17' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="username">{{'clients.create.fields.username' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend no-borders no-paddings">
+                                                    <span class="input-group-text font-12" id="usernamePrepend">@</span>
+                                                </div>
+                                                <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.username.errors }" aria-describedby="usernamePrepend" class="form-control" formControlName="username" id="username" placeholder="{{'clients.create.placeholders.placeholder19' | translate}}" type="text"/>
+                                                <div *ngIf="isFormSubmitted && clientControl.username.errors" class="invalid-feedback">
+                                                    <div *ngIf="clientControl.username.errors.required">{{'clients.create.error_messages.message19' | translate}}</div>
+                                                    <div *ngIf="clientControl.username.errors.minlength || clientControl.username.errors.maxlength || clientControl.username.errors.pattern">{{'clients.create.error_messages.message20' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="language">{{'clients.create.fields.language' | translate}}</label>
+                                            <ng-select [items]="languages" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="language" formControlName="language" labelForId="language" placeholder="{{'clients.create.placeholders.placeholder22' | translate}}"></ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-mail"></i> {{'clients.headings.head5' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="mobile">{{'clients.create.fields.mobile' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.mobile.errors }" class="form-control" formControlName="mobile" id="mobile" placeholder="xxxxxxxxxx" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.mobile.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.mobile.errors.pattern">{{'clients.create.error_messages.message21' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="phone">{{'clients.create.fields.phone' | translate}}</label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.phone.errors }" class="form-control" formControlName="phone" id="phone" placeholder="xxxxxxxxxx" type="text"/>
+                                            <div *ngIf="isFormSubmitted && clientControl.phone.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.phone.errors.pattern">{{'clients.create.error_messages.message22' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="skype">{{'clients.create.fields.skype' | translate}}</label>
+                                            <input class="form-control" formControlName="skype" id="skype" placeholder="{{'clients.create.placeholders.placeholder20' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="country">{{'clients.create.fields.country' | translate}}</label>
+                                            <ng-select [items]="countries" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="country" labelForId="country" placeholder="{{'clients.create.placeholders.placeholder21' | translate}}"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="address">{{'clients.create.fields.address' | translate}}</label>
+                                            <textarea class="form-control" formControlName="address" id="address" placeholder="{{'clients.create.placeholders.placeholder27' | translate}}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-file-text"></i> {{'clients.headings.head6' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'clients.create.fields.profile_photo' | translate}}</label>
+                                            <input formControlName="avatar" type="hidden">
+                                            <div #profiledropzone class="dropzone dz-clickable">
+                                                <div class="dz-default dz-message">
+                                                    <span><strong>{{'clients.create.error_messages.message23' | translate}}</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="people-lists text-center">
+                                                <a (click)="setAvatar(avatar)" *ngFor="let avatar of avatars;" [ngClass]="{active: isActive(avatar)}" class="btn btn-profile-danger rounded-circle text-dark">
+                                                    <img alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{avatar}}"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && clientControl.department_roles.errors }" class="form-group">
+                                            <label>{{'clients.create.fields.departments_roles' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <ng-select (change)="departmentRolesChange($event)" [items]="departmentsRoles" [multiple]="true" [selectableGroup]="false" bindLabel="name" bindValue="id" formControlName="department_roles" groupBy="roles" placeholder="{{'clients.create.placeholders.placeholder23' | translate}}">
+                                                <ng-template let-item="item" ng-optgroup-tmp>{{item.name}}</ng-template>
+                                                <ng-template let-item="item" ng-option-tmp>{{item.name}}</ng-template>
+                                            </ng-select>
+                                            <div *ngIf="isFormSubmitted && clientControl.department_roles.errors" class="invalid-feedback">
+                                                <div *ngIf="clientControl.department_roles.errors.required">{{'clients.create.error_messages.message24' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-file-text"></i> {{'clients.headings.head7' | translate}}</h4>
+                                <div class="row" formGroupName="clients">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="facebook">{{'clients.create.fields.facebook_URL' | translate}}</label>
+                                            <input class="form-control" formControlName="facebook" id="facebook" placeholder="{{'clients.create.placeholders.placeholder24' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="twitter">{{'clients.create.fields.twitter_URL' | translate}}</label>
+                                            <input class="form-control" formControlName="twitter" id="twitter" placeholder="{{'clients.create.placeholders.placeholder25' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="linkedin">{{'clients.create.fields.linkedIn_URL' | translate}}</label>
+                                            <input class="form-control" formControlName="linkedin" id="linkedin" placeholder="{{'clients.create.placeholders.placeholder26' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <a [routerLink]="['/clients']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button class="btn btn-submit" type="submit">{{'common.create' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</section>

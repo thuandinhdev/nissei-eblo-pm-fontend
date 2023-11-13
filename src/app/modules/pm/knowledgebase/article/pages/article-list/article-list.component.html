@@ -1,0 +1,79 @@
+<section *ngIf="isPageLoaded">
+    <div class="row">
+        <!-- Tree view -->
+        <div class="col-md-4">
+            <category-articles-tree></category-articles-tree>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="col-md-12">
+                    <!-- Card header -->
+                    <div class="card-header pl-0 pr-0">
+                        <h4 class="card-title mt-3">{{category.category_name}}'s {{'knowledge_base.article.title1' | translate}}</h4>
+                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_edit', 'knowledgebase_delete']" class="card-buttons">
+                            <div class="action-btn btn-group mr-1" dropdown="">
+                                <button class="btn btn-outline-info mb-0" type="button">{{'common.action' | translate}}</button>
+                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline-info dropdown-toggle mb-0" dropdownToggle="" type="button">
+                                    <span class="sr-only">{{'common.toggle_dropdown' | translate}}</span>
+                                </button>
+                                <div *dropdownMenu="" class="dropdown-menu action-dropdown animated fadeIn" role="menu">
+                                    <a (click)="editCategory(category)" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_edit']" class="dropdown-item"><i class="fa fa-pencil"></i>&nbsp;{{'common.edit' | translate}}
+                                    </a>
+                                    <a (click)="deleteCategory(category.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_delete']" class="dropdown-item"><i class="fa fa-trash-o"></i>&nbsp;{{'common.delete' | translate}}
+                                    </a>
+                                </div>
+                            </div>
+                            <button (click)="openCreateArticleModal(category.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-content pb-2">
+                        <div class="card-body">
+                            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl mt-1">
+                                <table class="table table-bordered table-hover b4-datatable">
+                                    <thead>
+                                    <tr>
+                                        <th class="width-50">#</th>
+                                        <th>{{'knowledge_base.article.columns.article_name' | translate}}</th>
+                                        <th class="width-50">{{'knowledge_base.article.columns.actions' | translate}}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody *ngIf="category.articles?.length != 0">
+                                    <tr *ngFor="let article of category.articles; index as i">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>
+                                            <a [routerLink]="['article/', article.id]" placement="top" tooltip="{{'common.view' | translate}}">{{article.article_title}}</a>
+                                        </td>
+                                        <td class="actions-dropdown">
+                                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_edit', 'knowledgebase_delete']" class="btn-group" dropdown>
+                                                <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                    <i class="fa fa-ellipsis-v"></i></button>
+                                                <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                    <li role="menuitem">
+                                                        <a (click)="openEditArticleModal(article)" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_edit']" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                    </li>
+                                                    <li role="menuitem">
+                                                        <a (click)="deleteArticle(article.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_delete']" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot *ngIf="category.articles?.length == 0">
+                                    <tr>
+                                        <td class="text-center" colspan="3">
+                                            <img src="assets/img/norecord-img.png" width="50">
+                                            <p class="mt-1">{{'common.empty_message.articles' | translate}}</p>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

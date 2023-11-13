@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-language"></i>&nbsp;{{'settings.translations.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="editTranslationForm" class="bs4-forms">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <!-- <div class="col-md-12">
+                    <div class="form-group" [ngClass]="{ 'is-invalid': isFormSubmitted && getTranslationControl.language.errors }">
+                        <label for="language">{{'settings.translations.create.fields.language' | translate}}<span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [searchable]="true"
+                            [items]="languages"
+                            [selectOnTab]="true"
+                            bindLabel="name"
+                            bindValue="code"
+                            labelForId="language"
+                            placeholder="{{'settings.translations.create.placeholders.placeholder1' | translate}}"
+                            formControlName="language">
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && getTranslationControl.language.errors" class="invalid-feedback">
+                            <div *ngIf="getTranslationControl.language.errors.required">{{'settings.translations.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && getTranslationControl.icon.errors }" class="form-group">
+                        <label for="icon">{{'settings.translations.create.fields.icon' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input formControlName="icon" type="hidden">
+                        <div #translateDropzone class="dropzone dz-clickable">
+                            <div *ngIf="isProfileUploded" class="dz-default dz-message">
+                                <span><strong></strong></span>
+                            </div>
+                            <div *ngIf="isProfileLoaded && translation.icon" class="dz-preview dz-image-preview">
+                                <div class="dz-image">
+                                    <img src="{{apiUrl}}/uploads/translation/{{translation.icon}}"/>
+                                </div>
+                                <a (click)="removeDropzoneImage()" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                            </div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && getTranslationControl.icon.errors" class="invalid-feedback">
+                            <div *ngIf="getTranslationControl.icon.errors.required">{{'settings.translations.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

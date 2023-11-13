@@ -1,0 +1,39 @@
+// ===========================================================================================================================================
+//  File Name: mixins.scss
+//  Description: Center vertically and/or horizontally an absolute positioned element, calculate rem, font size and border radius mixins etc..
+//         related customiztion.
+// ============================================================================================================================================
+
+@mixin center($xy:xy) {
+	@if $xy == xy {
+		left: 50%;
+		top: 50%;
+		bottom: auto;
+		right: auto;
+		@include transform(translateX(-50%) translateY(-50%));
+	}
+	@else if $xy == x {
+		left: 50%;
+		right: auto;
+		@include transform(translateX(-50%));
+	}
+	@else if $xy == y {
+		top: 50%;
+		bottom: auto;
+		@include transform(translateY(-50%));
+	}
+}
+
+@function calculateRem($size) {
+	$remSize: $size / 16px;
+	@return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+	font-size: $size;
+	font-size: calculateRem($size);
+}
+
+@mixin border-radius($radius:.25em) {
+	border-radius: $radius;
+}

@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-tasks modal-icon"></i>&nbsp;{{'project_planner.sprint_task.title1' | translate}} {{sprint.type}}
+    </h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isPageLoaded" [formGroup]="createProjectSprintTaskForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{sprint.type}} {{'project_planner.sprint_task.create.fields.name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectSprintTaskControl.name.errors }" class="form-control" formControlName="name" id="name" placeholder="{{'project_planner.sprint_task.create.placeholders.placeholder1' | translate}}{{sprint.type}} {{'project_planner.sprint_task.create.fields.name' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && projectSprintTaskControl.name.errors" class="invalid-feedback">
+                            <div *ngIf="projectSprintTaskControl.name.errors.required">{{'project_planner.sprint_task.create.error_messages.message1' | translate}} {{sprint.type | lowercase}} {{'project_planner.sprint_task.title3' | translate}}.</div>
+                            <div *ngIf="projectSprintTaskControl.name.errors.maxlength">{{sprint.type}} {{'project_planner.sprint_task.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="assign_to">{{'project_planner.sprint_task.create.fields.responsible' | translate}}</label>
+                        <ng-select [items]="users" [multiple]="false" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="assign_to" labelForId="assign_to" placeholder="{{'project_planner.sprint_task.create.placeholders.placeholder2' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.firstname}} {{item.lastname}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectSprintTaskControl.start_date.errors }" class="form-group">
+                        <label for="start_date">{{'project_planner.sprint_task.create.fields.start_date' | translate}}</label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp1="bsDatepicker" (bsValueChange)="startDateChange($event)" [bsConfig]="datepickerConfig" [maxDate]="sprintEndDate" [minDate]="sprintStartDate" bsDatepicker class="form-control" formControlName="start_date" id="start_date" placeholder="{{'project_planner.sprint_task.create.placeholders.placeholder3' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                            <div *ngIf="isFormSubmitted && projectSprintTaskControl.start_date.errors" class="invalid-feedback">
+                                <div *ngIf="projectSprintTaskControl.start_date.errors.required">{{'project_planner.sprint_task.create.error_messages.message4' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectSprintTaskControl.end_date.errors }" class="form-group">
+                        <label for="end-date">{{'project_planner.sprint_task.create.fields.end_date' | translate}}</label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp2="bsDatepicker" [bsConfig]="datepickerConfig" [maxDate]="sprintEndDate" [minDate]="createProjectSprintTaskForm.get('start_date').value" bsDatepicker class="form-control" formControlName="end_date" id="end_date" placeholder="{{'project_planner.sprint_task.create.placeholders.placeholder4' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                            <div *ngIf="isFormSubmitted && projectSprintTaskControl.end_date.errors" class="invalid-feedback">
+                                <div *ngIf="projectSprintTaskControl.end_date.errors.required">{{'project_planner.sprint_task.create.error_messages.message5' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectSprintTaskControl.status.errors }" class="form-group">
+                        <label for="status">{{'project_planner.sprint_task.create.fields.status' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <ng-select [items]="statusLists" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="status" labelForId="status" placeholder="{{'project_planner.sprint_task.create.placeholders.placeholder5' | translate}}"></ng-select>
+                        <div *ngIf="isFormSubmitted && projectSprintTaskControl.status.errors" class="invalid-feedback">
+                            <div *ngIf="projectSprintTaskControl.status.errors.required">{{'project_planner.sprint_task.create.error_messages.message6' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="estimated_hours">{{'project_planner.sprint_task.create.fields.estimate_hours' | translate}}</label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && (projectSprintTaskControl.estimated_hours.errors || isHoursValid) }" class="form-control" formControlName="estimated_hours" placeholder="00:00" type='text'/>
+                        <div *ngIf="isFormSubmitted && projectSprintTaskControl.estimated_hours.errors" class="invalid-feedback">
+                            <div *ngIf="projectSprintTaskControl.estimated_hours.errors.pattern">{{'project_planner.sprint_task.create.error_messages.message7' | translate}}</div>
+                        </div>
+                        <div *ngIf="isHoursValid" class="invalid-feedback">
+                            <div *ngIf="isHoursValid">{{'project_planner.sprint_task.create.error_messages.message8' | translate}} {{this.sprint.hours}} {{'common.hours' | translate}}.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'project_planner.sprint_task.create.fields.description' | translate}}</label>
+                        <app-ngx-editor [placeholder]="'project_planner.sprint_task.create.placeholders.placeholder6' | translate" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-users modal-icon"></i>&nbsp;{{'users.title6' | translate}}</h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{'users.create.fields.csv_file' | translate}}
+                            <span class="text-danger">*</span></label><br>
+                        <input (change)="fileUpload($event.target.files)" accept=".csv" class="mb-3 btn btn-secondary" id="file" type="file">
+                        <div *ngIf="!csvFileSelected && isFormSubmitted" class="text-danger">{{'users.create.error_messages.message21' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button (click)="onSubmit()" class="btn btn-submit mb-0">{{'common.import' | translate}}</button>
+    </div>
+</form>

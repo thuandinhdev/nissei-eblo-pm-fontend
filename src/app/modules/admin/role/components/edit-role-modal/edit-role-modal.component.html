@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-lock"></i>&nbsp;{{'roles.title' | translate}}</h2>
+    <button (click)="bsEditRoleModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="editRoleForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{'roles.create.fields.role_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isSubmitted && roleControl.name.errors }" class="form-control" formControlName="name" id="name" placeholder="{{'roles.create.placeholders.placeholder1' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isSubmitted && roleControl.name.errors" class="invalid-feedback">
+                                <div *ngIf="roleControl.name.errors.required">{{'roles.create.error_messages.message1' | translate}}</div>
+                                <div *ngIf="roleControl.name.errors.maxlength">{{'roles.create.error_messages.message2' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="slug">{{'roles.create.fields.role_slug' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isSubmitted && roleControl.slug.errors }" class="form-control" formControlName="slug" id="slug" placeholder="{{'roles.create.placeholders.placeholder2' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isSubmitted && roleControl.slug.errors" class="invalid-feedback">
+                                <div *ngIf="roleControl.slug.errors.required">{{'roles.create.error_messages.message5' | translate}}</div>
+                                <div *ngIf="roleControl.slug.errors.maxlength">{{'roles.create.error_messages.message3' | translate}}</div>
+                                <div *ngIf="roleControl.slug.errors.pattern">{{'roles.create.error_messages.message4' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'roles.create.fields.description' | translate}}</label>
+                        <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

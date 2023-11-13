@@ -1,0 +1,22 @@
+.dropdown-menu{
+    left: -20px !important;
+    box-shadow: 2px 2px 5px 0px rgba(214,192,214,1);
+}
+    
+.person-dropdown:after {
+        content: "";
+        position: absolute;
+        top: -7px;
+        left: 15px;
+        width: 14px;
+        height: 14px;
+        transform: rotate(-45deg);
+        z-index: -1;
+        background: white;
+        border-right: 1px solid rgba(0, 0, 0, 0.15);
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    .inline-block{
+        display: inline-block;
+    }
+    

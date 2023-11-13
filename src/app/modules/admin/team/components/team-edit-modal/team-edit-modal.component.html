@@ -1,0 +1,68 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-universal-access"></i>&nbsp;{{'teams.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isPageLoaded" [formGroup]="editTeamForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="team_name">{{'teams.create.fields.team_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && teamControl.team_name.errors }" class="form-control" formControlName="team_name" id="team_name" placeholder="{{'teams.create.placeholders.placeholder1' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isFormSubmitted && teamControl.team_name.errors" class="invalid-feedback">
+                                <div *ngIf="teamControl.team_name.errors.required">{{'teams.create.error_messages.message1' | translate}}</div>
+                                <div *ngIf="teamControl.team_name.errors.maxlength">{{'teams.create.error_messages.message2' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && teamControl.members.errors }" class="form-group">
+                        <label for="members">{{'teams.create.fields.members' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select (change)="teamMemberChange($event)" [items]="users" [multiple]="true" [searchable]="true" bindLabel="firstname" bindValue="id" formControlName="members" placeholder="{{'teams.create.placeholders.placeholder2' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.firstname}} {{item.lastname}}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && teamControl.members.errors" class="invalid-feedback">
+                            <div *ngIf="teamControl.members.errors.required">{{'teams.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && teamControl.team_leader.errors }" class="form-group">
+                        <label for="team_leader">{{'teams.create.fields.leader' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="teamLeaders" [multiple]="false" [searchable]="true" bindLabel="firstname" bindValue="id" formControlName="team_leader" placeholder="{{'teams.create.placeholders.placeholder3' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.firstname}} {{item.lastname}}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && teamControl.team_leader.errors" class="invalid-feedback">
+                            <div *ngIf="teamControl.team_leader.errors.required">{{'teams.create.error_messages.message4' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'teams.create.fields.description' | translate}}</label>
+                        <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

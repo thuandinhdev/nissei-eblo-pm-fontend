@@ -1,0 +1,109 @@
+<div class="theme-settings color-palettes border-left-blue-grey border-left-lighter-4">
+    <a (click)="closeThemeSettings()" class="theme-settings-close">
+        <i class="ft-x font-m-3"></i>
+    </a>
+    <div class="pt-3 pl-2 pr-3 header">
+        <h4 class="mb-0 setting-title mt-0">{{'theme_setting.header.head11' | translate}}</h4>
+    </div>
+    <hr>
+    <div [perfectScrollbar]="scrollConfig" class="theme-settings-content p-2 ps-container ps-theme-dark">
+        <div class="">
+            <label class="setting-title">{{'theme_setting.header.head13' | translate}}</label>
+            <div class="float-right">
+                <div class="onoffswitch">
+                    <input (change)="changeCollapsedMenu($event)" [(ngModel)]="settings.is_collapsed_menu" class="onoffswitch-checkbox" id="is_collapsed_menu" name="is_collapsed_menu" type="checkbox"/>
+                    <label class="setting-title onoffswitch-label m-b-none" for="is_collapsed_menu">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="">
+            <label class="setting-title" for="sidebar-width">{{'theme_setting.header.head14' | translate}}</label>
+            <ng-select (change)="changeSidebarWidth($event)" [(ngModel)]="settings.sidebar_width" [clearable]="false" [items]="('theme_setting.width_options' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="value" bindValue="key" labelForId="sidebarWidth" placeholder="{{'theme_setting.placeholders.placeholder2' | translate}}"></ng-select>
+        </div>
+        <div class=" mt-1">
+            <label class="setting-title" for="sidebar-width">{{'theme_setting.header.head3' | translate}}</label>
+            <ng-select (change)="changeBGColorLayout($event)" [(ngModel)]="settings.theme_layout" [clearable]="false" [items]="('theme_setting.layout_options' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="value" bindValue="key" labelForId="layout" placeholder="{{'theme_setting.placeholders.placeholder1' | translate}}"></ng-select>
+        </div>
+        <hr>
+        <ng-container *ngIf="settings.theme_layout == 'light'">
+            <div class="sidebar-bg-color row">
+                <h6 class="setting-title mb-2">{{'theme_setting.header.head15' | translate}}</h6>
+                <div class="row p-1 full-width m-0 justify-content-center">
+                    <div *ngFor="let bgolor of sidebarBGGradientColors; let index=index" class="col-1 mb-1 mr-2 p-0">
+                        <a (click)="selectSidebarBGGradientColor(bgolor.key)"><span [ngClass]="bgolor.value" class="gradient-aqua-marine rounded d-block height-75"></span></a>
+                    </div>
+                </div>
+                <h6 class="setting-title mb-2">{{'theme_setting.header.head4' | translate}}</h6>
+                <div class="row p-1 full-width m-0 theme-settings-bg-color justify-content-center">
+                    <div *ngFor="let color of sidebarBGColors; let index=index" class="col-1 mb-1 mr-2 p-0">
+                        <a (click)="selectSidebarBGColor(color.key)"><span [ngClass]="color.value" class="d-block rounded height-75"></span></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h6 class="setting-title mb-3">{{'theme_setting.header.head5' | translate}}</h6>
+            <div class="sidebar-bg-image row">
+                <div class="col-md-12">
+                    <span class="setting-title">{{'theme_setting.header.head6' | translate}}</span>
+                    <div class="float-right">
+                        <label class="checkbox-container">
+                            <input (change)="changeBGImage($event)" [(ngModel)]="settings.is_sidebar_background" class="form-control sidebar-bg-image-display" type="checkbox">
+                            <span class="checkbox-checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <carousel [(activeSlide)]="sidebar_bg_image" [itemsPerSlide]="itemsPerSlide" [showIndicators]="showIndicator">
+                        <slide *ngFor="let slide of sidebarBGImages; let index=index">
+                            <img (click)="selectSidebarBGImage(index)" [attr.src]="slide.image" alt="image slide" class="img-fluid d-block mx-auto width-200 height-150">
+                        </slide>
+                    </carousel>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <ng-container *ngIf="settings.theme_layout == 'transparent'">
+            <h6 class="setting-title mb-3">{{'theme_setting.header.head7' | translate}}</h6>
+            <div class="theme-settings-bg-color">
+                <div class="row p-1">
+                    <div class="col" *ngFor="let color of transparentBGColors; let index=index">
+                        <a (click)="selectTransparentBGColor(color.key)"><span class="d-block rounded-circle height-30 width-30" [ngClass]="color.value"></span></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h6 class="setting-title mb-3">{{'theme_setting.header.head8' | translate}}</h6>
+            <div class="body-bg-image row">
+                <div class="col mb-3" *ngFor="let slide of transparentBGImages; let index=index">
+                    <a (click)="selectTrasparentBGImage(slide.class)"><img [attr.src]="slide.image" class="rounded" width="60"></a>
+                </div>
+            </div>
+        </ng-container> -->
+        <ng-container *ngIf="settings.theme_layout == 'custom-colors'">
+            <h6 class="setting-title mb-3">{{'theme_setting.header.head9' | translate}}</h6>
+            <div class="sidebar-bg-color row">
+                <div class="row p-1">
+                    <div class="col">
+                        <input (colorPickerChange)="changeSidebarTransparentColors($event)" (colorPickerSelect)="selectSidebarTransparentColors($event)" [(colorPicker)]="sidebarCustomColor" [(ngModel)]="settings.sidebar_bg_custom_color" [cpCancelButton]="true" [cpOKButton]="true" [style.background]="sidebarCustomColor" class="form-control round" id="sidebarCustomColor">
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            <hr>
+            <h6 class="setting-title mb-3">{{'theme_setting.header.head10' | translate}}</h6>
+            <div class="sidebar-bg-color row">
+                <div class="row p-1">
+                    <div class="col">
+                        <a (click)="selectSidebarTransparentFontColor('black')"><span class="d-block bg-white border height-30 width-30"></span></a>
+                    </div>
+                    <div class="col">
+                        <a (click)="selectSidebarTransparentFontColor('white')"><span class="d-block bg-black border height-30 width-30"></span></a>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

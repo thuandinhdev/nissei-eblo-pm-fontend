@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-file"></i>&nbsp;{{'file_browser.title3' | translate}}</h2>
+    <button (click)="bsCreateFileModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" [uploader]="uploader" class="well dropzone text-center" ng2FileDrop>
+                <i class="fa fa-upload fa-4x"></i>
+                <br/>
+                <h4 class="dz-message">{{'file_browser.create.error_messages.message2' | translate}}</h4>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <label class="btn btn-raised btn-info round btn-file">
+                <input [uploader]="uploader" class="d-none" multiple ng2FileSelect type="file"/>
+                <span><i class="fa fa-upload"></i> {{'file_browser.title3' | translate}}</span>
+            </label>
+        </div>
+        <div *ngIf="uploader.queue.length != 0" class="col-md-12">
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th width="50%">{{'file_browser.columns.name' | translate}}</th>
+                    <th>{{'file_browser.columns.size' | translate}}</th>
+                    <th>{{'file_browser.columns.progress' | translate}}</th>
+                    <th>{{'file_browser.columns.status' | translate}}</th>
+                    <th>{{'file_browser.columns.actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue; index as i">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB</td>
+                    <td *ngIf="uploader.options.isHTML5">
+                        <progressbar [animate]="true" [striped]="true" [value]="item.progress" max="100"></progressbar>
+                    </td>
+                    <td class="budges-status">
+                        <span *ngIf="item.isSuccess" class="completed">{{'common.status.success' | translate}}</span>
+                        <span *ngIf="item.isCancel" class="cancel">{{'common.status.cancel' | translate}}</span>
+                        <span *ngIf="item.isError" class="closed">{{'common.status.error' | translate}}</span>
+                    </td>
+                    <td nowrap>
+                        <button (click)="item.remove();uploaderRemove(attachmentsArr[i])" class="btn btn-raised btn-danger white btn-xs mb-0" type="button">
+                            <span class="fa fa-close"></span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.close' | translate}}</button>
+</div>

@@ -1,0 +1,305 @@
+<div class="card-content">
+    <div class="card-body">
+        <div class="row mr-2 ml-2">
+            <div class="col-md-12 card-separator">
+                <div class="d-flex justify-content-between">
+                    <div class="task-name d-lg-flex">
+                        <h4 class="task-id">
+                            <span>#{{defect.generated_id}}</span>
+                        </h4>
+                        <p class="task-title ml-lg-2">
+                            {{defect.defect_name}}
+                        </p>
+                    </div>
+                    <div class="task-action d-flex">
+                        <a *ngIf="permission" [routerLink]="['/defects/edit', defect.id]" class="btn btn-create mb-2 mb-lg-0 float-right" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a *ngIf="defect.attachment_hash" class="btn btn-create mb-2 mb-lg-0 float-right" download="{{defect.attachment}}" href="{{ apiUrl }}/uploads/defect/{{defect.attachment_hash}}" placement="top" target="_blank" tooltip="{{'defects.tooltips.attachment' | translate }}"><i class="fa fa-files-o"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 pr-0 pl-0">
+                <form class="form-body overflow-hidden mt-3">
+                    <!-- Detail fields -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-4 pr-lg-3 pl-lg-3 pr-2 pl-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col card-separator mb-3">
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.project_name' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.project.project_name}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.project_version' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.project_version}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3 d-flex justify-content-between">
+                                                    <!-- <div class="row"> -->
+                                                    <div class="">
+                                                        <label>{{'defects.create.fields.status' | translate}}</label>
+                                                        <div class="status-dropdown">
+                                                            <ng-container *ngIf="permission; else elseBlock6">
+                                                                <div class="btn-group" dropdown>
+                                                                    <button aria-controls="dropdown-basic-2" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic-2" type="button">{{getTranslateStatus(defect.status) | translate}}&nbsp;<span class="caret"></span>
+                                                                    </button>
+                                                                    <ul *dropdownMenu aria-labelledby="button-basic-2" class="dropdown-menu animated fadeIn" id="dropdown-basic-2" role="menu">
+                                                                        <li *ngFor="let status of ('defects.status' | translate)" role="menuitem">
+                                                                            <a (click)="changeDefectStatus([defect.id], status);defect.status = status.id" [ngClass]="{'active': defect.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock6>
+                                                                <ng-container *ngFor="let status of ('defects.status' | translate)">
+                                                                    <div class="budges-status">
+                                                                        <span *ngIf="status.id == defect.status" class="{{status.class}}">{{status.label}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <label>{{'defects.create.fields.severity' | translate}}</label>
+                                                        <div class="status-dropdown">
+                                                            <ng-container *ngIf="permission; else elseBlock5">
+                                                                <div class="btn-group" dropdown>
+                                                                    <button aria-controls="dropdown-basic-1" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic-1" type="button">{{getTranslateSeverities(defect.severity) | translate}}&nbsp;<span class="caret"></span>
+                                                                    </button>
+                                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                                        <li *ngFor="let severity of ('defects.severities' | translate)" role="menuitem">
+                                                                            <a (click)="changeDefectSeverity([defect.id], severity);defect.severity = severity.id" [ngClass]="{'active': defect.severity == severity.id}" class="dropdown-item btn btn-sm {{severity.class}}">{{severity.label}}</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock5>
+                                                                <ng-container *ngFor="let severity of ('defects.severities' | translate)">
+                                                                    <div class="budges-status">
+                                                                        <span *ngIf="severity.id == defect.severity" class="{{severity.class}}">{{severity.label}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                    <!--  </div> -->
+                                                </div>
+                                                <div class="col-lg-12 mb-3 d-flex justify-content-between">
+                                                    <div class="text-center">
+                                                        <label>{{'defects.create.fields.created_by' | translate}}</label>
+                                                        <div class="people-lists">
+                                                            <a [routerLink]="['/users/profile', defect.created_user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{defect.created_user.firstname}} {{defect.created_user.lastname}}">
+                                                                <img *ngIf="defect.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.created_user.avatar}}"/>
+                                                                <img *ngIf="!defect.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                            </a><br>
+                                                            <span class="mt-2">{{defect.created_user.firstname}} {{defect.created_user.lastname}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <label>{{'defects.create.fields.assigned_To' | translate}}</label>
+                                                        <div class="people-lists">
+                                                            <ng-container *ngIf="defect.assign_member == 'Unassign' || defect.assign_member == '' || defect.assign_member == null else elseBlock3;">
+                                                                <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                    <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                                </a>
+                                                            </ng-container>
+                                                            <ng-template #elseBlock3>
+                                                                <a [routerLink]="['/users/profile', defect.assign_user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{defect.assign_user.firstname}} {{defect.assign_user.lastname}}">
+                                                                    <img *ngIf="defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.assign_user.avatar}}"/>
+                                                                    <img *ngIf="!defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                                </a><br>
+                                                                <span class="mt-2">{{defect.assign_user.firstname}} {{defect.assign_user.lastname}}</span>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 card-separator">
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.start_date' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.start_date | dateTimeFormatFilter : loginUser.settings.date_format}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.end_date' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.end_date | dateTimeFormatFilter : loginUser.settings.date_format}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.estimate_hours' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permission; else elseBlock7">
+                                                            <inline-edit-hours (updateValue)="saveDefectDetail('estimated_hours', $event);" [elementFor]="'defects.inline_edit.estimate_hours' | translate" [fieldValue]="defect.estimated_hours" [isRequired]="'false'" [name]="'estimated_hours'"></inline-edit-hours>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock7>{{ defect.estimated_hours}}</ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.actual_hours' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.actual_hours}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'defects.create.fields.defect_type' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permission; else elseBlock4">
+                                                            <inline-edit-select (updateValue)="saveDefectDetail('defect_type', $event);" [elementFor]="'defects.inline_edit.defect_type' | translate" [isRequired]="'true'" [name]="'defect_type'" [options]="('defects.defect_types' | translate)" [selectedValue]="defect.defect_type" [txtField]="'defect_type'"></inline-edit-select>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock4>
+                                                            <ng-container *ngFor="let type of ('defects.defect_types' | translate)">
+                                                                <span *ngIf="type.id == defect.defect_type">{{type.label}}</span>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'common.created' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.created_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'common.updated' | translate}}</label>
+                                                    <div class="detail-inline">{{defect.updated_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <!-- Description field -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 description-detail card-separator">
+                                        <h4 class="sub-title"><span>{{'defects.details.title2' | translate}}</span></h4>
+                                        <div class="detail-inline">
+                                            <ng-container *ngIf="permission; else elseBlock1">
+                                                <inline-edit-text-editor (updateValue)="saveDefectDetail('description', $event);" [elementFor]="'defects.inline_edit.description' | translate" [fieldValue]="defect.description" [name]="'description'"></inline-edit-text-editor>
+                                            </ng-container>
+                                            <ng-template #elseBlock1>
+                                                <p [innerHtml]="defect.description"></p>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                    <!-- Custom fields -->
+                                    <div *ngIf="defect.custom_fields.length > 0" class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
+                                        <h4 class="sub-title"><span>{{'defects.details.title1' | translate}}</span></h4>
+                                        <div class="row">
+                                            <ng-container *ngFor="let customField of defect.custom_fields">
+                                                <div *ngIf="customField.field_type != 'textarea'" class="col-lg-4 col-md-6 mt-2 mb-3">
+                                                    <ng-container *ngIf="customField.field_type == 'text' || customField.field_type == 'numeric'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{defect[customField.field_column]}}</div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'date'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{defect[customField.field_column] | dateTimeFormatFilter: loginUser.settings.date_format}}</div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'dropdown'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">
+                                                            <ng-container *ngFor="let fieldValue of getParseArray(customField.default_value)">
+                                                                <ng-container *ngIf="fieldValue.value == defect[customField.field_column]">
+                                                                    {{fieldValue.label}}
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'checkbox'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">
+                                                            <div *ngIf="defect[customField.field_column] == 1; else checkboxElseBlock">{{'common.true' | translate}}</div>
+                                                            <ng-template #checkboxElseBlock>{{'common.false' | translate}}</ng-template>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngFor="let customField of defect.custom_fields">
+                                                <div *ngIf="customField.field_type == 'textarea'" class="col-lg-4 col-md-6 mt-2 mb-3">
+                                                    <ng-container>
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{defect[customField.field_column]}}</div>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <!-- Todos list -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
+                                        <app-todo-detail [module_id]="3" [module_related_id]="defect.id"></app-todo-detail>
+                                    </div>
+                                    <!-- Defect Timesheet -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
+                                        <app-timesheet-list [apiUrl]="apiUrl" [loginUser]="loginUser" [module_id]="'3'" [module_related_id]="defect.id" [project_id]="defect.project_id"></app-timesheet-list>
+                                    </div>
+                                    <!-- Tab Design -->
+                                    <tabset class="nav nav-tabs d-flex justify-content-left details-tabs col-md-12 p-0">
+                                        <!-- Comments -->
+                                        <tab (selectTab)="setActiveDefectTab($event)" class="card-separator mb-3" customClass="text-left" id="1">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-comments-o"></i><span class="mt-1 ml-1">{{'comments.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Task Comment -->
+                                            <div class="col-lg-12 pr-0 pl-0">
+                                                <app-defect-comments *ngIf="getActiveDefectTab('1')" [apiUrl]="apiUrl" [loginUser]="loginUser" [permission]="permission"></app-defect-comments>
+                                            </div>
+                                        </tab>
+                                        <!-- Attachments -->
+                                        <tab (selectTab)="setActiveDefectTab($event)" class="card-separator mb-3" customClass="text-left" id="2">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-paperclip"></i><span class="mt-1 ml-1">{{'attachments.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Task Attachment -->
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pr-0 pl-0">
+                                                <app-defect-attachment [apiUrl]="apiUrl" [defect]="defect" [loginUser]="loginUser" [permission]="permission"></app-defect-attachment>
+                                            </div>
+                                        </tab>
+                                        <!-- Notes -->
+                                        <tab (selectTab)="setActiveDefectTab($event)" class="card-separator mb-3 tab-width" customClass="text-left" id="3">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-sticky-note-o"></i><span class="mt-1 ml-1">{{'notes.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Notes -->
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                                <h4 class="sub-title mt-2">
+                                                    <!-- <span>{{'notes.title' | translate}}</span> -->
+                                                </h4>
+                                                <div class="detail-inline">
+                                                    <ng-container *ngIf="permission; else elseBlock2">
+                                                        <inline-edit-text-editor (updateValue)="saveDefectDetail('notes', $event);" [elementFor]="'defects.inline_edit.notes' | translate" [fieldValue]="defect.notes" [name]="'notes'"></inline-edit-text-editor>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock2></ng-template>
+                                                </div>
+                                            </div>
+                                        </tab>
+                                        <!-- Activity -->
+                                        <tab (selectTab)="setActiveDefectTab($event)" class="card-separator mb-3" customClass="text-left" id="4">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-list"></i><span class="mt-1 ml-1">{{'activities.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <app-defect-activities [apiUrl]="apiUrl" [defect]="defect" [loginUser]="loginUser"></app-defect-activities>
+                                        </tab>
+                                        <!-- History -->
+                                        <tab (selectTab)="setActiveDefectTab($event)" class="card-separator mb-3 tab-width" customClass="text-left" id="5">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-history"></i><span class="mt-1 ml-1">{{'histories.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <app-defect-history [apiUrl]="apiUrl" [defect]="defect" [loginUser]="loginUser"></app-defect-history>
+                                        </tab>
+                                    </tabset>
+                                    <!-- Tab Design End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

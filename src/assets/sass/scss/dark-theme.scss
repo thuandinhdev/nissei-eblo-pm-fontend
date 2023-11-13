@@ -1,0 +1,923 @@
+/*================================
+ Dark and trasparent layout 
+ ================================
+ ====================================*/
+
+
+body.dark {
+    background: #13131A;
+
+    .app-sidebar {
+        .logo-text {
+            color: #fafafb !important;
+        }
+
+        &:before {
+            background: #1C1C24;
+            opacity: 1;
+        }
+    }
+
+    .off-canvas-sidebar:before {
+        background: #1C1C24;
+        opacity: 1;
+    }
+
+    .app-sidebar .navigation i,
+    .off-canvas-sidebar .navigation i,
+    .app-sidebar .navigation li a {
+        color: #fafafb !important;
+    }
+
+    .card {
+        background: #1C1C24;
+        color: #fafafb;
+    }
+
+    .navbar-light {
+        background-color: #1c1c24 !important;
+    }
+
+    .btn-rounded {
+        background-color: #44444F;
+        color: #fafafb;
+    }
+
+    .copyright,
+    .navbar-light .navbar-nav .nav-link {
+        color: #fafafb;
+    }
+
+    .feed-element-date-activities {
+        display: flex;
+        border: 1px solid #515151;
+
+        span {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            width: auto;
+            padding: 0 12px;
+            flex: 1;
+        }
+
+        span:first-child {
+            background: #44444f;
+        }
+    }
+
+    .btn-create {
+        background-color: #44444F;
+        color: #fafafb;
+
+        i {
+            color: #fafafb;
+        }
+    }
+
+    .html5buttons .btn-datatable-gredient {
+        border: 1px solid #44444f !important;
+    }
+
+    .b4-datatable>thead>tr {
+        background-color: #13131a;
+        color: #fbfbfa;
+    }
+
+    .btn-filters .badge::after {
+        border-bottom: 38px solid #13131a;
+    }
+
+    .task-title,
+    .setting-title {
+        color: #fbfbfa;
+    }
+
+    .table-hover tbody tr {
+        color: #212529;
+        background-color: #1c1c24;
+    }
+
+    .status-dropdown .btn-group button.btn {
+        background: #1c1c24 !important;
+        border-color: #5b5b5b !important;
+        color: #fbfbfa;
+    }
+
+    .status-dropdown .dropdown-menu.show {
+        border: 1px solid #13131a;
+        background: #13131a;
+    }
+
+    .status-dropdown .dropdown-menu.show a {
+        border: 1px solid #13131a;
+        color: #fafafb !important;
+    }
+
+    .actions-dropdown .btn-action {
+        background: #44444f !important;
+        border: 1px solid #44444f;
+        color: #fbfbfa;
+    }
+
+    .dataTables_info {
+        color: #fbfbfa;
+    }
+
+    .modal-content {
+        background: #44444f !important;
+    }
+
+    .ng-select .ng-select-container {
+        background-color: #1c1c24;
+        border: 1px solid #797979;
+        color: #bdbdc7;
+    }
+
+    .ng-dropdown-panel {
+        background: #44444f !important;
+        color: #fbfbfa;
+    }
+
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+        background: #000 !important;
+        color: #fbfbfa;
+    }
+
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        background: #44444f !important;
+        color: #fbfbfa;
+    }
+
+    .dropzone {
+
+        border: 2px #bdbdc7;
+        background: #13131a;
+    }
+
+    .drag-container {
+        background-color: #1c1c24;
+
+        .item-box {
+
+            border: solid 1px #363636;
+
+            color: #aaa;
+
+            background: #1c1c24;
+
+        }
+    }
+
+    .ngx-toolbar .ngx-toolbar-set .ngx-editor-button {
+        background-color: #222228 !important;
+        padding: .4rem;
+        color: white;
+        min-width: 2.5rem;
+        border: 1px solid #0e0e12 !important;
+        border-right: #0a0a0d !important;
+    }
+
+    .ngx-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #0a0a0d;
+        font-size: .8rem;
+        padding: .2rem .2rem 0;
+        border: 1px solid #0a0a0d;
+    }
+
+    .ngxePopover.popover.bs-popover-auto .arrow::after,
+    .ngxePopover.popover.bs-popover-bottom .arrow::after {
+        border-bottom-color: #13131a;
+    }
+
+    .ngxePopover.popover .popover-body {
+        color: #fafafb;
+        background: #0a0a0d;
+    }
+
+    .ngx-editor-grippie {
+        border: 1px solid #0a0a0d;
+        background-color: #0a0a0d;
+    }
+
+    .ngx-editor .ngx-wrapper .ngx-editor-textarea {
+        border: 1px solid #0a0a0d !important;
+    }
+
+
+    .ngxePopover .btn.btn-primary {
+        color: #fff !important;
+        background-color: #222228;
+        border-color: #222228;
+    }
+
+    .bs-datepicker-body {
+        border: 1px solid #1c1c24;
+
+    }
+
+    .bs-datepicker {
+        background: #13131a;
+        box-shadow: none;
+    }
+
+    .detail-page .nav-tabs .nav-item .nav-link {
+        color: #fbfbfa;
+    }
+
+    .list-inline-buttons {
+        border: 1px solid #13131a;
+
+        background: #13131a;
+    }
+
+    .detail-page .detail-inline {
+        color: #f7f7f7;
+    }
+
+    .custom-nav-tabs ul.nav-pills li a {
+        background: #13131a;
+        color: #fbfbfa !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        border: transparent;
+    }
+
+    .file-browser .file-box .files .file-name h4 {
+        color: #f7f7f7;
+    }
+
+    .btn-cancel {
+        background: #44444f !important;
+        color: #fbfbfa;
+    }
+
+    .calender-today {
+        background: #44444f !important;
+        color: #bdbdc7 !important;
+    }
+
+    .calender-today.active,
+    .calender-today:active {
+        background: #009092 !important;
+        color: #fff !important;
+    }
+
+
+}
+
+body {
+    &.dark {
+        background-color: #13131A;
+        color: #bdbdc7;
+        height: 100%;
+
+        main {
+            color: #bdbdc7;
+        }
+
+        .bg-white {
+            background-color: #1C1C24 !important;
+            color: #009da0 !important;
+        }
+
+        .content-sub-header,
+        .list-group-item-action {
+            color: #bdbdc7;
+        }
+
+        .nav-tabs {
+            border-bottom-color: #616279;
+            color: #bdbdc7;
+
+            .active {
+                color: #bdbdc7 !important;
+                border-color: transparent;
+            }
+
+            .nav-link.active {
+                color: #bdbdc7;
+            }
+        }
+
+        .table {
+            td {
+                color: #bdbdc7;
+            }
+
+            .bg-light th {
+                color: #000 !important;
+            }
+        }
+
+        // p {
+        //   color: #bdbdc7;
+        // }
+
+        .text-muted {
+            color: #b1b1bb !important;
+        }
+
+        .content-header,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #fff;
+        }
+
+        .navbar {
+
+            .nav-link,
+            i,
+            .navbar-nav .nav-item {
+                color: #fff !important;
+            }
+
+            .navbar-toggle .icon-bar {
+                color: #fff;
+            }
+        }
+
+        .badge {
+            color: #fff;
+        }
+
+        .badge-light {
+            color: #fbfbfa !important;
+            background: #13131a !important;
+        }
+
+        .card,
+        .card-footer {
+            background: #1C1C24;
+        }
+
+
+
+        label {
+            color: #bdbdc7;
+        }
+
+        .search {
+            border-radius: 1.5rem;
+            background: #1C1C24;
+            color: #bdbdc7;
+            border: 2px solid #616279;
+        }
+
+        .custom-select {
+            margin-bottom: 0.3125rem;
+            margin-left: 0.3125rem;
+        }
+
+        .custom-radio {
+            margin-left: 0.3125rem;
+        }
+
+        form {
+            .form-actions {
+                border-top-color: #616279;
+                border-bottom-color: #616279;
+            }
+
+            &.form-bordered .form-group {
+                border-bottom-color: #616279;
+
+                >div {
+                    border-left-color: #616279;
+                }
+            }
+
+            &.striped-rows .form-group:nth-child(even) {
+                background: #13131A;
+            }
+
+            &.wizard>.steps>ul>.current>a {
+                color: #fff !important;
+            }
+        }
+
+        .form-control,
+        .ng2-tag-input__text-input,
+        .type-zone {
+            background: #1C1C24 !important;
+            color: #bdbdc7 !important;
+            border-bottom: 2px solid #616279 !important;
+        }
+
+        .input-group-text {
+            background: #1C1C24 !important;
+            color: #bdbdc7 !important;
+            border-color: #616279 !important;
+        }
+
+        .btn-light {
+            color: #1C1C24 !important;
+        }
+
+        .btn-flat {
+            background-color: #13131A !important;
+        }
+
+        .buttons-copy,
+        .buttons-csv,
+        .buttons-excel,
+        .buttons-pdf,
+        .buttons-print {
+            background: #44444f !important;
+            color: #bdbdc7 !important;
+            outline: 0 !important;
+        }
+
+        .email-application {
+            .email-app-list-mails {
+                background-color: #1C1C24;
+                border-right: 1px solid #bdbdc7;
+                border-color: #616279;
+
+                .email-actions {
+                    border-bottom: 1px solid #616279;
+                    border-top: 1px solid #616279;
+                }
+            }
+
+            .email-app-mail-content,
+            .email-app-sidebar {
+                background-color: #1C1C24;
+                border-right: 1px solid #bdbdc7;
+                border-color: #616279;
+            }
+
+            .list-group-item-action {
+                color: #bdbdc7;
+
+                &.bg-blue-grey,
+                &.email-app-sender {
+                    background-color: #13131A !important;
+                }
+            }
+
+            .email-app-menu .form-group-compose {
+                border-bottom: 1px solid #616279;
+            }
+
+            .list-group-item.active {
+                background-color: #009da0;
+                border-color: #009da0;
+                color: #fff;
+
+                &:focus,
+                &:hover {
+                    background-color: #009da0;
+                    border-color: #009da0;
+                    color: #fff;
+                }
+            }
+        }
+
+        .chat-application {
+            .chat-app-window {
+                background-color: #1C1C24;
+            }
+
+            .chat-fixed-search,
+            .chat-sidebar {
+                background-color: #1C1C24;
+                border-color: #616279;
+            }
+
+            .chat-name {
+                border-color: #616279;
+            }
+
+            .chats {
+                .chat-left .chat-content p {
+                    color: #000;
+                }
+
+                .chat-content p {
+                    color: #fff;
+                }
+            }
+
+            .bg-blue-grey.bg-lighten-5 {
+                background-color: #4f5069 !important;
+            }
+        }
+
+        .list-group {
+            .list-group-item {
+                background-color: inherit;
+            }
+
+            button {
+                color: #bdbdc7 !important;
+            }
+        }
+
+        .dropdown-menu {
+            background-color: #1c1c24;
+
+            .dropdown-item {
+                color: #bdbdc7;
+
+                &:hover {
+                    background-color: #009da0;
+                }
+            }
+
+            button {
+                color: #bdbdc7;
+            }
+        }
+
+        .dropdown-divider {
+            border-top-color: #616279;
+        }
+
+        .dropdown-header {
+            background-color: #13131A;
+            color: #fff;
+        }
+
+        .nav-link {
+            border-bottom-color: #616279;
+            color: #bdbdc7;
+
+            .active {
+                color: #bdbdc7 !important;
+                border-color: #616279;
+            }
+        }
+
+        .tab-content {
+
+            .active,
+            .tabpane {
+                background: #1C1C24 !important;
+            }
+        }
+
+        .progress {
+            background: #13131A;
+        }
+
+        .popover,
+        .tooltip {
+            color: #fff !important;
+        }
+
+        .ngb-dp-header,
+        .ngb-dp-month-name,
+        .ngb-dp-weekdays {
+            background: #13131A !important;
+        }
+
+        .switch {
+            margin-left: 0.3125rem;
+        }
+
+        .cal-month-view {
+            .cal-cell-row {
+                background-color: #1C1C24;
+                color: #bdbdc7;
+
+                &:hover {
+                    background-color: #1C1C24;
+                    color: #bdbdc7;
+                }
+
+                .cal-today {
+                    background-color: #13131A;
+                }
+
+                .cal-day-cell.cal-weekend .cal-day-number {
+                    color: #bdbdc7;
+                }
+
+                .cal-cell-top:hover {
+                    background-color: #13131A;
+                }
+            }
+
+            .cal-open-day-events {
+                background-color: #13131A;
+            }
+
+            .cal-header .cal-cell:hover {
+                background-color: #1C1C24;
+            }
+        }
+
+        .cal-week-view {
+            .cal-event {
+                background-color: #13131A !important;
+                border-color: #616279 !important;
+
+                .cal-event-title {
+                    color: #bdbdc7;
+                }
+            }
+
+            .cal-hour-odd {
+                background-color: #13131A;
+            }
+
+            .cal-day-headers {
+                .cal-header {
+                    background-color: #1C1C24;
+                    color: #b1b1bb;
+
+                    &:hover {
+                        background-color: #1C1C24;
+                        color: #b1b1bb;
+                    }
+                }
+
+                .cal-today {
+                    background-color: #13131A;
+
+                    &:hover {
+                        background-color: #13131A;
+                    }
+                }
+            }
+
+            .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
+                background-color: transparent !important;
+            }
+
+            .cal-header.cal-weekend span {
+                color: #b1b1bb;
+            }
+        }
+
+        .cal-day-view {
+            .cal-event {
+                background-color: #13131A !important;
+                border-color: #616279 !important;
+
+                .cal-event-title {
+                    color: #bdbdc7;
+                }
+            }
+
+            .cal-hour-odd {
+                background-color: #13131A;
+            }
+
+            .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
+                background-color: transparent !important;
+            }
+        }
+
+        .cd-horizontal-timeline {
+            .events a {
+                color: #bdbdc7;
+            }
+
+            .cd-timeline-navigation a {
+                top: 60%;
+
+                &:after {
+                    top: 23%;
+                }
+            }
+        }
+
+        .taskboard-app-form {
+            background-color: transparent !important;
+        }
+
+
+
+        .color-palettes {
+            color: #000 !important;
+
+            a,
+            h4,
+            h6 {
+                color: #000 !important;
+            }
+
+            hr {
+                color: #000 !important;
+                border-color: rgba(255 255 255 / 20%) !important;
+            }
+
+            label,
+            p,
+            span {
+                color: #000 !important;
+            }
+
+            #rtl-icon span.white {
+                color: #fff !important;
+            }
+
+            .color-palettes-close i,
+            .theme-settings-close i {
+                color: #bdbdc7 !important;
+            }
+        }
+
+        .theme-settings {
+            color: #000 !important;
+            background: #13131a;
+
+            a,
+            h4,
+            h6 {
+                color: #bdbdc7 !important;
+            }
+
+            hr {
+                color: #000 !important;
+                border-color: rgba(255 255 255 / 20%) !important;
+            }
+
+            label,
+            p,
+            span {
+                color: #bdbdc7 !important;
+            }
+
+            #rtl-icon span.white {
+                color: #fff !important;
+            }
+
+            .color-palettes-close i,
+            .theme-settings-close i {
+                color: #fbfbfa !important;
+            }
+        }
+
+        .notification-sidebar {
+            &.open {
+                background: #13131A !important;
+                box-shadow: 0 0 20px 3px #000 61 !important;
+            }
+
+            .switch {
+                border: none !important;
+            }
+
+            .tab-content .active {
+                background: #13131A !important;
+            }
+
+            .notification-sidebar-close .ft-x {
+                color: #fff !important;
+            }
+
+            .nav-link.active {
+                color: #009da0 !important;
+            }
+
+            #activity #timeline.timeline-left .timeline-line {
+                background-color: #616279;
+            }
+        }
+
+        #lock-screen {
+
+            .fg-image,
+            .lock-screen-img,
+            .login-img,
+            .register-img {
+                background: #494b62 !important;
+            }
+        }
+
+        #login {
+
+            .fg-image,
+            .lock-screen-img,
+            .login-img,
+            .register-img {
+                background: #494b62 !important;
+            }
+        }
+
+        #maintenance {
+
+            .fg-image,
+            .lock-screen-img,
+            .login-img,
+            .register-img {
+                background: #494b62 !important;
+            }
+        }
+
+        #regestration {
+
+            .fg-image,
+            .lock-screen-img,
+            .login-img,
+            .register-img {
+                background: #494b62 !important;
+            }
+        }
+
+        .forgot-password-bg {
+
+            .fg-image,
+            .lock-screen-img,
+            .login-img,
+            .register-img {
+                background: #494b62 !important;
+            }
+        }
+    }
+
+
+
+    &.dark {
+        .alert p {
+            color: #000 !important;
+        }
+
+        table.dataTable tr.group td {
+            background: #13131A;
+        }
+
+        .dataTables_length .form-control {
+            color: #fff;
+        }
+
+        .ngx-datatable .datatable-header .datatable-header-cell .sort-btn {
+            color: #bdbdc7 !important;
+        }
+
+        .ng2-smart-filter .form-control {
+            height: auto !important;
+        }
+
+
+
+        .media-list.media-bordered .media {
+            border-top-color: #616279;
+        }
+
+        .accordion .btn-link:hover {
+            color: #fff;
+        }
+
+        .swal2-modal h2 {
+            color: #1C1C24 !important;
+        }
+
+        .snow-container .quill-toolbar .ql-formats .ql-picker {
+            color: #bdbdc7 !important;
+        }
+
+        .pagination .page-item {
+            .page-link {
+                background-color: #1C1C24;
+                color: #bdbdc7;
+                border-color: #616279;
+            }
+
+            &.active .page-link {
+                background-color: #009da0;
+            }
+        }
+
+        .ngb-dp-months .ngb-dp-week .ngb-dp-day .btn-light {
+            color: #fff !important;
+
+            &:hover {
+                background-color: #13131A;
+            }
+        }
+
+        .ng-untouched .form-control,
+        .ngb-tp-hour .form-control,
+        .ngb-tp-minute .form-control,
+        .ngb-tp-second .form-control {
+            color: #bdbdc7 !important;
+        }
+
+        .ngb-tp-meridian .btn-outline-primary {
+            margin-bottom: 0;
+        }
+
+        .cal-day-cell.cal-out-month .cal-day-number {
+            opacity: 0.2;
+        }
+    }
+
+
+}

@@ -1,0 +1,87 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.system_settings.title' | translate}}</span></h4>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="settingsForm" class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="timezone">{{'settings.system_settings.create.fields.timezone' | translate}}
+                        <span class="text-danger"></span></label>
+                    <ng-select [items]="timezones" [searchable]="true" [selectOnTab]="true" bindLabel="value" bindValue="key" formControlName="timezone" labelForId="timezone" placeholder="{{'settings.system_settings.create.placeholders.placeholder3' | translate}}"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div [ngClass]="{ 'is-invalid': isSubmitted && systemSetting.default_language.errors }" class="form-group">
+                    <label for="default_language">{{'settings.system_settings.create.fields.default_language' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <ng-select [items]="languages" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="language" formControlName="default_language" labelForId="default_language" placeholder="{{'settings.system_settings.create.placeholders.placeholder1' | translate}}"></ng-select>
+                    <div *ngIf="isSubmitted && systemSetting.default_language.errors" class="invalid-feedback">
+                        <div *ngIf="systemSetting.default_language.errors.required">{{'settings.system_settings.create.error_messages.message5' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div [ngClass]="{ 'is-invalid': isSubmitted && systemSetting.currency_id.errors }" class="form-group">
+                    <label for="currency_id">{{'settings.system_settings.create.fields.default_currency' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <ng-select [items]="currencies" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="currency_id" labelForId="currency_id" placeholder="{{'settings.system_settings.create.placeholders.placeholder7' | translate}}">
+                        <ng-template let-item="item" ng-option-tmp>
+                            {{item.symbol}} - {{item.name}}
+                        </ng-template>
+                    </ng-select>
+                    <div *ngIf="isSubmitted && systemSetting.currency_id.errors" class="invalid-feedback">
+                        <div *ngIf="systemSetting.currency_id.errors.required">{{'settings.system_settings.create.error_messages.message4' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="tables_pagination_limit">{{'settings.system_settings.create.fields.tables_pagination_limit' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isSubmitted && systemSetting.tables_pagination_limit.errors }" class="form-control" formControlName="tables_pagination_limit" id="tables_pagination_limit" placeholder="{{'settings.system_settings.create.placeholders.placeholder4' | translate}}" type="number"/>
+                    <div *ngIf="isSubmitted && systemSetting.tables_pagination_limit.errors" class="invalid-feedback">
+                        <div *ngIf="systemSetting.tables_pagination_limit.errors.required">{{'settings.system_settings.create.error_messages.message1' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div [ngClass]="{ 'is-invalid': isSubmitted && systemSetting.date_format.errors }" class="form-group">
+                    <label for="date_format">{{'settings.system_settings.create.fields.date_format' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <ng-select [items]="dateFormates" [searchable]="true" [selectOnTab]="true" bindValue="value" formControlName="date_format" labelForId="date_format" placeholder="{{'settings.system_settings.create.placeholders.placeholder5' | translate}}"></ng-select>
+                    <div *ngIf="isSubmitted && systemSetting.date_format.errors" class="invalid-feedback">
+                        <div *ngIf="systemSetting.date_format.errors.required">{{'settings.system_settings.create.error_messages.message2' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div [ngClass]="{ 'is-invalid': isSubmitted && systemSetting.time_format.errors }" class="form-group">
+                    <label for="time_format">{{'settings.system_settings.create.fields.time_format' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <ng-select [items]="timeFormates" [searchable]="true" [selectOnTab]="true" bindValue="value" formControlName="time_format" labelForId="time_format" placeholder="{{'settings.system_settings.create.placeholders.placeholder6' | translate}}"></ng-select>
+                    <div *ngIf="isSubmitted && systemSetting.time_format.errors" class="invalid-feedback">
+                        <div *ngIf="systemSetting.time_format.errors.required">{{'settings.system_settings.create.error_messages.message3' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="form-group">
+                    <label for="allowed_for_registration">{{'settings.system_settings.create.fields.allowed_for_registration' | translate}}</label>
+                    <label class="checkbox-container d-block">
+                        <input class="form-control" formControlName="allowed_for_registration" id="allowed_for_registration" type="checkbox"/>
+                        <span class="checkbox-checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button *ngxPermissionsOnly="['admin', 'super_admin', 'systemsettings_create', 'systemsettings_edit']" class="btn btn-submit" type="submit">
+                    <span>{{'common.save' | translate}}</span></button>
+            </div>
+        </div>
+    </div>
+</form>

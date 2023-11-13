@@ -1,0 +1,48 @@
+<!-- Card header -->
+<div class="card-header justify-content-center p-0">
+    <div class="card-buttons pt-2 pb-2 pr-1">
+        <button (click)="openAttachmentCreateModal()" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}" type="button">
+            <i class="fa fa-upload"></i><span>{{'common.drag_file' | translate}}</span></button>
+    </div>
+</div><!-- Card body -->
+<div class="card-body">
+    <div *ngIf="attachments?.length != 0" class="row border-top pt-2">
+        <div *ngFor="let file of attachments; index as i" class="col-sm-4">
+            <div class="file-browser">
+                <div class="actions-dropdown text-right m-1 pr-2">
+                    <div class="btn-group" dropdown>
+                        <a aria-controls="dropdown-basic-1" class="dropdown-toggle" dropdownToggle href="javascript:void(0);" id="button-basic-1"><i class="fa fa-ellipsis-v"></i></a>
+                        <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                            <li role="menuitem">
+                                <a class="dropdown-item btn btn-download btn-raised" download="{{file.file_name}}" href="{{apiUrl}}/uploads/incident_attachment/{{file.file_hash}}" target="_blank" tooltip="{{'common.download' | translate}}"><i class="fa fa-download"></i></a>
+                            </li>
+                            <li *ngIf="permission" role="menuitem">
+                                <a (click)="attachmentDelete(attachment.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="file-box">
+                    <div class="files">
+                        <div *ngIf="file.icon" class="icon docx">
+                            <i [ngClass]="file.icon"></i>
+                        </div>
+                        <div *ngIf="file.isImageFile" class="image">
+                            <img alt="image" class="img-fluid height-100" src="{{ apiUrl }}/uploads/incident_attachment/{{file.file_hash}}"/>
+                        </div>
+                        <div class="file-name">
+                            <a download="{{file.file_name}}" href="{{apiUrl}}/uploads/incident_attachment/{{file.file_hash}}" target="_blank" tooltip="{{file.file_name}}">
+                                <h4>{{ (file.file_name.length > 20) ? (file.file_name | slice:0:20) + '..' : (file.file_name) }}</h4>
+                            </a>
+                            <p>{{'file_browser.title7' | translate}}: {{ file.updated_at | dateTimeFormatFilter:loginUser.settings.date_time_format }}</p>
+                        </div>
+                    </div>
+                    <span class="corner"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="attachments?.length == 0" class="row border-top pt-2">
+        <div class="col-sm-12 text-center">{{'common.datatable.sEmptyTable' | translate}}</div>
+    </div>
+</div>

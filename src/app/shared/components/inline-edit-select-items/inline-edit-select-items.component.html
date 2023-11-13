@@ -1,0 +1,21 @@
+<div #container class="editable-container editable-inline">
+    <div [hidden]="isEditView" class="editable-label budges-status">
+        <ng-container *ngFor="let taxes of getValue(options)">
+            <span class="open">{{taxes}}</span>
+        </ng-container>
+        <span (click)="showEditable()" class="editable"><i aria-hidden="true" class="fa fa-pencil"></i></span>
+    </div>
+    <form #form="ngForm" (ngSubmit)="save()" *ngIf="isEditView" class="form-inline editableForm" novalidate="">
+        <label class="sr-only" for="txtField">{{txtField}}</label>
+        <div class="input-group">
+            <ng-select #select_component (select)="select($event, select_component)" [(ngModel)]="value" [closeOnSelect]="false" [items]="options" [multiple]="true" [name]="name" [ngClass]="{ 'is-invalid': select_component.isValueSelected }" [placeholder]="'shared.inline_edit.placeholders.placeholder2' | translate:{'elementFor':elementFor}" [required]="isRequired" [searchable]="true" [selectOnTab]="true" bindLabel="tax_name" bindValue="id" labelForId="txtField"></ng-select>
+            <button [disabled]="!form.valid" class="btn btn-inline-submit" type="submit">
+                <i aria-hidden="true" class="fa fa-check"></i></button>
+            <button (click)="showDetail()" class="btn btn-inline-cancel" type="button">
+                <i aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="invalid-feedback">
+            <span *ngIf="select_component.isValueSelected">{{'shared.inline_edit.error_messages.message1' | translate:{'elementFor': elementFor} }}</span>
+        </div>
+    </form>
+</div>

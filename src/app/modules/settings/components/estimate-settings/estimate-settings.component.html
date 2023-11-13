@@ -1,0 +1,80 @@
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.estimate_settings.title' | translate}}</span></h4>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="estimateSettingsForm">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="estimate_prefix">{{'settings.estimate_settings.create.fields.estimate_prefix' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && estimateSetting.estimate_prefix.errors }" class="form-control" formControlName="estimate_prefix" id="estimate_prefix" placeholder="{{'settings.estimate_settings.create.placeholders.placeholder1' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && estimateSetting.estimate_prefix.errors" class="invalid-feedback">
+                        <div *ngIf="estimateSetting.estimate_prefix.errors.required">{{'settings.estimate_settings.create.error_messages.message1' | translate}}</div>
+                        <div *ngIf="estimateSetting.estimate_prefix.errors.maxlength">{{'settings.estimate_settings.create.error_messages.message2' | translate }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="due_after">{{'settings.estimate_settings.create.fields.due_after' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && estimateSetting.due_after.errors }" class="form-control" formControlName="due_after" id="due_after" placeholder="{{'settings.estimate_settings.create.placeholders.placeholder2' | translate}}" type="number"/>
+                    <div *ngIf="isFormSubmitted && estimateSetting.due_after.errors" class="invalid-feedback">
+                        <div *ngIf="estimateSetting.due_after.errors.required">{{'settings.estimate_settings.create.error_messages.message3' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="form-group">
+                    <label for="auto_remind">{{'settings.estimate_settings.create.fields.auto_remind' | translate}}</label>
+                    <label class="checkbox-container d-block">
+                        <input class="form-control" formControlName="auto_remind" id="auto_remind" type="checkbox"/>
+                        <span class="checkbox-checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="auto_remind_before">{{'settings.estimate_settings.create.fields.auto_remind_before' | translate}}</label>
+                    <input class="form-control" formControlName="auto_remind_before" id="auto_remind_before" placeholder="{{'settings.estimate_settings.create.placeholders.placeholder5' | translate}}" type="number"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="client_note">{{'settings.estimate_settings.create.fields.client_note' | translate}}</label>
+                    <textarea class="form-control" formControlName="client_note" id="client_note" placeholder="{{'settings.estimate_settings.create.placeholders.placeholder3' | translate}}" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="terms_conditions">{{'settings.estimate_settings.create.fields.terms_conditions' | translate}}</label>
+                    <textarea class="form-control" formControlName="terms_conditions" id="terms_conditions" placeholder="{{'settings.estimate_settings.create.placeholders.placeholder4' | translate}}" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>{{'settings.estimate_settings.create.fields.estimate_logo' | translate }}</label>
+                    <input formControlName="estimate_logo" type="hidden">
+                    <div #logodropzone class="dropzone dz-clickable">
+                        <div *ngIf="isLogoLoaded && setting.estimate_logo" class="dz-preview dz-image-preview">
+                            <div class="dz-image">
+                                <img height="100" src="{{apiUrl}}/uploads/estimate_logo/{{setting.estimate_logo}}" width="100"/>
+                            </div>
+                            <a (click)="removeDropzoneImage()" class="btn btn-sm btn-block">{{ 'common.remove_file' | translate }}</a>
+                        </div>
+                        <div class="dz-default dz-message">
+                            <span *ngIf="!setting.estimate_logo"><strong>{{ 'settings.estimate_settings.create.error_messages.message4' | translate }}</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button *ngxPermissionsOnly="['admin', 'super_admin', 'estimatesettings_edit']" class="btn btn-submit" type="submit">{{'common.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

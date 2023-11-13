@@ -1,0 +1,14 @@
+// ================================
+// 	File Name: plugins.scss
+// 	Description: Import all plugins
+// ================================
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~ngx-ui-switch/ui-switch.component.scss';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@import '~jstree/dist/themes/default-dark/style.min.css';
+@import '~ngx-toastr/toastr-bs4-alert';
+
+@import "plugins/chartist";
+@import "plugins/checkboxes";
+@import "plugins/datatables";
+@import "plugins/custom";

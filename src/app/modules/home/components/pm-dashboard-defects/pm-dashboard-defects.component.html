@@ -1,0 +1,50 @@
+<div class="card card-height overflow-y">
+    <div class="card-header border-bottom mb-3">
+        <h4 class="card-title mt-2">{{'defects.title' | translate}}</h4>
+        <div class="card-buttons">
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_view']" [routerLink]="['/defects']" class="btn btn-rounded  mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>&nbsp;&nbsp;
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/defects/create']" class="btn btn-rounded  mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <div [perfectScrollbar]="scrollConfig" class="card-body sidebar-content">
+        <div class="card-block pt-0">
+            <div *ngIf="defects?.length != 0" class="list-elements">
+                <div *ngFor="let defect of defects" class="feed-element {{defectStatusKeyColor[defect.status]}}">
+                    <div class="feed-element-body">
+                        <div class=" justify-content-center justify-content-lg-between">
+                            <h6>
+                                <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a><span> - {{defect.defect_name}}</span>
+                            </h6>
+
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="people-lists">
+                                <ng-container *ngIf="defect.assign_member == 'Unassign' || defect.assign_member == '' || defect.assign_user == null; else elseBlock">
+                                    <a class="btn rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                    </a>
+                                </ng-container>
+                                <ng-template #elseBlock>
+                                    <a [routerLink]="['/users/profile', defect.assign_user.id]" class="btn rounded-circle text-dark" placement="top" tooltip="{{defect.assign_user.firstname}} {{defect.assign_user.lastname}}">
+                                        <img *ngIf="defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.assign_user.avatar}}"/>
+                                        <img *ngIf="!defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                    </a>
+                                </ng-template>
+                            </div>
+                            <div class="badge badge-pill mt-2">{{ defect.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}</div>
+                            <div class="budges-status">
+                                <ng-container *ngFor="let status of ('defects.status' | translate)">
+                                    <span *ngIf="status.id == defect.status" class="{{status.class}}">{{status.label}}</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="defects?.length == 0" class="text-center">
+                <img src="assets/img/norecord-img.png" width="50">
+                <p class="mt-1">{{ 'common.empty_message.defects' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>

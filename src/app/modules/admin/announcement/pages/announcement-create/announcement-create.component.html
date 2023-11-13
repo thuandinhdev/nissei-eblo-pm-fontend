@@ -1,0 +1,100 @@
+<section id="basic-form-layouts">
+    <form (ngSubmit)="onSubmit()" [formGroup]="createAnnouncementForm">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">{{'announcements.create.title1' | translate }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="title">{{'announcements.create.fields.title' | translate }}
+                                                <span class="text-danger">&nbsp;*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && announcementControl.title.errors }" class="form-control" formControlName="title" id="title" placeholder="{{'announcements.create.placeholders.placeholder1' | translate }}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && announcementControl.title.errors" class="invalid-feedback">
+                                                <div *ngIf="announcementControl.title.errors.required">{{'announcements.create.error_messages.message1' | translate }}</div>
+                                                <div *ngIf="announcementControl.title.errors.maxlength">{{'announcements.create.error_messages.message2' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>{{'announcements.create.fields.status' | translate }}
+                                                <span class="text-danger">&nbsp;*</span></label><br>
+                                            <div class="form-check radio-container d-block">
+                                                <input class="form-check-input" formControlName="status" id="checkbox1" type="radio" value="1">
+                                                <label class="form-check-label" for="checkbox1">&nbsp;{{'announcements.create.fields.publish' | translate }}&nbsp;</label>
+                                                <span class="radio-checkmark"></span>
+                                            </div>
+                                            <div class="form-check radio-container d-block">
+                                                <input class="form-check-input" formControlName="status" id="checkbox2" type="radio" value="0">
+                                                <label class="form-check-label" for="checkbox2">&nbsp;{{'announcements.create.fields.unpublish' | translate }}</label>
+                                                <span class="radio-checkmark"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="all_client">{{'announcements.create.fields.all_clients' | translate }}</label>
+                                            <div class="form-check checkbox-container d-block">
+                                                <input class="form-check-input" formControlName="all_client" id="all_client" type="checkbox">
+                                                <label></label>
+                                                <span class="checkbox-checkmark"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="start_date">{{'announcements.create.fields.start_date' | translate }}
+                                                <span class="text-danger">&nbsp;*</span></label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp="bsDatepicker" (bsValueChange)="startDateChange($event)" [bsConfig]="datepickerConfig" [ngClass]="{ 'is-invalid': isFormSubmitted && announcementControl.start_date.errors }" aria-describedby="inputGroupPrepend3" bsDatepicker class="form-control" formControlName="start_date" id="start_date" placeholder="{{'announcements.create.placeholders.placeholder2' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                            </div>
+                                            <div *ngIf="isFormSubmitted && announcementControl.start_date.errors" class="invalid-feedback">
+                                                <div *ngIf="announcementControl.start_date.errors.required">{{'announcements.create.error_messages.message3' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="end_date">{{'announcements.create.fields.end_date' | translate }}
+                                                <span class="text-danger">&nbsp;*</span></label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp="bsDatepicker" [bsConfig]="datepickerConfig" [minDate]="createAnnouncementForm.get('start_date').value" [ngClass]="{ 'is-invalid': isFormSubmitted && announcementControl.end_date.errors }" aria-describedby="inputGroupPrepend3" bsDatepicker class="form-control" formControlName="end_date" id="end_date" placeholder="{{'announcements.create.placeholders.placeholder3' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                            </div>
+                                            <div *ngIf="isFormSubmitted && announcementControl.end_date.errors" class="invalid-feedback">
+                                                <div *ngIf="announcementControl.end_date.errors.required">{{'announcements.create.error_messages.message4' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="description">{{'announcements.create.fields.description' | translate }}</label>
+                                            <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="description" height="150px" id="description" minHeight="100px"></app-ngx-editor>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 text-right">
+                                        <a [routerLink]="['/announcements']" class="btn btn-cancel">{{'common.cancel' | translate }}</a>
+                                        <button class="btn btn-submit" type="submit">{{'common.create' | translate }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -1,0 +1,86 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'departments.title' | translate}}</span></h4>
+                    <button (click)="openDepartmentCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'departments_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                        <i class="fa fa-plus"></i></button>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div *ngFor="let department of departments; index as i" class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="float-left sub-title">{{department.name}}</h4>
+                                        <div class="action-btn btn-group float-right" dropdown="">
+                                            <button class="btn btn-outline-info mb-0" type="button">{{'departments.columns.actions' | translate}}</button>
+                                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline-info dropdown-toggle mb-0" dropdownToggle="" type="button">
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div *dropdownMenu="" class="dropdown-menu action-dropdown animated fadeIn" role="menu">
+                                                <a (click)="openDepartmentEditModal(department)" *ngxPermissionsOnly="['admin', 'super_admin', 'departments_edit']" class="dropdown-item"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
+                                                <a (click)="deleteDepartment(department.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'departments_delete']" class="dropdown-item"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl mt-1">
+                                            <table class="table table-bordered table-hover b4-datatable">
+                                                <thead>
+                                                <tr>
+                                                    <th class="width-50">D{{ i + 1 }}</th>
+                                                    <th>{{'departments.columns.designation' | translate}}</th>
+                                                    <th class="width-50">{{'departments.columns.actions' | translate}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody *ngIf="department.roles?.length != 0">
+                                                <tr *ngFor="let role of department.roles; index as j">
+                                                    <td class="text-center">{{ j + 1 }}</td>
+                                                    <td>
+                                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'departments_view']; else elseBlock2; then thenBlock"></div>
+                                                        <ng-template #elseBlock2>
+                                                            {{role.name}}&nbsp;
+                                                            <span class="badge badge-pill badge-dark">{{role.users}}</span>
+                                                        </ng-template>
+                                                        <ng-template #thenBlock>
+                                                            <a [routerLink]="['detail', department.id, role.id]" tooltip="{{'departments.tooltip.tooltip11' | translate}}">{{role.name}}&nbsp;</a><span class="badge badge-pill badge-dark">{{role.users}}</span>
+                                                        </ng-template>
+                                                    </td>
+                                                    <td class="actions-dropdown">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                                <i class="fa fa-ellipsis-v"></i></button>
+                                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'departments_view']" role="menuitem">
+                                                                    <a [routerLink]="['detail', department.id, role.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'departments.tooltip.tooltip11' | translate}}"><i class="fa fa-lock"></i></a>
+                                                                </li>
+                                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'departments_delete']" role="menuitem">
+                                                                    <a (click)="deleteDepartmentRole(department.id, role.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot *ngIf="department?.length == 0">
+                                                <tr>
+                                                    <td class="text-center" colspan="3">
+                                                        <img src="assets/img/norecord-img.png" width="50">
+                                                        <p class="mt-1">{{ 'common.empty_message.departments' | translate }}</p>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

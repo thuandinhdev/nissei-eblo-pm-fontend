@@ -1,0 +1,91 @@
+// ================================================================================================
+// 	File Name: reboot.scss
+// 	Description: Reboot css of html, body, typography, other bootstrap elemets/tags and override css from bootstrap etc..
+// 				 related customiztion.
+// ================================================================================================
+html {
+	font-size: $font-size-root;
+}
+
+body {
+	font-family: $font-family-montserrat;
+	font-weight: 300;
+	line-height: 1.5em;
+	color: rgba(0, 0, 0, 0.87);
+	min-height: 100vh;
+	&.inverse {
+		background: #333333;
+		&, .form-control {
+			color: $white;
+		}
+		.modal,
+		.panel-default,
+		.card {
+			&,
+			.form-control {
+				background-color: initial;
+				color: initial;
+			}
+		}
+
+	}
+}
+
+a {
+	color: theme-color("primary");
+	cursor: pointer;
+	&:hover,
+	&:focus {
+		color: darker(theme-color("primary"), 5%);
+		text-decoration: none;
+	}
+	&.text-info{
+		&:hover, &:focus{
+			color: darker(theme-color("info"), 5%);
+		}
+	}
+}
+
+p {
+	font-size: 1rem;
+	letter-spacing: 0.3px;
+}
+
+img {
+	&.img-border {
+		border: 5px solid #fff;
+	}
+}
+
+ul {
+	&.no-list-style {
+		list-style: none;
+	}
+}
+
+.wrapper {
+	&.wrapper-full-page {
+		height: auto;
+		min-height: 100vh;
+	}
+}
+
+.content-wrapper{
+	padding:0 15px;
+}
+
+.page-header {
+	height: 60vh;
+	background-position: center center;
+	background-size: cover;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+footer p {
+	font-size: 13px;
+	text-align: center;
+}

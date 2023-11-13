@@ -1,0 +1,15 @@
+.bg-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.buy-btn {
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 10px !important;
+    z-index: 99;
+
+    &:hover {
+        opacity: .9;
+    }
+}

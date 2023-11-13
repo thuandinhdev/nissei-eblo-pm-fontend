@@ -1,0 +1,104 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'leaves.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_view']" [routerLink]="['/leave-types']" class="btn btn-create mb-0" tooltip="{{'leave_types.title' | translate}}"><i class="fa fa-suitcase"></i></a>
+                        <a [routerLink]="['/leaves/request']" class="btn btn-create mb-0" tooltip="{{'leaves.title2' | translate}}"><i class="fa fa-trello"></i></a>
+                        <a [routerLink]="['/leaves/calendar']" class="btn btn-create mb-0" tooltip="{{'common.calendar_view' | translate}}"><i class="fa fa-calendar"></i></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'reports_view']" [routerLink]="['/leaves/report']" class="btn btn-create mb-0" tooltip="{{'common.report' | translate}}"><i class="fa fa-area-chart"></i></a>
+                        <a (click)="openLeaveCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'leaves_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="leaves_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'leaves.create.fields.user' | translate}}</th>
+                                    <th>{{'leaves.create.fields.leave_date' | translate}}</th>
+                                    <th>{{'leaves.create.fields.leave_type' | translate}}</th>
+                                    <th>{{'leaves.create.fields.duration' | translate}}</th>
+                                    <th>{{'leaves.create.fields.status' | translate}}</th>
+                                    <th>{{'common.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="leaves?.length != 0">
+                                <tr *ngFor="let leave of leaves; index as i">
+                                    <td class="text-center">{{ i + 1 }}</td>
+                                    <td>{{leave.firstname}} {{leave.lastname}}</td>
+                                    <td class="budges-status">
+                                        <span class="open">{{leave.leave_date}}</span>
+                                    </td>
+                                    <td>{{leave.leave_type}}</td>
+                                    <td>
+                                        <ng-container *ngIf="leave.duration == 'half' else elseBlock4">
+                                            <ng-container *ngIf="leave.duration_type == 'first_half' else elseBlock5">
+                                                {{'leaves.labels.first_half_day' | translate}}
+                                            </ng-container>
+                                            <ng-template #elseBlock5>
+                                                {{'leaves.labels.second_half_day' | translate}}
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-template #elseBlock4>
+                                            {{'leaves.labels.full_day' | translate}}
+                                        </ng-template>
+                                    </td>
+                                    <td class="status-dropdown">
+                                        <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'leaves_edit'] else elseBlock;">
+                                            <div class="btn-group" dropdown>
+                                                <ng-container *ngIf="getCheckStatusChangePermission(leave) else elseBlock">
+                                                    <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(leave.status) | translate}}&nbsp;<span class="caret"></span>
+                                                    </button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                        <ng-container *ngFor="let status of ('leaves.status' | translate)">
+                                                            <li *ngIf="status.id == 1 || status.id == 2 || status.id == 3" role="menuitem">
+                                                                <a (click)="changeLeaveStatus([leave.id], status);leave.status = status.id" [ngClass]="{'active': leave.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                        <ng-template #elseBlock>
+                                            <ng-container *ngFor="let status of ('leaves.status' | translate)">
+                                                <div class="budges-status">
+                                                    <span *ngIf="status.id == leave.status" class="{{status.class}}">{{status.label}}</span>
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </td>
+                                    <td class="actions-dropdown">
+                                        <div *ngIf="getCheckPermission(leave) else elseBlock1;" class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li role="menuitem">
+                                                    <a (click)="openLeaveEditModal(leave)" class="dropdown-item btn btn-edit btn-raised"><i class="fa fa-pencil-square-o" tooltip="{{'common.edit' | translate}}"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a (click)="deleteLeave(leave.id)" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <ng-template #elseBlock1><span>-</span></ng-template>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="leaves?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="6">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

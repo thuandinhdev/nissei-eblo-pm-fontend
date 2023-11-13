@@ -1,0 +1,94 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pb-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="main-title mt-2"><span>{{'appointments.title' | translate}}</span></h4>
+                            </div>
+                            <div class="col-md-8 text-lg-right">
+                                <div class="row">
+                                    <div class="col-md-5 mb-lg-0 mb-2">
+                                        <form class="form mt-1 ">
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp="bsDatepicker" (bsValueChange)="appointmentYearChange($event)" [(bsValue)]="year" [bsConfig]="{ dateInputFormat: 'MM-YYYY', minMode : minMode }" aria-describedby="inputGroupPrepend1" bsDatepicker class="form-control" id="search_for_month" name="search_for_month" placeholder="{{'appointments.create.placeholders.placeholder8' | translate}}" type="text" value="{{ year | dateTimeFormatFilter:'MM-YYYY' }}"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-7`">
+                                        <a [routerLink]="['/appointments']" class="btn btn-create  mb-0 mr-1" tooltip="{{'common.switch_to_list' | translate}}"><i class="fa fa-list"></i><span>{{'common.list' | translate}}</span></a>
+                                        <a *ngxPermissionsOnly="['admin', 'super_admin']" [routerLink]="['/providers']" class="btn btn-create  mb-0 mr-1" tooltip="{{'providers.title' | translate}}"><i class="fa fa-industry"></i><span>{{'providers.title' | translate}}</span></a>
+                                        <button (click)="openAppointmentCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                                            <i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pl-2 pr-2 pt-3 pb-3">
+                    <!-- Filter buttons -->
+                    <div *ngIf="isCalendarLoaded" class="row btn-filters mb-3">
+                        <div class="col-sm-12">
+                            <button (click)="filterByStatus(1)" [ngClass]="{'active': appoitmentFilterKey === 1}" class="btn btn-raised open">
+                                <p>{{'common.status.reserved' | translate}}</p>
+                                <span class="badge badge-light">{{appointments.statusCount[1]}}</span>
+                            </button>
+                            <button (click)="filterByStatus(2)" [ngClass]="{'active': appoitmentFilterKey == 2}" class="btn btn-raised assigned">
+                                <p>{{'common.status.confirmed' | translate}}</p>
+                                <span class="badge badge-light">{{appointments.statusCount[2]}}</span>
+                            </button>
+                            <button (click)="filterByStatus(3)" [ngClass]="{'active': appoitmentFilterKey == 3}" class="btn btn-raised completed">
+                                <p>{{'common.status.finished' | translate}}</p>
+                                <span class="badge badge-light">{{appointments.statusCount[3]}}</span>
+                            </button>
+                            <button (click)="filterByStatus(4)" [ngClass]="{'active': appoitmentFilterKey == 4}" class="btn btn-raised cancel">
+                                <p>{{'common.status.canceled' | translate}}</p>
+                                <span class="badge badge-light">{{appointments.statusCount[4]}}</span>
+                            </button>
+                            <button (click)="filterByStatus(0)" [ngClass]="{'active': appoitmentFilterKey == 0 }" class="btn btn-raised btn-secondary">
+                                <p>{{'common.status.total' | translate}}</p>
+                                <span class="badge badge-light">{{appointments.statusCount[0]}}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row text-center">
+
+                                <div class="col-md-6 d-flex mb-lg-0 mb-2 ml-lg-0 ml-4">
+                                    <div (viewDateChange)="closeOpenMonthViewDay()" [(viewDate)]="viewDate" [view]="view" class="btn calender-day" mwlCalendarPreviousView>
+                                        <i class="calendar-icon fa fa-chevron-left"></i>
+                                    </div>
+                                    <div class="ml-2 mr-2">
+                                        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'): loginUser.language }}</h3>
+                                    </div>
+                                    <div (viewDateChange)="closeOpenMonthViewDay()" [(viewDate)]="viewDate" [view]="view" class="btn calender-day" mwlCalendarNextView>
+                                        <i class="calendar-icon fa fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-lg-0 mb-2 text-lg-right">
+                                    <div class="btn-view-date">
+                                        <div [(viewDate)]="viewDate" class="btn calender-today mb-1" mwlCalendarToday>{{'calendar.today' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month" class="btn calender-today mb-1">{{'calendar.month' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week" class="btn calender-today mb-1">{{'calendar.week' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day" class="btn calender-today mb-1">{{'calendar.day' | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div [ngSwitch]="view">
+                                <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month" [activeDayIsOpen]="activeDayIsOpen" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-month-view>
+                                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-week-view>
+                                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-day-view>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

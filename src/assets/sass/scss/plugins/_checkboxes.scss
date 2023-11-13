@@ -1,0 +1,228 @@
+// ================================================================================================
+// 	File Name: checkboxes.scss
+// 	Description: Custom check box file
+// 				 related customiztion.
+// ================================================================================================
+/** *************
+	Checkbox
+	*************/
+.checkbox-container {
+	display: inline-block;
+	position: relative;
+	padding-left: 35px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.checkbox-container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+.checkbox-checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 22px;
+	width: 22px;
+	border: 2px solid #ccc;
+}
+.checkbox-container:hover input ~ .checkbox-checkmark {
+	border-color: $primary-main;
+}
+.checkbox-container input:checked ~ .checkbox-checkmark {
+	background-color: $primary-main;
+	border-color: $primary-main;
+}
+.checkbox-checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+.checkbox-container input:checked ~ .checkbox-checkmark:after {
+	display: block;
+}
+.checkbox-container .checkbox-checkmark:after {
+	left: 7px;
+	top: 3px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+/** *************
+	Radio
+	*************/
+.radio-container {
+	display: inline;
+	position: relative;
+	padding-left: 35px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.radio-container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+.radio-checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 22px;
+	width: 22px;
+	border: 2px solid #ccc;
+	border-radius: 20px;
+}
+.radio-container:hover input ~ .radio-checkmark {
+	border-color: $primary-main;
+}
+.radio-container input:checked ~ .radio-checkmark {
+	background-color: $primary-main;
+	border-color: $primary-main;
+}
+.radio-checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+.radio-container input:checked ~ .radio-checkmark:after {
+	display: block;
+}
+.radio-container .radio-checkmark:after {
+	left: 7px;
+	top: 3px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+/** *************
+	Swichery
+	*************/
+.switchery {
+	width: 35px;
+	height: 15px;
+	padding: -1px 1px 1px 0px;
+	> small {
+		width: 15px;
+		height: 15px;
+	}
+}
+.onoffswitch {
+	position: relative;
+	width: 54px;
+}
+.onoffswitch-checkbox {
+	display: none;
+	&:checked {
+		+ {
+			.onoffswitch-label {
+				.onoffswitch-inner {
+					margin-left: 0;
+				}
+				.onoffswitch-switch {
+					right: 0;
+				}
+			}
+		}
+	}
+}
+.onoffswitch-label {
+	display: block;
+	overflow: hidden;
+	cursor: pointer;
+	border: 2px solid $primary-main;
+	border-radius: 3px;
+}
+.onoffswitch-inner {
+	display: block;
+	width: 200%;
+	margin-left: -100%;
+	transition: margin 0.3s ease-in 0s;
+	&:before {
+		display: block;
+		float: left;
+		width: 50%;
+		height: 16px;
+		padding: 0;
+		line-height: 16px;
+		font-size: 10px;
+		color: white;
+		font-family: $font-family-montserrat;
+		font-weight: bold;
+		box-sizing: border-box;
+		content: "ON";
+		padding-left: 7px;
+		background-color: $primary-main;
+		color: #FFFFFF;
+	}
+	&:after {
+		display: block;
+		float: left;
+		width: 50%;
+		height: 16px;
+		padding: 0;
+		line-height: 16px;
+		font-size: 10px;
+		color: white;
+		font-family: $font-family-montserrat;
+		font-weight: bold;
+		box-sizing: border-box;
+		content: "OFF";
+		padding-right: 7px;
+		background-color: #FFFFFF;
+		color: #919191;
+		text-align: right;
+	}
+}
+.onoffswitch-switch {
+	display: block;
+	width: 18px;
+	margin: 0;
+	background: #FFFFFF;
+	border: 2px solid $primary-main;
+	border-radius: 3px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 36px;
+	transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+	margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+	right: 0;
+}
+.onoffswitch-checkbox:disabled + .onoffswitch-label .onoffswitch-inner:before {
+	background-color: #919191;
+}
+.onoffswitch-checkbox:disabled + .onoffswitch-label,
+.onoffswitch-checkbox:disabled + .onoffswitch-label .onoffswitch-switch {
+	border-color: #919191;
+}
+
+// --
+// Switchery round
+.switchery-radius {
+	.switchery {
+		border-radius: 2px;
+		> small {
+			border-radius: 0;
+		}
+	}
+}

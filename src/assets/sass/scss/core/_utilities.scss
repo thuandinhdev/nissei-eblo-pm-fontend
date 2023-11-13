@@ -1,0 +1,9 @@
+// ================================================================================================
+//  File Name: utilities.scss
+//  Description: Utilities for elements, tags, classes etc..
+//         related customiztion.
+// ================================================================================================
+
+[class*='gradient-']{
+	background-repeat: repeat !important;
+}

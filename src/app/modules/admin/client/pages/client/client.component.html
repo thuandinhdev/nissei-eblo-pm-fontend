@@ -1,0 +1,102 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'clients.title' | translate}}</span></h4>
+                    <a *ngxPermissionsOnly="['admin', 'super_admin', 'clients_create']" [routerLink]="['/clients/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class=" table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="clients_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>{{'clients.columns.photo' | translate}}</th>
+                                    <th>{{'clients.columns.first_name' | translate}}</th>
+                                    <th>{{'clients.columns.last_name' | translate}}</th>
+                                    <th>{{'clients.columns.username' | translate}}</th>
+                                    <th>{{'clients.columns.company_name' | translate}}</th>
+                                    <th>{{'clients.columns.company_email' | translate}}</th>
+                                    <th>{{'clients.columns.status' | translate}}</th>
+                                    <th>{{'clients.columns.departments_roles' | translate}}</th>
+                                    <th>{{'clients.columns.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="clients?.length != 0">
+                                <tr *ngFor="let client of clients; index as i">
+                                    <td class="people-lists">
+                                        <a [routerLink]="['/users/profile', client.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{client.firstname}} {{client.lastname}}">
+                                            <img *ngIf="client.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{client.avatar}}"/>
+                                            <img *ngIf="!client.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'clients_edit']; else elseBlock1; then thenBlock1"></div>
+                                        <ng-template #elseBlock1>{{client.firstname}}</ng-template>
+                                        <ng-template #thenBlock1>
+                                            <inline-edit-input (updateValue)="saveClientDetail(i, 'firstname', $event);" [elementFor]="'clients.inline_edit.first_name' | translate" [fieldValue]="client.firstname" [isRequired]="'true'" [maxLength]="20" [name]="'firstname'" [type]="'text'"></inline-edit-input>
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'clients_edit']; else elseBlock2; then thenBlock2"></div>
+                                        <ng-template #elseBlock2>{{client.lastname}}</ng-template>
+                                        <ng-template #thenBlock2>
+                                            <inline-edit-input (updateValue)="saveClientDetail(i, 'lastname', $event);" [elementFor]="'clients.inline_edit.last_name' | translate" [fieldValue]="client.lastname" [isRequired]="'true'" [maxLength]="20" [name]="'lastname'" [type]="'text'"></inline-edit-input>
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <a [routerLink]="['profile', client.id]" tooltip="{{'common.view' | translate}}">{{client.username}}</a>
+                                    </td>
+                                    <td>{{client.clients.company_name}}</td>
+                                    <td>{{client.clients.company_email}}</td>
+                                    <td class="text-center">
+                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'clients_edit']; else elseBlock; then thenBlock"></div>
+                                        <ng-template #elseBlock>
+                                            <div class="budges-status">
+                                                <span *ngIf="client.is_active == '1'" class="completed">{{'common.status.active' | translate}}</span>
+                                                <span *ngIf="client.is_active == '0'" class="cancel">{{'common.status.deactive' | translate}}</span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #thenBlock>
+                                            <ui-switch (valueChange)="setActiveDeactiveUser($event, client)" [checked]="client.is_active == '1' ? true : false"></ui-switch>
+                                        </ng-template>
+                                    </td>
+                                    <td class="budges-status">
+                                        <ng-template *ngIf="client.roles?.length == 0;else elseBlock4">-</ng-template>
+                                        <ng-template #elseBlock4>
+                                            <span *ngFor="let role of departments[client.id]" class="completed">{{role.role_name}} ({{role.department_name}})</span>
+                                        </ng-template>
+                                    </td>
+                                    <td class="actions-dropdown">
+                                        <div class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li *ngIf="client.email_verified == '0' || client.email_verified == 0" role="menuitem">
+                                                    <a (click)="sendInviteUserMail(client.id)" *ngxPermissionsOnly="['admin', 'super_admin']" class="dropdown-item btn btn-invite btn-raised" tooltip="{{'common.invite' | translate}}"><i class="fa fa-envelope-o"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a *ngxPermissionsOnly="['admin', 'super_admin', 'clients_edit']" [routerLink]="['edit', client.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a (click)="deleteClient(client.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'clients_delete']" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="clients?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

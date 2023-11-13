@@ -1,0 +1,137 @@
+// =====================================================================================================
+// 	File Name: custom.scss
+// 	Description: Plugins custom class override form plugins like ng-select, sweet alert etc..
+// 				 related customiztion.
+// =====================================================================================================
+.ng-select.ng-select-single .ng-select-container {
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+.card-form{
+        padding: 1.5rem !important;
+    border-bottom: none !important;
+    background-color: transparent !important;
+    display: -ms-flexbox !important;
+    display: flex;
+    -ms-flex-flow: row nowrap !important;
+    flex-flow: row nowrap !important;
+    -ms-flex-pack: justify !important;
+    justify-content: space-between !important;
+        .estimate-form{
+            width: 500px;
+        }
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    font-size: 1rem;
+    font-weight: 400;
+    color: darker($body-bg, 30%);
+}
+
+.switch.switch-medium {
+    height: 25px;
+    min-width: 50px;
+    border: 0px;
+
+    .switch-pane {
+        span {
+            font-size: 0;
+        }
+    }
+
+    small {
+        width: 22px;
+        height: 22px;
+        margin: 1px 2px;
+        right: calc(100% - 26px);
+    }
+
+    &.checked {
+        background: $primary-main !important;
+
+        small {
+            right: 0;
+            left: auto;
+            background: #FFF !important;
+        }
+    }
+}
+
+/** *********************
+	Sweet Alert
+	***********************/
+.swal2-modal {
+    .swal2-confirm {
+        background-color: theme-color('success') !important;
+    }
+
+    .swal2-cancel {
+        background-color: theme-color('danger') !important;
+    }
+}
+
+/** **********
+	breadcrumb
+	***********/
+.breadcrumb {
+    background: none;
+    // padding: 0.75rem 0;
+
+    i {
+        font-size: 20px;
+    }
+}
+
+/** **********
+	Toastr
+	***********/
+.toast-container.toast-top-center .ngx-toastr,
+.toast-container.toast-bottom-center .ngx-toastr {
+    width: 400px;
+}
+
+/** **********
+	Dropzone
+	***********/
+.dz-image {
+    img {
+        max-width: 100%;
+    }
+}
+
+.dropzone {
+    min-height: 100px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background: white;
+    padding: 0;
+    border-style: dashed !important;
+    border-radius: 8px !important;
+}
+.btn .btn-sm .btn-block{
+padding: 0 !important;
+}
+// .dropzone .dz-message span {
+//     display: none;
+// }
+
+// .dropzone .dz-message:after {
+//     content: "Drop files here or click to upload.";
+// }
+
+/**********
+Calendar
+	**********/
+.cal-month-view .cal-open-day-events {
+    color: #fff;
+    background-color: $primary-main !important;
+    box-shadow: none !important;
+}
+
+/** *********************
+	JSTree
+	***********************/
+.jstree_size {
+    a {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-money"></i>&nbsp;{{'payment_methods.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="paymentMethodForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">{{'payment_methods.create.fields.method_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && paymentMethodControl.method_name.errors }" class="form-control" formControlName="method_name" id="method_name" placeholder="{{'payment_methods.create.placeholders.placeholder1' | translate }}" type="text"/>
+                        <span class="font-small">{{'payments.info1' | translate}}</span>
+                        <div *ngIf="isFormSubmitted && paymentMethodControl.method_name.errors" class="invalid-feedback">
+                            <div *ngIf="paymentMethodControl.method_name.errors.required">{{'payment_methods.create.error_messages.message1' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'payment_methods.create.fields.description' | translate}}</label>
+                        <textarea class="form-control" formControlName="description" id="description" placeholder="{{'payment_methods.create.placeholders.placeholder2' | translate }}" rows="4" type="text"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="checkbox-container d-block" for="show_on_pdf">
+                            <input class="form-control" formControlName="show_on_pdf" id="show_on_pdf" type="checkbox"/>
+                            <span class="checkbox-checkmark"></span>
+                            {{'payment_methods.create.fields.show_on_pdf' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

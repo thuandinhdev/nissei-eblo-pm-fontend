@@ -1,0 +1,52 @@
+<section *ngIf="isPageLoaded" class="dashboard_1">
+    <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-success">
+                <p>Demo resets every 12 hour on GMT+2 . Feel free to test all the features before purchasing, keep in mind that some features are disabled.</p>
+            </div>
+        </div>
+    </div> -->
+    <app-dashboard-settings [dashboardSettings]="dashboardSettings"></app-dashboard-settings>
+    <app-pm-dashboard-widgets [dashboardLists1]="dashboardLists1" [dashboardLists]="dashboardLists" [dashboardSettings]="dashboardSettings" [loginUser]="loginUser"></app-pm-dashboard-widgets>
+    <app-pm-dashboard-charts *ngIf="!loginUser.is_client" [dashboardSettings]="dashboardSettings" [monthlyReport]="dashboardLists1.count_by_month" [projectChartReport]="dashboardLists1.project_count_by_status" [taskReport]="dashboardLists1.task_count_by_status"></app-pm-dashboard-charts>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+                <div *ngIf="dashboardSettings.is_projects_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-projects [apiUrl]="apiUrl" [loginUser]="loginUser" [projects]="dashboardLists1.projects" [userLists]="userLists"></app-pm-dashboard-projects>
+                </div>
+                <div *ngIf="dashboardSettings.is_tasks_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-tasks [apiUrl]="apiUrl" [loginUser]="loginUser" [tasks]="dashboardLists1.tasks"></app-pm-dashboard-tasks>
+                </div>
+                <div *ngIf="dashboardSettings.is_defects_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-defects [apiUrl]="apiUrl" [defects]="dashboardLists1.defects" [loginUser]="loginUser"></app-pm-dashboard-defects>
+                </div>
+                <div *ngIf="dashboardSettings.is_incidents_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-incidents [apiUrl]="apiUrl" [incidents]="dashboardLists1.incidents" [loginUser]="loginUser"></app-pm-dashboard-incidents>
+                </div>
+                <div *ngIf="dashboardSettings.is_estimates_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-estimates [apiUrl]="apiUrl" [estimates]="dashboardLists1.estimates" [loginUser]="loginUser"></app-pm-dashboard-estimates>
+                </div>
+                <div *ngIf="dashboardSettings.is_invoices_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-invoices [apiUrl]="apiUrl" [invoices]="dashboardLists1.invoices" [loginUser]="loginUser"></app-pm-dashboard-invoices>
+                </div>
+                <div *ngIf="dashboardSettings.is_todos_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-todos [loginUser]="loginUser"></app-pm-dashboard-todos>
+                </div>
+                <div *ngIf="dashboardSettings.is_activities_list" class="col-xl-4 col-lg-12">
+                    <app-pm-dashboard-activity [apiUrl]="apiUrl" [loginUser]="loginUser" [todaysActivity]="dashboardLists.today_activities"></app-pm-dashboard-activity>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+                <div *ngIf="dashboardSettings.is_meetings_list" class="col-xl-6 col-lg-12">
+                    <app-pm-dashboard-meetings [loginUser]="loginUser" [meetings]="dashboardLists.meetings"></app-pm-dashboard-meetings>
+                </div>
+                <div *ngIf="dashboardSettings.is_announcement_list && !loginUser.is_client" class="col-xl-6 col-lg-12">
+                    <app-pm-dashboard-announcements [announcements]="dashboardLists.announcement" [loginUser]="loginUser"></app-pm-dashboard-announcements>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

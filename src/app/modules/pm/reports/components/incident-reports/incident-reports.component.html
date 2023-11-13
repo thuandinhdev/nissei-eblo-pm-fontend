@@ -1,0 +1,126 @@
+<!-- Card header -->
+<div class="pl-0 pr-0 border-bottom">
+    <h4 class="main-title mt-2"><span>{{'reports.headings.incident_report' | translate}}</span></h4>
+</div><!-- Card body -->
+<div class="card-body pt-3 overflow-x-scroll overflow-y-hidden">
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="incidents_table" width="100%">
+                    <thead>
+                    <tr class="display_all">
+                        <th>{{'incidents.columns.id' | translate}}</th>
+                        <th>{{'incidents.columns.incident_name' | translate}}</th>
+                        <th>{{'incidents.columns.start_date' | translate}}</th>
+                        <th>{{'incidents.columns.end_date' | translate}}</th>
+                        <th>{{'incidents.columns.actual_hours' | translate}}</th>
+                        <th>{{'incidents.columns.creator' | translate}}</th>
+                        <th>{{'incidents.columns.assigned' | translate}}</th>
+                        <th>{{'incidents.columns.type' | translate}}</th>
+                        <th>{{'incidents.columns.priority' | translate}}</th>
+                        <th>{{'incidents.columns.status' | translate}}</th>
+                        <th>{{'incidents.columns.project' | translate}}</th>
+                        <th>{{'incidents.columns.project_version' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="incidents?.length != 0">
+                    <tr *ngFor="let incident of incidents">
+                        <td>{{incident.generated_id}}</td>
+                        <td>{{incident.incident_name}}</td>
+                        <td>{{incident.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td>{{incident.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td>
+                            <ng-container *ngIf="incident.actual_hours else elseBlock2;">{{incident.actual_hours}}</ng-container>
+                            <ng-template #elseBlock2>-</ng-template>
+                        </td>
+                        <td class="people-lists">
+                            <a [routerLink]="['/users/profile', incident.create_user_id]" class="btn btn-profile-info rounded-circle text-dark" tooltip="{{incident.created_firstname}} {{incident.created_lastname}}">
+                                <img *ngIf="incident.created_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.created_avatar}}"/>
+                                <img *ngIf="!incident.created_avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                            </a>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="incident.assign_to == 'Unassign' || incident.assign_to == '' || incident.assign_to == null; else elseBlock">
+                                <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                    <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                <a [routerLink]="['/users/profile', incident.assign_to]" class="btn btn-profile-info rounded-circle text-dark" tooltip="{{incident.assigned_firstname}} {{incident.assigned_lastname}}">
+                                    <img *ngIf="incident.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assigned_avatar}}"/>
+                                    <img *ngIf="!incident.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-template>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let type of ('incidents.incident_types' | translate)">
+                                <span *ngIf="type.id == incident.incident_type" class="badge badge-secondary">{{type.label}}</span>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                <span *ngIf="priority.id == incident.priority" class="badge {{priority.class}}">{{priority.label}}</span>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let status of ('incidents.status' | translate)">
+                                <span *ngIf="status.id == incident.status" class="badge {{status.class}}">{{status.label}}</span>
+                            </ng-container>
+                        </td>
+                        <td>{{incident.project_name}}</td>
+                        <td><span class="badge badge-secondary">{{incident.project_version}}</span></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            <input class="form-control" name="incident_Id" placeholder="{{'incidents.columns.id' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="incident_name" placeholder="{{'incidents.columns.incident_name' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="start_date" placeholder="{{'incidents.columns.start_date' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="end_date" placeholder="{{'incidents.columns.end_date' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="actual_hours" placeholder="{{'incidents.columns.actual_hours' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="created" placeholder="{{'incidents.columns.creator' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="assigned" placeholder="{{'incidents.columns.assigned' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="incident_type" placeholder="{{'incidents.columns.type' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="priority" placeholder="{{'incidents.columns.priority' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="status" placeholder="{{'incidents.columns.status' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="project" placeholder="{{'incidents.columns.project' | translate}}" type="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="project_version" placeholder="{{'incidents.columns.project_version' | translate}}" type="text"/>
+                        </th>
+                    </tr>
+                    </tfoot>
+                    <tfoot *ngIf="incidents?.length == 0" class="tfoot_dt">
+                    <tr>
+                        <td class="text-center" colspan="12">
+                            <img src="assets/img/norecord-img.png" width="50">
+                            <p class="mt-1">{{'common.empty_message.incidents' | translate}}</p>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

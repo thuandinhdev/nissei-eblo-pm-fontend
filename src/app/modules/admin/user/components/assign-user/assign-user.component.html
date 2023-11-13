@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-lock"></i>&nbsp;{{'users.title3' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isModalLoaded" class="bs4-forms" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && checkObjectKeys() }" class="form-group">
+                        <label>{{'users.create.fields.select_users' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <div class="col-sm-12">
+                            <div *ngFor="let permission of permissions | keyvalue; let $index=index;" class="form-check i-child-checks m-b-xs">
+                                <div>
+                                    <label class="checkbox-container">
+                                        <input (change)="changePermissions($index, permission.key)" [checked]="isPermissionChecked(permission.key, assignPermissions, $index)" name="parent_{{$index}}" type="checkbox"/>
+                                        {{permissionsUsers[permission.key].name}}
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+                                <div [hidden]="!hideElements[$index]" class="col-sm-12 hide">
+                                    <div class="form-row">
+                                        <div *ngFor="let pValue of permission.value" class="col-sm-3 col-12 m-xs">
+                                            <label class="checkbox-container">
+                                                <input [(checklist)]="assignPermissions[permission.key]" [checklistValue]="pValue" [disabled]="pValue === 'view'" name="child_{{$index}}" type="checkbox"/>
+                                                {{pValue | titlecase}}
+                                                <span class="checkbox-checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isFormSubmitted && checkObjectKeys()" class="invalid-feedback">{{'users.create.error_messages.message20' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.cancel' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.assign' | translate}}</button>
+    </div>
+</form>

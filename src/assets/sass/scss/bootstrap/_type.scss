@@ -1,0 +1,87 @@
+// ================================================================================================
+//  File Name: type.scss
+//  Description: Override typography tags, classess from etc .. bootstrap.
+//         related customiztion.
+// ================================================================================================
+
+h1, .h1 {
+	font-size: $h1-font-size;
+}
+h2, .h2 {
+	font-size: $h2-font-size;
+}
+h3, .h3 {
+	font-size: $h3-font-size;
+}
+h4, .h4 {
+	font-size: $h4-font-size;
+}
+h5, .h5 {
+	font-size: $h5-font-size;
+}
+h6, .h6 {
+	font-size: $h6-font-size;
+	font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: $font-family-montserrat;
+	font-weight: 400;
+	line-height: 1.5em;
+}
+
+small, .small{
+	font-size: 90%;
+}
+
+blockquote, .blockquote {
+	padding: 10px 20px;
+	margin: 0 0 20px;
+	font-size: 1.1rem;
+	border-left: 5px solid #eeeeee;
+	p {
+		font-style: italic;
+	}
+	footer, small, .small {
+		display: block;
+		font-size: 80%;
+		line-height: 1.42857143;
+		color: #777777;
+	}
+}
+
+.blockquote-reverse, blockquote.pull-right {
+	padding-right: 15px;
+	padding-left: 0;
+	border-right: 5px solid #eeeeee;
+	border-left: 0;
+	text-align: right;
+}
+
+li, dd {
+	line-height: 2rem;
+}
+
+h2.title {
+	margin-bottom: $margin-base * 2;
+}
+
+.text-warning {
+	color: theme-color("warning") !important;
+}
+.text-primary {
+	color: theme-color("primary") !important;
+}
+.text-danger {
+	color: theme-color("danger") !important;
+}
+.text-success {
+	color: theme-color("success") !important;
+}
+.text-info {
+	color: theme-color("info") !important;
+}
+.text-gray{
+	color: color("gray") !important;
+}

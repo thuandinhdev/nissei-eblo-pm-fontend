@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-user"></i>&nbsp;{{'users.title7' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" class="bs4-forms">
+    <div class="modal-body">
+        <div class="form-row">
+            <div class="col-12">
+                <div #profileDropzone class="dropzone dz-clickable">
+                    <div *ngIf="isProfileLoaded && usersData.avatar" class="dz-preview dz-image-preview">
+                        <div class="dz-image">
+                            <img src="{{apiUrl}}/uploads/profile/{{usersData.avatar}}"/>
+                        </div>
+                        <a (click)="removeDropzoneImage()" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                    </div>
+                    <div class="dz-default dz-message">
+                        <span><strong>{{'users.create.error_messages.message11' | translate}}</strong></span>
+                    </div>
+                </div>
+                <div class="people-lists text-center">
+                    <a (click)="setAvatar(avatar)" *ngFor="let avatar of avatars;" [ngClass]="{active: isActive(avatar)}" class="btn btn-profile-danger rounded-circle text-dark">
+                        <img alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{avatar}}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit"><span>{{'common.update' | translate}}</span></button>
+    </div>
+</form>

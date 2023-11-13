@@ -1,0 +1,157 @@
+<section *ngIf="isPageLoad">
+    <div class="row">
+        <div class="col-12 text-center text-sm-right">
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'estimates_view']" class="btn btn-secondary text-white mb-0" href="{{apiUrl}}/estimates/download/{{estimate.secret_id}}/{{estimate.client.id}}" type="button"><i class="ft-upload mr-1"></i>{{'estimates.view.download' | translate}}
+            </a>
+        </div>
+    </div>
+    <div class="row" id="estimate_table">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-content p-3">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div *ngIf="estimate.status == 'draft'" class="ribbon ribbon-bookmark ribbon-draft">{{'estimates.view.draft' | translate}}</div>
+                                <div *ngIf="estimate.status == 'sent'" class="ribbon ribbon-bookmark ribbon-sent">{{'estimates.view.sent' | translate}}</div>
+                                <div *ngIf="estimate.status == 'expired'" class="ribbon ribbon-bookmark ribbon-expired">{{'estimates.view.expired' | translate}}</div>
+                                <div *ngIf="estimate.status == 'declined'" class="ribbon ribbon-bookmark ribbon-declined">{{'estimates.view.decline' | translate}}</div>
+                                <div *ngIf="estimate.status == 'accepted'" class="ribbon ribbon-bookmark ribbon-accepted">{{'estimates.view.accepted' | translate}}</div>
+
+                                <div class="media logo-img pt-5">
+                                    <img *ngIf="estimateSettings.estimate_logo" alt="Estimate Logo" height="80" src="{{apiUrl}}/uploads/estimate_logo/{{estimateSettings.estimate_logo}}" width="80">
+                                    <img *ngIf="!estimateSettings.estimate_logo" alt="Estimate Logo" height="80" src="assets/img/logos/vipspm_logo.png" width="80">
+                                    <div class="media-body ml-4">
+                                        <ul class="m-0 list-unstyled">
+                                            <li class="text-bold-800">{{loginUser.settings.company_name}}</li>
+                                            <li class="nl2br">{{loginUser.settings.company_address}}</li>
+                                            <li>{{loginUser.settings.company_phone}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 text-right">
+                                <h2 class="primary text-uppercase">{{'estimates.title4' | translate}}</h2>
+                                <p class="pb-3"># {{estimate.estimate_number}}</p>
+                                <!-- <ul class="px-0 list-unstyled">
+                                    <li>{{'estimates.view.balance_due' | translate}}</li>
+                                    <li class="font-medium-2 text-bold-700">{{loginUser.currency.symbol}}{{estimates.total | number : '1.2-2'}}</li>
+                                </ul> -->
+                            </div>
+                        </div>
+                        <div class="row" id="invoice-customer-details">
+                            <div class="col-12">
+                                <p class="text-muted mb-1">{{'estimates.view.bill_to' | translate}}</p>
+                            </div>
+                            <div class="col-md-4 col-12 text-left">
+                                <ul class="m-0 list-unstyled">
+                                    <li class="text-bold-800">{{estimate.client.firstname}} {{estimate.client.lastname}}</li>
+                                    <li class="nl2br">{{estimate.client.address}}</li>
+                                    <li>{{estimate.client.phone}}</li>
+                                    <li>{{estimate.client.mobile}}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8 col-12 text-right">
+                                <p *ngIf="estimate.reference">
+                                    <span class="text-muted">{{'estimates.create.fields.reference' | translate}} :</span> {{estimate.reference}}
+                                </p>
+                                <p>
+                                    <span class="text-muted">{{'estimates.view.estimate_date' | translate}} :</span> {{estimate.estimate_date | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                </p>
+                                <p class="m-0">
+                                    <span class="text-muted">{{'estimates.view.due_date' | translate}} :</span> {{estimate.valid_till | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                </p>
+                            </div>
+                        </div>
+                        <div id="invoice-items-details">
+                            <div class="row">
+                                <div class="table-responsive col-12">
+                                    <table class="table mt-3">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{'estimates.create.fields.item_name' | translate}} &amp; {{'estimates.create.fields.item_description' | translate}}</th>
+                                            <th>{{'estimates.create.fields.quantity' | translate}}</th>
+                                            <th>{{'estimates.create.fields.unit_price' | translate}}</th>
+                                            <th>{{'estimates.create.fields.item_tax' | translate}}</th>
+                                            <th class="text-right">{{'estimates.create.fields.total_item_amount' | translate}} ({{loginUser.currency.symbol}})</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let item of estimate.items; index as i">
+                                            <th scope="row">{{i + 1}}</th>
+                                            <td>
+                                                <p class="mb-0">{{item.item_name}}</p>
+                                                <p class="mb-0 text-muted">{{item.item_description}}</p>
+                                            </td>
+                                            <td><span>{{item.quantity}}<small>&nbsp;{{item.item_unit}}</small></span>
+                                            </td>
+                                            <td>{{item.unit_price}}</td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let tax of item.taxes">
+                                                    <span class="open">{{tax.tax_name}} ({{tax.tax_rate}}%)</span>
+                                                </ng-container>
+                                            </td>
+                                            <td class="text-right">{{item.unit_price * item.quantity}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mt-md-0">
+                                <div class="col-md-6 col-12 text-left"></div>
+                                <div class="col-md-6 col-12">
+                                    <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>{{'estimates.create.fields.sub_total' | translate}}</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{estimates.sub_total | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr *ngFor="let tax of itemTaxes | keyvalue">
+                                                <td>{{taxesNameValues[tax.key].tax_name}} ({{taxesNameValues[tax.key].tax_rate}}%)</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{tax.value | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'estimates.create.fields.discount' | translate}}</td>
+                                                <td class="danger text-right">(-) {{loginUser.currency.symbol}}{{estimate.total_discount | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'estimates.create.fields.adjustment' | translate}}</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{estimate.adjustment | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-500">{{'estimates.create.fields.total_amount' | translate}}</td>
+                                                <td class="text-bold-500 text-right"> {{loginUser.currency.symbol}}{{estimates.total | number : '1.2-2'}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mt-sm-0 pt-3 border-top">
+                                <div class="col-md-12 col-12 d-flex align-items-center">
+                                    <div class="terms-conditions mb-2">
+                                        <h6><strong>{{'estimates.view.terms' | translate}}</strong></h6>
+                                        <p>{{estimateSettings.terms_conditions}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center text-sm-right">
+            <ng-container *ngIf="estimate.status == 'draft' || estimate.status == 'sent'">
+                <button (click)="changeEstimateStatus(estimate.id, 'accepted');" class="btn btn-submit" type="button">{{'estimates.view.accept' | translate}}</button>
+                <button (click)="changeEstimateStatus(estimate.id, 'declined');" class="btn btn-cancel" type="button">{{'estimates.view.decline' | translate}}</button>
+            </ng-container>
+            <ng-container *ngIf="estimate.status == 'declined'">
+                <button (click)="changeEstimateStatus(estimate.id, 'accepted');" class="btn btn-submit" type="button">{{'estimates.view.accept' | translate}}</button>
+            </ng-container>
+        </div>
+    </div>
+</section>

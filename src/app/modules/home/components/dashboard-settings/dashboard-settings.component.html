@@ -1,0 +1,156 @@
+<div class="text-right">
+    <a (click)="toggleDashboardSettings()" *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_edit']" class="btn btn-rounded mb-0" tooltip="{{'common.options' | translate}}">
+        <i class="ft-eye-off"></i>
+    </a>
+</div>
+<div *ngIf="isCollapsed">
+    <div class="card">
+        <div class="card-body">
+            <div class="p-2">
+                <h4 class="main-title mt-2"><span>{{'settings.dashboard_settings.title21' | translate}}</span></h4>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_projects_widget ? true: false, 'is_projects_widget')" [(ngModel)]="dashboardSettings.is_projects_widget" type="checkbox"/>
+                        <label for="is_projects_widget">&nbsp;<span>{{'settings.dashboard_settings.title5' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_tasks_widget ? true: false, 'is_tasks_widget')" [(ngModel)]="dashboardSettings.is_tasks_widget" type="checkbox"/>
+                        <label for="is_tasks_widget">&nbsp;<span>{{'settings.dashboard_settings.title6' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_defects_widget ? true: false, 'is_defects_widget')" [(ngModel)]="dashboardSettings.is_defects_widget" type="checkbox"/>
+                        <label for="is_defects_widget">&nbsp;<span>{{'settings.dashboard_settings.title7' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_incidents_widget ? true: false, 'is_incidents_widget')" [(ngModel)]="dashboardSettings.is_incidents_widget" type="checkbox"/>
+                        <label for="is_incidents_widget">&nbsp;<span>{{'settings.dashboard_settings.title8' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_estimates_widget ? true: false, 'is_estimates_widget')" [(ngModel)]="dashboardSettings.is_estimates_widget" type="checkbox"/>
+                        <label for="is_estimates_widget">&nbsp;<span>{{'settings.dashboard_settings.title10' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_invoices_widget ? true: false, 'is_invoices_widget')" [(ngModel)]="dashboardSettings.is_invoices_widget" type="checkbox"/>
+                        <label for="is_invoices_widget">&nbsp;<span>{{'settings.dashboard_settings.title11' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_payments_widget ? true: false, 'is_payments_widget')" [(ngModel)]="dashboardSettings.is_payments_widget" type="checkbox"/>
+                        <label for="is_payments_widget">&nbsp;<span>{{'settings.dashboard_settings.title12' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_leaves_widget ? true: false, 'is_leaves_widget')" [(ngModel)]="dashboardSettings.is_leaves_widget" type="checkbox"/>
+                        <label for="is_leaves_widget">&nbsp;<span>{{'settings.dashboard_settings.title13' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_users_widget ? true: false, 'is_users_widget')" [(ngModel)]="dashboardSettings.is_users_widget" type="checkbox"/>
+                        <label for="is_users_widget">&nbsp;<span>{{'settings.dashboard_settings.title15' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_clients_widget ? true: false, 'is_clients_widget')" [(ngModel)]="dashboardSettings.is_clients_widget" type="checkbox"/>
+                        <label for="is_clients_widget">&nbsp;<span>{{'settings.dashboard_settings.title16' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_teams_widget ? true: false, 'is_teams_widget')" [(ngModel)]="dashboardSettings.is_teams_widget" type="checkbox"/>
+                        <label for="is_teams_widget">&nbsp;<span>{{'settings.dashboard_settings.title14' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_articles_widget ? true: false, 'is_articles_widget')" [(ngModel)]="dashboardSettings.is_articles_widget" type="checkbox"/>
+                        <label for="is_articles_widget">&nbsp;<span>{{'settings.dashboard_settings.title17' | translate}}</span></label>
+                    </div>
+                </div>
+                <h4 class="main-title mt-2"><span>{{'settings.dashboard_settings.title22' | translate}}</span></h4>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_projects_status_chart ? true: false, 'is_projects_status_chart')" [(ngModel)]="dashboardSettings.is_projects_status_chart" type="checkbox"/>
+                        <label for="is_projects_status_chart">&nbsp;<span>{{'settings.dashboard_settings.title18' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_tasks_status_chart ? true: false, 'is_tasks_status_chart')" [(ngModel)]="dashboardSettings.is_tasks_status_chart" type="checkbox"/>
+                        <label for="is_tasks_status_chart">&nbsp;<span>{{'settings.dashboard_settings.title19' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_monthly_report_chart ? true: false, 'is_monthly_report_chart')" [(ngModel)]="dashboardSettings.is_monthly_report_chart" type="checkbox"/>
+                        <label for="is_monthly_report_chart">&nbsp;<span>{{'settings.dashboard_settings.title20' | translate}}</span></label>
+                    </div>
+                </div>
+                <h4 class="main-title mt-2"><span>{{'settings.dashboard_settings.title23' | translate}}</span></h4>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_projects_list ? true: false, 'is_projects_list')" [(ngModel)]="dashboardSettings.is_projects_list" type="checkbox"/>
+                        <label for="is_projects_list">&nbsp;<span>{{'settings.dashboard_settings.title5' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_tasks_list ? true: false, 'is_tasks_list')" [(ngModel)]="dashboardSettings.is_tasks_list" type="checkbox"/>
+                        <label for="is_tasks_list">&nbsp;<span>{{'settings.dashboard_settings.title6' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_defects_list ? true: false, 'is_defects_list')" [(ngModel)]="dashboardSettings.is_defects_list" type="checkbox"/>
+                        <label for="is_defects_list">&nbsp;<span>{{'settings.dashboard_settings.title7' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_incidents_list ? true: false, 'is_incidents_list')" [(ngModel)]="dashboardSettings.is_incidents_list" type="checkbox"/>
+                        <label for="is_incidents_list">&nbsp;<span>{{'settings.dashboard_settings.title8' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_estimates_list ? true: false, 'is_estimates_list')" [(ngModel)]="dashboardSettings.is_estimates_list" type="checkbox"/>
+                        <label for="is_estimates_list">&nbsp;<span>{{'settings.dashboard_settings.title10' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_invoices_list ? true: false, 'is_invoices_list')" [(ngModel)]="dashboardSettings.is_invoices_list" type="checkbox"/>
+                        <label for="is_invoices_list">&nbsp;<span>{{'settings.dashboard_settings.title9' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_todos_list ? true: false, 'is_todos_list')" [(ngModel)]="dashboardSettings.is_todos_list" type="checkbox"/>
+                        <label for="is_todos_list">&nbsp;<span>{{'settings.dashboard_settings.title3' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_activities_list ? true: false, 'is_activities_list')" [(ngModel)]="dashboardSettings.is_activities_list" type="checkbox"/>
+                        <label for="is_activities_list">&nbsp;<span>{{'settings.dashboard_settings.title2' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_meetings_list ? true: false, 'is_meetings_list')" [(ngModel)]="dashboardSettings.is_meetings_list" type="checkbox"/>
+                        <label for="is_meetings_list">&nbsp;<span>{{'settings.dashboard_settings.title4' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4">
+                        <input (change)="saveDashboardSetting(dashboardSettings.is_announcement_list ? true: false, 'is_announcement_list')" [(ngModel)]="dashboardSettings.is_announcement_list" type="checkbox"/>
+                        <label for="is_announcement_list">&nbsp;<span>{{'settings.dashboard_settings.title1' | translate}}</span></label>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_projects_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_projects_dashboard')" id="is_projects_dashboard"></ui-switch>
+                        <label for="is_projects_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title5' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_tasks_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_tasks_dashboard')" id="is_tasks_dashboard"></ui-switch>
+                        <label for="is_tasks_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title6' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_defects_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_defects_dashboard')" id="is_defects_dashboard"></ui-switch>
+                        <label for="is_defects_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title7' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_incidents_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_incidents_dashboard')" id="is_incidents_dashboard"></ui-switch>
+                        <label for="is_incidents_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title8' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_todos_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_todos_dashboard')" id="is_todos_dashboard"></ui-switch>
+                        <label for="is_todos_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title3' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_activities_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_activities_dashboard')" id="is_activities_dashboard"></ui-switch>
+                        <label for="is_activities_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title2' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_meetings_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_meetings_dashboard')" id="is_meetings_dashboard"></ui-switch>
+                        <label for="is_meetings_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title4' | translate}}</span></label>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <ui-switch [checked]="dashboardSettings.is_announcement_dashboard == '1' ? true : false" (valueChange)="saveDashboardSetting($event, 'is_announcement_dashboard')" id="is_announcement_dashboard"></ui-switch>
+                        <label for="is_announcement_dashboard">&nbsp;<span>{{'settings.dashboard_settings.title1' | translate}}</span></label>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

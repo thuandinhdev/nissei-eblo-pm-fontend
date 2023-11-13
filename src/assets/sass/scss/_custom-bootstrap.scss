@@ -1,0 +1,14 @@
+// ================================================================================================
+// 	File Name: custom-bootstrap.scss
+// 	Description: Import all custom override bootstrap files like reboot, badges, buttons etc..
+// ================================================================================================
+@import "bootstrap/reboot";
+@import "bootstrap/badge";
+@import "bootstrap/buttons";
+@import "bootstrap/card";
+@import "bootstrap/forms";
+@import "bootstrap/carousel";
+@import "bootstrap/modal";
+@import "bootstrap/navbar";
+@import "bootstrap/popover";
+@import "bootstrap/type";

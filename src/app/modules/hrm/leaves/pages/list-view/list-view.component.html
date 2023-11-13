@@ -1,0 +1,97 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0">
+                    <h4 class="main-title mt-2"><span>{{'leaves.title2' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/leaves']" class="btn btn-create mb-0" tooltip="{{'leaves.title3' | translate}}"><i class="fa fa-suitcase"></i></a>
+                        <a [routerLink]="['/leaves/calendar']" class="btn btn-create mb-0" tooltip="{{'common.calendar_view' | translate}}"><i class="fa fa-calendar"></i></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'reports_view']" [routerLink]="['/leaves/report']" class="btn btn-create mb-0" tooltip="{{'common.report' | translate}}"><i class="fa fa-area-chart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row project-planner-list">
+        <ng-container *ngFor="let leave of leaves; let i = index">
+            <div class="col-lg-6 ">
+                <div class="card list-details">
+                    <div class="card-body p-3">
+                        <div class="task-name">
+                            <p class="task-title">{{leave.leave_type.leave_type}} {{'leaves.title4' | translate}}</p>
+                            <div class="mb-15">
+                                <a href="#" placement="top" tooltip="{{leave.user.firstname}} {{leave.user.lastname}}">
+                                    <img *ngIf="leave.user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{leave.user.avatar}}"/>
+                                    <img *ngIf="!leave.user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                                <span class="ml-3"><a [routerLink]="['/users/profile', leave.user.id]">{{leave.user.firstname}} {{leave.user.lastname}}</a></span>
+                            </div>
+                        </div>
+                        <div class="text-size d-lg-flex justify-content-between mt-2 mb-2">
+                            <div class="d-flex">
+                                <div class="mb-lg-0 mb-2"><strong>{{'leaves.columns.leave_date' | translate}}:</strong>
+                                </div>
+                                <div class="ml-2 mr-2">
+                                    <span>{{ leave.leave_date | dateTimeFormatFilter: loginUser.settings.date_format }}</span>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="leave.duration =='half' else elseBlock">
+                                <div class="d-flex">
+                                    <div class="mb-lg-0 mb-2">
+                                        <strong>{{'leaves.columns.duration' | translate}}:</strong></div>
+                                    <div class="ml-2 mr-2">
+                                        <span>{{ getTranslateDurationType(leave.duration_type) | translate }}</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                <div class="d-flex">
+                                    <div class="mb-lg-0 mb-2">
+                                        <strong>{{'leaves.columns.duration' | translate}}:</strong></div>
+                                    <div class="ml-2 mr-2"><span>{{'leaves.labels.full_day' | translate}}</span></div>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <p class="mb-2 text-size">
+							<span class="pr-2 text-nowrap mb-2 d-inline-block">
+								<i class="fa fa-tasks mr-1 text-muted"></i>
+								<b>{{leave.total_leave}}</b> {{'leaves.labels.total_leaves' | translate}}
+							</span>
+                            <span class="pr-2 text-nowrap mb-2 d-inline-block">
+								<i class="fa fa-thumbs-o-up mr-1 text-muted"></i>
+								<b>{{leave.total_approved_leaves}}</b> {{'leaves.labels.approved' | translate}}
+							</span>
+                            <span class="pr-2 text-nowrap mb-2 d-inline-block">
+								<i class="fa fa-indent mr-1 text-muted"></i>
+								<b>{{leave.remaining_leaves}}</b> {{'leaves.labels.remaining' | translate}}
+							</span>
+                        </p>
+                        <p>{{leave.reason}}</p>
+                        <ng-container *ngFor="let attachment of leave.attachments">
+                            <div>
+                                <a download="{{attachment.file_name}}" href="{{apiUrl}}/uploads/leave_attachment/{{attachment.file_hash}}" target="_blank">{{attachment.file_name}}</a>
+                            </div>
+                        </ng-container>
+                        <div class="text-right">
+                            <button (click)="changeLeaveStatus([leave.id], 2);" class="btn btn-submit" type="button">{{'leaves.buttons.accept' | translate}}</button>
+                            <button (click)="changeRejectLeaveStatus([leave.id], 3);" class="btn btn-cancel" type="button">{{'leaves.buttons.reject' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div *ngIf="leaves?.length == 0" class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-content pt-2">
+                        <div class="text-center">
+                            <img src="assets/img/norecord-img.png" width="50">
+                            <p class="mt-1">{{'common.empty_message.leaves' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

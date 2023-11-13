@@ -1,0 +1,99 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.theme_settings.title' | translate}}</span></h4>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="compnay_logo">{{'settings.theme_settings.create.fields.compnay_logo' | translate}}</label>
+            <div #logodropzone class="dropzone dz-clickable d-flex justify-content-center">
+                <div *ngIf="settings.company_logo && isCompanyLogoUploaded" class="dz-preview dz-image-preview" id="logo_image">
+                    <div class="dz-image">
+                        <img src="{{apiUrl}}/uploads/company_logo/{{settings.company_logo}}"/>
+                    </div>
+                    <a (click)="removeCompanyLogo()" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                </div>
+                <div class="dz-default dz-message">
+                    <span><strong>{{'settings.theme_settings.create.error_messages.message1' | translate}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="login_bg">{{'settings.theme_settings.create.fields.login_background' | translate}}</label>
+            <div #loginbg class="dropzone dz-clickable d-flex justify-content-center">
+                <div *ngIf="settings.login_background && isLoginBgUploaded" class="dz-preview dz-image-preview" id="bg_image">
+                    <div class="dz-image">
+                        <img src="{{apiUrl}}/uploads/login_bg/{{settings.login_background}}"/>
+                    </div>
+                    <a (click)="removeLoginBg()" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                </div>
+                <div class="dz-default dz-message">
+                    <span><strong>{{'settings.theme_settings.create.error_messages.message1' | translate}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="compnay_sidebar_logo">{{'settings.theme_settings.create.fields.compnay_sidebar_logo' | translate}}</label>
+            <div #sidebardropzone class="dropzone dz-clickable d-flex justify-content-center">
+                <div *ngIf="settings.company_sidebar_logo && isCompanySidebarLogoUploaded" class="dz-preview dz-image-preview" id="company_sidebar_logo">
+                    <div class="dz-image">
+                        <img src="{{apiUrl}}/uploads/company_sidebar_logo/{{settings.company_sidebar_logo}}"/>
+                    </div>
+                    <a (click)="removeCompanySidebarLogo()" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                </div>
+                <div class="dz-default dz-message">
+                    <span><strong>{{'settings.theme_settings.create.error_messages.message1' | translate}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="sidebar_background_images">{{'settings.theme_settings.create.fields.sidebar_background_images' | translate}}</label>
+            <div #colorpaletts class="dropzone dz-clickable">
+                <div *ngIf="settings.sidebar_background_images && settings.sidebar_background_images.length > 0 && isSidebarBgsUploaded" class="dz-preview dz-image-preview d-flex" id="sidebar_bg_images">
+                    <ng-container *ngFor="let sidebarImg of settings.sidebar_background_images; index as i">
+                        <div *ngIf="sidebarImg" class="dz-image-custom">
+                            <img src="{{apiUrl}}/uploads/sidebar_background_images/{{sidebarImg}}"/>
+                            <button (click)="removeSidebarBgImage(sidebarImg)" class="btn btn-sm btn-block">{{'common.remove_file' | translate}}</button>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="dz-default dz-message">
+                    <span><strong>{{'settings.theme_settings.create.error_messages.message1' | translate}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label for="sidebar-width">{{'theme_setting.header.head14' | translate}}</label>
+            <div>
+                <ng-select (change)="changeSidebarWidth($event)" [(ngModel)]="settings.sidebar_width" [items]="('theme_setting.width_options' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="value" bindValue="key" labelForId="sidebarWidth" placeholder="{{'theme_setting.placeholders.placeholder2' | translate}}"></ng-select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>{{'theme_setting.header.head13' | translate}}</label>
+            <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                <input (change)="changeCollapsedMenu($event)" [(ngModel)]="settings.is_collapsed_menu" class="onoffswitch-checkbox" id="is_collapsed_menu" name="is_collapsed_menu" type="checkbox"/>
+                <label class="onoffswitch-label m-b-none" for="is_collapsed_menu">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+        <button (click)="onSubmit()" *ngxPermissionsOnly="['admin', 'super_admin', 'themesettings_create', 'themesettings_edit']" class="btn btn-submit" type="button">
+            <span>{{'common.save' | translate}}</span></button>
+    </div>
+</div>

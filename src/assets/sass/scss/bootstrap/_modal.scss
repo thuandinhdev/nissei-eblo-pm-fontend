@@ -1,0 +1,91 @@
+// ================================================================================================
+// 	File Name: modal.scss
+// 	Description: Modal classes override from bootstrap provides modal sizes, background colors classes etc..
+// 				 related customiztion.
+// ================================================================================================
+.modal-content {
+	border-radius: $border-radius;
+	margin-top: 40px;
+	.modal-header {
+		h2{
+			font-size: 1.5rem !important;
+		}
+		background: $primary-main;
+		margin: -47px 15px 0 15px;
+		border-radius: $border-radius;
+		border: 0px;
+		box-shadow: 0 8px 8px 0px rgba(0, 0, 0, 0.1), 0 8px 8px 0 rgba(0, 0, 0, 0.1);
+		padding: 1.5rem 1rem;
+		color: #FFFFFF;
+		.close {
+			margin: 6px 0 0 0;
+			padding: 0px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background: #FFFFFF;
+			color: #3242a2;
+			font-weight: 400;
+			text-align: center;
+			line-height: 27px;
+			font-size: 22px;
+			opacity: 1 !important;
+			border: 2px solid #FFFFFF;
+			transition-duration: 0.5s;
+			&:hover {
+				background-color: transparent;
+				color: #FFFFFF;
+				transition-duration: 0.5s;
+			}
+		}
+	}
+	.modal-footer {
+		.btn-submit {
+			padding: 13px 30px 13px 40px;
+			font-size: 16px;
+			font-weight: 500;
+			border-radius: 50px 0 0 50px;
+			position: relative;
+			color: #FFFFFF !important;
+			box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+			background-color: #2bb673;
+			background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
+			background-size: 300% 100%;
+			border: 0px;
+			margin-right: -32px;
+			-moz-transition: all .4s ease-in-out;
+			-o-transition: all .4s ease-in-out;
+			-webkit-transition: all .4s ease-in-out;
+			transition: all .4s ease-in-out;
+			&::after {
+				position: absolute;
+				content: "";
+				right: 0;
+				top: -15px;
+				width: 16px;
+				height: 15px;
+				border-right: 16px solid transparent;
+				border-bottom: 13px solid;
+				border-left: 0px solid transparent;
+				color: #375669;
+				left: auto;
+			}
+			&:hover {
+				background-position: right center;
+				-moz-transition: all .4s ease-in-out;
+				-o-transition: all .4s ease-in-out;
+				-webkit-transition: all .4s ease-in-out;
+				transition: all .4s ease-in-out;
+			}
+		}
+		.btn-cancel {
+			box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+			padding: 12px 35px;
+			position: relative;
+			overflow: hidden;
+		}
+	}
+}
+.modal-md {
+	max-width: 600px;
+}

@@ -1,0 +1,323 @@
+// =====================================
+//  File Name: responsive.scss
+//  Description: Responsive media query
+//         related customiztion.
+// =====================================
+@media (min-width: 992px) {
+    .main-panel {
+        .main-content {
+            padding-left: 250px;
+        }
+    }
+
+    .navbar {
+        .navbar-header {
+            padding-left: 240px;
+        }
+
+        .navbar-container {
+            padding-left: 250px;
+        }
+    }
+
+    .dashboard_1 .horizontal-timeline .timeline-muted {
+        display: flex;
+    }
+
+    .sidebar-sm {
+        .main-panel .main-content {
+            padding-left: 220px;
+        }
+
+        .navbar {
+            .navbar-header {
+                padding-left: 210px;
+            }
+
+            .navbar-container {
+                padding-left: 220px;
+            }
+        }
+
+        footer {
+            padding-left: 220px;
+        }
+    }
+
+    .sidebar-lg {
+        .main-panel .main-content {
+            padding-left: 280px;
+        }
+
+        .navbar {
+            .navbar-header {
+                padding-left: 270px;
+            }
+
+            .navbar-container {
+                padding-left: 280px;
+            }
+        }
+
+        footer {
+            padding-left: 280px;
+        }
+    }
+
+    .dark.transparent {
+        .app-sidebar {
+            background: 0 0 !important;
+        }
+    }
+
+    footer {
+        padding-left: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .app-sidebar {
+        transition: transform .4s cubic-bezier(.25, .8, .25, 1);
+    }
+
+    .dashboard_1 .horizontal-timeline .timeline-muted {
+        display: flex;
+    }
+
+    .navbar {
+        padding: 0 25px;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-toggle .icon-bar {
+        display: block;
+        position: relative;
+        background: #fff;
+        width: 24px;
+        height: 2px;
+        border-radius: 1px;
+        margin: 0 auto;
+    }
+
+    .navbar-header .navbar-toggle {
+        margin: 10px 15px 10px 0;
+        width: 40px;
+        height: 40px;
+    }
+
+    .navbar-form {
+        margin-top: .75rem !important;
+    }
+
+    .dark.transparent {
+        .app-sidebar {
+            background: rgba(0, 0, 0, .8) !important;
+            transition: all .5s ease !important;
+        }
+    }
+
+    .bar1,
+    .bar2,
+    .bar3 {
+        outline: 1px solid transparent;
+    }
+}
+
+@media (max-width: 640px) {
+    .logo-text span {
+        font-size: 14px !important;
+    }
+    .card-form{
+    	display: grid !important;
+
+    	 .estimate-form{
+    		width: 300px !important;
+    	}
+    }
+    .app-sidebar .logo .logo-text,
+    .off-canvas-sidebar .logo .logo-text {
+        text-align: left !important;
+    }
+
+    .navbar-form {
+        display: none;
+    }
+
+    .card {
+        .card-header {
+            display: flex;
+            text-align: center;
+
+            h4 {
+                margin: 1rem 0 !important;
+            }
+
+            .card-buttons {
+                .btn-create {
+                    width: auto;
+
+                    span {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .under-line {
+        text-decoration: underline !important;
+        font-size: 13px;
+    }
+
+    .register-form {
+        font-size: 13px;
+    }
+
+    .html5buttons {
+        float: none !important;
+    }
+
+    .detail-page {
+        .nav-tabs {
+            .nav-item {
+                width: 46%;
+            }
+        }
+    }
+
+    .dashboard_1 .horizontal-timeline .timeline-muted {
+        display: flex;
+    }
+}
+
+@media (max-width: 575px) {
+    .height-600 {
+        height: auto !important;
+    }
+
+    .card-height-chart {
+    height: 436px !important;
+     }
+
+    .btn-cancel,
+    .btn-submit {
+        font-size: 15px;
+        padding: 10px 30px;
+        margin: 0 5px;
+    }
+
+    .btn-submit {
+        padding: 11px 35px;
+    }
+
+    .content-wrapper {
+        padding: 0;
+    }
+
+    .under-line {
+        text-decoration: underline !important;
+        font-size: 13px;
+    }
+
+    .register-form {
+        font-size: 13px;
+    }
+
+    .dashboard_1 .horizontal-timeline .timeline-muted {
+        display: flex;
+    }
+
+    footer {
+        p {
+            text-align: center;
+        }
+    }
+}
+
+@media (min-width: 320px) {
+    .navbar-header {
+        float: left;
+    }
+
+    .navbar-right {
+        float: right !important;
+    }
+
+    .navbar-nav>li {
+        float: left;
+    }
+}
+
+@media (max-width: 320px) {
+    .navbar-right {
+        display: none;
+    }
+
+    .navbar-nav>li:first-child {
+        display: none;
+    }
+}
+
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

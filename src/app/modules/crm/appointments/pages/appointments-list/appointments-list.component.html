@@ -1,0 +1,125 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-2">
+                <!-- Card header -->
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'appointments.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a *ngxPermissionsOnly="['admin', 'super_admin']" [routerLink]="['/providers']" class="btn btn-create  mb-0 mr-1" tooltip="{{'providers.title' | translate}}"><i class="fa fa-industry"></i><span>{{'providers.title' | translate}}</span></a>
+                        <a [routerLink]="['/appointments/calendar']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_calendar' | translate}}"><i class="fa fa-calendar-plus-o"></i><span>{{'common.calendar' | translate}}</span></a>
+                        <button (click)="openAppointmentCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                            <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Filter buttons -->
+                        <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex mb-3">
+                            <div class="pl-lg-0 btn-filters">
+                                <button (click)="filterByStatus(1)" [ngClass]="{'active': statusfilterId==1}" class="btn btn-raised open" type="button">
+                                    <p>{{'common.status.reserved' | translate}}</p>
+                                    <span class="badge badge-light">{{statusCount[1]}}</span>
+                                </button>
+                                <button (click)="filterByStatus(2)" [ngClass]="{'active': statusfilterId ==2}" class="btn btn-raised assigned" type="button">
+                                    <p>{{'common.status.confirmed' | translate}}</p>
+                                    <span class="badge badge-light">{{statusCount[2]}}</span>
+                                </button>
+                                <button (click)="filterByStatus(3)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised completed" type="button">
+                                    <p>{{'common.status.finished' | translate}}</p>
+                                    <span class="badge badge-light">{{statusCount[3]}}</span>
+                                </button>
+                                <button (click)="filterByStatus(4)" [ngClass]="{'active': statusfilterId==4}" class="btn btn-raised cancel" type="button">
+                                    <p>{{'common.status.canceled' | translate}}</p>
+                                    <span class="badge badge-light">{{statusCount[4]}}</span>
+                                </button>
+                                <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/appointments']" class="btn btn-raised btn-secondary" type="button">
+                                    <p>{{'common.status.total' | translate}}</p>
+                                    <span class="badge badge-light">{{statusCount[0]}}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Appointment list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="appointments_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'appointments.columns.id' | translate}}</th>
+                                            <th>{{'appointments.columns.title' | translate}}</th>
+                                            <th>{{'appointments.columns.provider' | translate}}</th>
+                                            <th>{{'appointments.columns.start_time' | translate}}</th>
+                                            <th>{{'appointments.columns.end_time' | translate}}</th>
+                                            <th>{{'appointments.columns.location' | translate}}</th>
+                                            <th>{{'appointments.columns.status' | translate}}</th>
+                                            <th>{{'appointments.columns.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="appointments?.length != 0">
+                                        <tr *ngFor="let appointment of appointments; index as i">
+                                            <td>
+                                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_view'] else elseBlock1;">
+                                                    <a [routerLink]="['/appointments/detail', appointment.id]" tooltip="{{'common.view' | translate}}">{{appointment.generated_id}}</a>
+                                                </ng-container>
+                                                <ng-template #elseBlock1>{{appointment.generated_id}}</ng-template>
+                                            </td>
+                                            <td>{{appointment.title}}</td>
+                                            <td>{{appointment.provider_firstname}} {{appointment.provider_lastname}}</td>
+                                            <td>{{appointment.start_date_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{appointment.end_date_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{appointment.location}}</td>
+                                            <td class="status-dropdown">
+                                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_edit']; else elseBlock1; then thenBlock1"></div>
+                                                <ng-template #elseBlock1>
+                                                    <ng-container *ngFor="let status of ('appointments.status' | translate)">
+                                                        <div class="budges-status">
+                                                            <span *ngIf="status.id == appointment.status" class="{{status.class}}">{{status.label}}</span>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-template>
+                                                <ng-template #thenBlock1>
+                                                    <div class="btn-group" dropdown>
+                                                        <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(appointment.status) | translate}}&nbsp;<span class="caret"></span>
+                                                        </button>
+                                                        <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                            <li *ngFor="let status of ('appointments.status' | translate)" role="menuitem">
+                                                                <a (click)="changeAppointmentStatus([appointment.id], status);appointment.status = status.id" [ngClass]="{'active': appointment.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </ng-template>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a (click)="openAppointmentEditModal(appointment)" *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_edit']" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <a (click)="deleteAppointment(appointment.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_delete']" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="appointments?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="8">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

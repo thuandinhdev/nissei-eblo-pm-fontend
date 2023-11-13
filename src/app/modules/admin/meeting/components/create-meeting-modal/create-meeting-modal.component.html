@@ -1,0 +1,109 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-group"></i>&nbsp;{{'meetings.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createMeetingForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="title">{{'meetings.create.fields.title' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && meetingControl.title.errors }" class="form-control" formControlName="title" id="title" placeholder="{{'meetings.create.placeholders.placeholder1' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isFormSubmitted && meetingControl.title.errors" class="invalid-feedback">
+                                <div *ngIf="meetingControl.title.errors.required">{{'meetings.create.error_messages.message1' | translate}}</div>
+                                <div *ngIf="meetingControl.title.errors.maxlength">{{'meetings.create.error_messages.message2' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="loginUser" class="col-md-4">
+                    <div class="card shadow-none">
+                        <div class="card-img text-center">
+                            <img *ngIf="loginUser.avatar" alt="{{loginUser.firstname}}" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{loginUser.avatar}}">
+                            <img *ngIf="!loginUser.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_large.jpg">
+                        </div>
+                        <div class="card-body text-center">
+                            <label class="m-0">{{loginUser.firstname}} {{loginUser.lastname}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && meetingControl.start_date.errors }" class="form-group">
+                        <label for="start_date">{{'meetings.create.fields.start_date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #startDT></owl-date-time>
+                            <input (dateTimeChange)="startDateChange($event)" [owlDateTimeTrigger]="startDT" [owlDateTime]="startDT" aria-describedby="inputGroupPrepend2" class="form-control" formControlName="start_date" id="start_date" placeholder="{{'meetings.create.placeholders.placeholder2' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && meetingControl.start_date.errors" class="invalid-feedback">
+                            <div *ngIf="meetingControl.start_date.errors.required">{{'meetings.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && meetingControl.end_date.errors }" class="form-group">
+                        <label for="end_date">{{'meetings.create.fields.end_date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #endDT></owl-date-time>
+                            <input [min]="createMeetingForm.get('start_date').value" [owlDateTimeTrigger]="endDT" [owlDateTime]="endDT" aria-describedby="inputGroupPrepend3" class="form-control" formControlName="end_date" id="end_date" placeholder="{{'meetings.create.placeholders.placeholder3' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && meetingControl.end_date.errors" class="invalid-feedback">
+                            <div *ngIf="meetingControl.end_date.errors.required">{{'meetings.create.error_messages.message4' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="client_id">{{'meetings.create.fields.client_name' | translate }}</label>
+                        <ng-select [items]="clients" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="client_id" labelForId="client_id" placeholder="{{'meetings.create.placeholders.placeholder6' | translate }}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.firstname}} {{item.lastname}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="location">{{'meetings.create.fields.location' | translate}}</label>
+                        <input class="form-control" formControlName="location" id="location" placeholder="{{'meetings.create.placeholders.placeholder5' | translate}}" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && meetingControl.members.errors }" class="form-group">
+                        <label for="members">{{'meetings.create.fields.peoples' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="users" [multiple]="true" [searchable]="true" bindLabel="firstname" bindValue="id" formControlName="members" placeholder="{{'meetings.create.placeholders.placeholder4' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.firstname}} {{item.lastname}}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && meetingControl.members.errors" class="invalid-feedback">
+                            <div *ngIf="meetingControl.members.errors.required">{{'meetings.create.error_messages.message5' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'meetings.create.fields.description' | translate}}</label>
+                        <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

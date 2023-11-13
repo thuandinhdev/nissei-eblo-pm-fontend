@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h2 class="modal-title"><i aria-hidden="true" class="fa fa-envelope"></i>&nbsp;{{'users.title4' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="changeUserEmailForm" class="bs4-forms">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="email">{{'users.create.fields.email' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.email.errors }" class="form-control" formControlName="email" id="email" placeholder="{{'users.create.placeholders.placeholder3' | translate}}" type="email"/>
+                        <div *ngIf="isFormSubmitted && userControl.email.errors" class="invalid-feedback">
+                            <div *ngIf="userControl.email.errors.required">{{'users.create.error_messages.message5' | translate}}</div>
+                            <div *ngIf="userControl.email.errors.email">{{'users.create.error_messages.message6' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="password">{{'users.create.fields.password' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.password.errors }" class="form-control" formControlName="password" id="password" placeholder="{{'users.create.placeholders.placeholder4' | translate}}" type="password"/>
+                        <div *ngIf="isFormSubmitted && userControl.password.errors" class="invalid-feedback">
+                            <div *ngIf="userControl.password.errors.required">{{'users.create.error_messages.message7' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.cancel' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit"><span>{{'common.update' | translate}}</span></button>
+    </div>
+</form>

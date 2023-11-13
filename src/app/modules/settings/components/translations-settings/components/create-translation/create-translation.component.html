@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-language"></i>&nbsp;{{'settings.translations.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createTranslationForm" class="bs4-forms">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && getTranslationControl.language.errors }" class="form-group">
+                        <label for="language">{{'settings.translations.create.fields.language' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="languages" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="code" formControlName="language" labelForId="language" placeholder="{{'settings.translations.create.placeholders.placeholder1' | translate}}"></ng-select>
+                        <div *ngIf="isFormSubmitted && getTranslationControl.language.errors" class="invalid-feedback">
+                            <div *ngIf="getTranslationControl.language.errors.required">{{'settings.translations.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && getTranslationControl.icon.errors }" class="form-group">
+                        <label for="icon">{{'settings.translations.create.fields.icon' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input formControlName="icon" type="hidden">
+                        <div #translateDropzone class="dropzone dz-clickable">
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'settings.translations.create.error_messages.message3' | translate}}</strong></span>
+                            </div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && getTranslationControl.icon.errors" class="invalid-feedback">
+                            <div *ngIf="getTranslationControl.icon.errors.required">{{'settings.translations.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.cancel' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

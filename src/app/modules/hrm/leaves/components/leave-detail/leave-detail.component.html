@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-suitcase"></i>&nbsp;{{'leave_report.title1' | translate}}</h2>
+    <button (click)="onCancel()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<div *ngIf="isPageLoad" class="modal-body">
+    <div class="card pl-2 pr-2">
+        <div class="card-header pl-0 pr-0 d-flex">
+            <div class="row">
+                <ng-container *ngFor="let leaveCount of leavesData.leavesCount; index as j">
+                    <div class="col-lg-3 col-md-4 col-sm-6 budges-status">
+                        <span [ngStyle]="{'background-color': leaveCount.color}">{{leaveCount.count}}</span>&nbsp;{{leaveCount.leave_type}}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="card-content pt-3 pb-3">
+            <div class="card-body">
+                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                    <table class="table table-bordered table-hover b4-datatable" id="leaves_table" width="100%">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{'leaves.columns.leave_type' | translate}}</th>
+                            <th>{{'leaves.columns.leave_date' | translate}}</th>
+                            <th>{{'leaves.columns.duration' | translate}}</th>
+                            <th>{{'leaves.columns.reason' | translate}}</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="leavesData.leaves?.length != 0">
+                        <tr *ngFor="let leave of leavesData.leaves; index as i">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td>{{leave.leave_type.leave_type}}</td>
+                            <td>{{leave.leave_date}}</td>
+                            <td>
+                                <ng-container *ngIf="leave.duration == 'half' else elseBlock4">
+                                    <ng-container *ngIf="leave.duration_type == 'first_half' else elseBlock5">
+                                        {{'leaves.labels.first_half_day' | translate}}
+                                    </ng-container>
+                                    <ng-template #elseBlock5>
+                                        {{'leaves.labels.second_half_day' | translate}}
+                                    </ng-template>
+                                </ng-container>
+                                <ng-template #elseBlock4>
+                                    {{'leaves.labels.full_day' | translate}}
+                                </ng-template>
+                            </td>
+                            <td>{{leave.reason}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot *ngIf="leavesData.leaves?.length == 0" class="tfoot_dt">
+                        <tr>
+                            <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

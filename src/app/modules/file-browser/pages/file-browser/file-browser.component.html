@@ -1,0 +1,113 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'file_browser.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <button (click)="uploadFileModal();" *ngxPermissionsOnly="['filemanager_create']" class="btn btn-create" tooltip="{{'common.upload' | translate}}">
+                            <i class="fa fa-upload"></i></button>
+                        <button (click)="openFolderCreateModal();" *ngxPermissionsOnly="['filemanager_create']" class="btn btn-create" tooltip="{{'common.create' | translate}}">
+                            <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3 mt-2">
+                                <div *ngIf="breadcrumbs?.length != 0" class="folder-list p-2">
+                                    <h4>Folders</h4>
+                                    <ul>
+                                        <li *ngFor="let breadcrumb of breadcrumbs;">
+                                            <a (click)="getFileFolders(breadcrumb.parent_folder)"><i class="fa fa-folder"></i>&nbsp;{{breadcrumb.folder_name}}
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 mt-2">
+                                <div class="row">
+                                    <!-- Folders -->
+                                    <div *ngFor="let folder of folders;" class="col-sm-4">
+                                        <div class="file-browser">
+                                            <div class="actions-dropdown text-right m-1 pr-2">
+                                                <div class="btn-group" dropdown>
+                                                    <a aria-controls="dropdown-basic-1" class="dropdown-toggle" dropdownToggle href="javascript:void(0);" id="button-basic-1"><i class="fa fa-ellipsis-v"></i></a>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li *ngxPermissionsOnly="['filemanager_edit']" role="menuitem">
+                                                            <a (click)="openFolderEditModal(folder)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngxPermissionsOnly="['filemanager_edit']" role="menuitem">
+                                                            <a (click)="deleteFolder(folder.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="file-box">
+                                                <div class="files">
+                                                    <a (click)="getFileFolders(folder.id)">
+                                                        <div class="icon docx">
+                                                            <i class="fa fa-folder-o"></i>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <h4>{{ (folder.folder_name.length > 20) ? (folder.folder_name | slice:0:20) + '..' : (folder.folder_name) }}</h4>
+                                                            <p>{{'file_browser.title7' | translate}}: {{ folder.updated_at | dateTimeFormatFilter: loginUser.settings.date_time_format }}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <span class="corner"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Files -->
+                                    <div *ngFor="let file of files; index as i" class="col-sm-4">
+                                        <div class="file-browser">
+                                            <div class="actions-dropdown text-right m-1 pr-2">
+                                                <div class="btn-group" dropdown>
+                                                    <a aria-controls="dropdown-basic-1" class="dropdown-toggle" dropdownToggle href="javascript:void(0);" id="button-basic-1"><i class="fa fa-ellipsis-v"></i></a>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a class="dropdown-item btn btn-download btn-raised" download="{{file.file_name}}" href="{{apiUrl}}/uploads/filebrowser/{{file.file_hash}}" target="_blank" tooltip="{{'common.download' | translate}}"><i class="fa fa-download"></i></a>
+                                                        </li>
+                                                        <li *ngxPermissionsOnly="['filemanager_edit']" role="menuitem">
+                                                            <a (click)="opneFileEditModal(file)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngxPermissionsOnly="['filemanager_edit']" role="menuitem">
+                                                            <a (click)="deleteFile(file.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="file-box">
+                                                <div class="files">
+                                                    <div *ngIf="file.icon" class="icon docx">
+                                                        <i [ngClass]="file.icon"></i>
+                                                    </div>
+                                                    <div *ngIf="file.isImageFile" class="image">
+                                                        <img alt="image" class="img-fluid height-100" src="{{ apiUrl }}/uploads/filebrowser/{{file.file_hash}}"/>
+                                                    </div>
+                                                    <div class="file-name">
+                                                        <a download="{{file.file_name}}" href="{{apiUrl}}/uploads/filebrowser/{{file.file_hash}}" target="_blank" tooltip="{{file.file_name}}">
+                                                            <h4>{{ (file.file_name.length > 20) ? (file.file_name | slice:0:20) + '..' : (file.file_name) }}</h4>
+                                                        </a>
+                                                        <p>{{'file_browser.title7' | translate}}: {{ file.updated_at | dateTimeFormatFilter:loginUser.settings.date_time_format }}</p>
+                                                    </div>
+                                                </div>
+                                                <span class="corner"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="isEmptyObject(folders) && isEmptyObject(files)" class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <img src="assets/img/norecord-img.png" width="50">
+                                        <p class="mt-1">{{'common.empty_message.file_browser' | translate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,120 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.dashboard_settings.title' | translate}}</span></h4>
+</div>
+<form class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{'settings.dashboard_settings.columns.settings' | translate}}</th>
+                            <th class="width-100"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title1' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_announcement_dashboard" class="onoffswitch-checkbox" id="is_announcement_dashboard" name="is_announcement_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_announcement_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title2' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_activities_dashboard" class="onoffswitch-checkbox" id="is_activities_dashboard" name="is_activities_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_activities_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title3' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_todos_dashboard" class="onoffswitch-checkbox" id="is_todos_dashboard" name="is_todos_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_todos_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title4' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_meetings_dashboard" class="onoffswitch-checkbox" id="is_meetings_dashboard" name="is_meetings_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_meetings_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title5' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_projects_dashboard" class="onoffswitch-checkbox" id="is_projects_dashboard" name="is_projects_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_projects_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title6' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_tasks_dashboard" class="onoffswitch-checkbox" id="is_tasks_dashboard" name="is_tasks_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_tasks_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title7' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_defects_dashboard" class="onoffswitch-checkbox" id="is_defects_dashboard" name="is_defects_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_defects_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'settings.dashboard_settings.title8' | translate}}</td>
+                            <td>
+                                <div *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_create', 'dashboardsettings_edit']" class="onoffswitch">
+                                    <input (change)="saveDashboardSettings()" [(ngModel)]="settings.is_incidents_dashboard" class="onoffswitch-checkbox" id="is_incidents_dashboard" name="is_incidents_dashboard" type="checkbox"/>
+                                    <label class="onoffswitch-label m-b-none" for="is_incidents_dashboard">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

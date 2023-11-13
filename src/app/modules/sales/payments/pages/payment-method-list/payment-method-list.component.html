@@ -1,0 +1,73 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'payment_methods.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'payments_view']" [routerLink]="['/payments']" class="btn btn-create mb-0" placement="left" tooltip="{{'payments.title' | translate}}"><i class="fa fa-money"></i></a>
+                        <button (click)="openPaymentMethodCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'paymentmethod_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                            <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-info">{{'payments.info' | translate}}</div>
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="payment_method_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'payment_methods.columns.method_name' | translate}}</th>
+                                            <th>{{'payment_methods.columns.description' | translate}}</th>
+                                            <th>{{'payment_methods.columns.status' | translate}}</th>
+                                            <th>{{'common.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let method of paymentMethods; index as i">
+                                            <td>{{method.method_name}}</td>
+                                            <td class="nl2br">{{method.description}}</td>
+                                            <td>
+                                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'paymentmethod_edit'] else elseBlock1">
+                                                    <ui-switch (valueChange)="setActiveInactiveMethod($event, method)" [checked]="method.status == '1' ? true : false"></ui-switch>
+                                                </ng-container>
+                                                <ng-template #elseBlock1>
+                                                    <div class="budges-status">
+                                                        <span *ngIf="method.status == '1'" class="completed">{{'common.status.active' | translate}}</span>
+                                                        <span *ngIf="method.status == '0'" class="cancel">{{'common.status.inactive' | translate}}</span>
+                                                    </div>
+                                                </ng-template>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a (click)="openPaymentMethodEditModal(method)" *ngxPermissionsOnly="['admin', 'super_admin', 'paymentmethod_edit']" class="dropdown-item btn btn-edit btn-raised"><i class="fa fa-pencil-square-o" tooltip="{{'common.edit' | translate}}"></i></a>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <a (click)="deletePaymentMethod(method.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'paymentmethod_delete']" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="paymentMethods?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="4">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,15 @@
+// ===============================================================================================================
+// 	File Name: app.scss
+// 	Description: Application main scss file for import all nested scss files like variables, mixins, plugins etc ..
+// 				and related customization
+// ================================================================================================================
+@import "scss/variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "scss/core/color-palettes";
+@import "scss/app-variables";
+@import "scss/mixins";
+@import "scss/custom-bootstrap";
+@import "scss/core";
+@import "scss/plugins";
+@import "scss/dark-theme";
+@import "scss/custom";

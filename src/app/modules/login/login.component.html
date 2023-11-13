@@ -1,0 +1,88 @@
+<section *ngIf="isSettingsLoad" [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}" id="login">
+    <div class="container-fluid">
+        <div class="row full-height-vh">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="card card-inverse indigo-purple-gradient width-400 login-form">
+                    <div class="login-user-img d-flex justify-content-center">
+                        <ng-container *ngIf="settings != null && settings.company_logo; else elseCondition;">
+                            <img alt="element 06" class="mb-2" height="96" src="{{apiUrl}}/uploads/company_logo/{{settings.company_logo}}" width="200">
+                        </ng-container>
+                        <ng-template #elseCondition>
+                            <img alt="element 06" class="mb-2" height="75" src="assets/img/logos/vipspm_logo_large.png">
+                        </ng-template>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="card-block pb-0">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="auth-forms">
+                                <div class="form-group">
+                                    <div class="col-md-12 pl-lg-3 pr-lg-3">
+                                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.email.errors }" class="form-control" formControlName="email" placeholder="{{'login.fields.email.placeholder' | translate}}" type="text"/>
+                                        <div *ngIf="isFormSubmitted && userControl.email.errors" class="invalid-feedback">
+                                            <div *ngIf="userControl.email.errors.required">{{'login.fields.email.errors.required' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12 pl-lg-3 pr-lg-3">
+                                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.password.errors }" class="form-control" formControlName="password" placeholder="{{'login.fields.password.placeholder' | translate}}" type="password"/>
+                                        <div *ngIf="isFormSubmitted && userControl.password.errors" class="invalid-feedback">
+                                            <div *ngIf="userControl.password.errors.required">{{'login.fields.password.errors.required' | translate}}</div>
+                                            <div *ngIf="userControl.password.errors.minlength || userControl.password.errors.maxlength">{{'login.fields.password.errors.email' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-submit" type="submit">{{'login.title' | translate}}</button>
+                                        <div class="text-center forgot-password">
+                                            <a [routerLink]="['/forgot-password']" class="font-italic"><small>{{'login.buttons.forgot_password' | translate}}</small></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <!-- <div class="card-footer text-center pb-0" *ngIf="settings.is_demo">
+                            <div class="form-group">
+                                <h6>{{'login.buttons.quick_login' | translate}}</h6>
+                                <div class="col-md-12 text-left">
+                                    <div class="row">
+                                        <div class="col-6 mb-1 pl-2 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('admin@gmail.com','Admin123!')">{{'login.buttons.admin_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col-6 mb-1 pl-1 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('user@gmail.com','User123!')">{{'login.buttons.user_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                                         <div class="col-6 mb-1 pl-2 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('client@gmail.com','Client123!')">{{'login.buttons.client_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                               
+                                        <div class="col-6 mb-1 pl-1 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('pm@gmail.com','PM123!')">{{'login.buttons.project_manager_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col-6  mb-1 pl-2 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('hr@gmail.com','HR123!')">{{'login.buttons.hr_manager_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col-6 mb-1 pl-1 pr-1 pl-xs-0 pr-xs-0">
+                                            <a class="pl-1 pr-1 under-line" (click)="instantLogin('sm@gmail.com','SM123!')">{{'login.buttons.sales_manager_login' | translate}}<i class="fa fa-arrow-right ml-1" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div *ngIf="settings.allowed_for_registration" class="card-footer text-center">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="justify-content-center d-flex align-items-baseline">
+                                    <h6 class="register-form mb-0">{{'login.buttons.register.text' | translate}}</h6> &nbsp;<a [routerLink]="['/register']" class="under-line">{{'login.buttons.register.button' | translate}}</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

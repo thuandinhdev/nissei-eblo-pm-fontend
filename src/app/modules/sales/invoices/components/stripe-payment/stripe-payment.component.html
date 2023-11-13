@@ -1,0 +1,4 @@
+<div class="form-group">
+    <input [(ngModel)]="amount" class="form-control" name="amount" type="number">
+</div>
+<button (click)="pay(amount)" class="btn btn-secondary btn-block" type="button">{{'settings.stripe_settings.title1' | translate}} {{loginUser.currency.symbol}}{{amount}}</button>

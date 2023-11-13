@@ -1,0 +1,63 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 border-bottom">
+    <h4 class="main-title "><span>{{'tasks.title' | translate }}</span></h4>
+    <div class="card-buttons">
+        <a *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" [routerLink]="['/tasks/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+    </div>
+</div><!-- Card body -->
+<div class="card-body pt-3">
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable " datatable id="task_datatable" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{'tasks.columns.id' | translate }}</th>
+                        <th>{{'tasks.columns.task_name' | translate }}</th>
+                        <th>{{'tasks.columns.start_date' | translate }}</th>
+                        <th>{{'tasks.columns.end_date' | translate }}</th>
+                        <th>{{'tasks.columns.assigned' | translate }}</th>
+                        <th>{{'tasks.columns.priority' | translate }}</th>
+                        <th>{{'tasks.columns.status' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let task of project.tasks">
+                        <td>
+                            <a [routerLink]="['/tasks/detail', task.id]" tooltip="{{'common.view' | translate}}">{{task.generated_id}}</a>
+                        </td>
+                        <td>{{task.name}}</td>
+                        <td>{{task.task_start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td>{{task.task_end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="task.assign_user == null; else elseBlock">
+                                <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                    <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                <a [routerLink]="['/users/profile', task.assign_user.id]" class="btn btn-profile-danger rounded-circle text-dark" placement="top" tooltip="{{task.assign_user.firstname}} {{task.assign_user.lastname}}">
+                                    <img *ngIf="task.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{task.assign_user.avatar}}"/>
+                                    <img *ngIf="!task.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-template>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let priority of ('tasks.priorities' | translate)">
+                                <div class="budges-status">
+                                    <span *ngIf="priority.id == task.priority" class="{{priority.class}}">{{priority.label}}</span>
+                                </div>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let status of ('tasks.status' | translate)">
+                                <span *ngIf="status.id == task.status" class="{{status.class}}">{{status.label}}</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

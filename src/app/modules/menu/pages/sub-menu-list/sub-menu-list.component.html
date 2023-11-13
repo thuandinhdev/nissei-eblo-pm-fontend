@@ -1,0 +1,86 @@
+<section class="hide_empty_message">
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card pl-2 pr-2">
+              <div class="card-header pl-0 pr-0 border-bottom">
+                  <h4 class="main-title mt-2"><span>{{'menu.title_sub' | translate}}</span></h4>
+                  <div class="card-buttons">
+                      <button (click)="openSubMenuCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'menu_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                          <i class="fa fa-plus"></i></button>
+                  </div>
+              </div>
+              <!-- Card content -->
+              <div class="card-content pt-3 pb-3">
+                  <!-- Card body -->
+                  <div class="card-body">
+                      <!-- Items list datatable -->
+                      <div class="row">
+                          <div class="col-sm-12">
+                              <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                  <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="sub_menu_table" width="100%">
+                                      <thead>
+                                      <tr>
+                                          <th>{{'menu.columns.name' | translate}}</th>
+                                          <th>{{'menu.columns.page' | translate}}</th>
+                                          <th>{{'menu.columns.page_type' | translate}}</th>
+                                          <th>{{'menu.columns.index' | translate}}</th>
+                                          <th>{{'common.actions' | translate}}</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: sub_menus }">
+                                        </ng-container>
+                                        <ng-template #recursiveListTmpl let-list="list">
+                                          <ng-container *ngFor="let item of list">
+                                            <tr>
+                                              <td>
+                                              <ng-container *ngIf="item.colspan > 0">
+                                                <span *ngFor="let item of [].constructor(item.colspan)" class="bg-light px-4"></span>
+                                              </ng-container>
+                                                {{item.name}}
+                                                <ng-container *ngIf="item.type == 1">
+                                                  <button (click)="openSubMenuCreateModal(item.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'menu_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                                                    <i class="fa fa-plus"></i>
+                                                  </button>
+                                                </ng-container>
+                                              </td>
+                                              <td>{{item.page}}</td>
+                                              <td>{{item.page_type}}</td>
+                                              <td>{{item.index}}</td>
+                                              <td class="actions-dropdown">
+                                                  <div class="btn-group" dropdown>
+                                                      <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                          <i class="fa fa-ellipsis-v"></i></button>
+                                                      <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                          <li *ngxPermissionsOnly="['admin', 'super_admin', 'menu_edit']" role="menuitem">
+                                                              <a (click)="openSubMenuEditModal(item)" class="dropdown-item btn btn-edit btn-raised"><i class="fa fa-pencil-square-o" tooltip="{{'common.edit' | translate}}"></i></a>
+                                                          </li>
+                                                          <li *ngxPermissionsOnly="['admin', 'super_admin', 'menu_delete']" role="menuitem">
+                                                              <a (click)="deleteSubMenu(item.id)" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                          </li>
+                                                      </ul>
+                                                  </div>
+                                              </td>
+                                            </tr>
+                                            <ng-container *ngIf="item.chidData.length > 0">
+                                              <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.chidData }"
+                                              ></ng-container>
+                                            </ng-container>
+                                          </ng-container>
+                                        </ng-template>
+                                      </tbody>
+                                      <tfoot *ngIf="sub_menus?.length == 0" class="tfoot_dt">
+                                      <tr>
+                                          <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                      </tr>
+                                      </tfoot>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

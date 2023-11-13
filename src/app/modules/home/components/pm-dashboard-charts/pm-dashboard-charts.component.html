@@ -1,0 +1,50 @@
+<div class="row charts-box">
+    <div *ngIf="dashboardSettings.is_projects_status_chart" class="col-xl-4 col-lg-12">
+        <app-pm-dashboard-chart1 [projectChartReport]="projectChartReport"></app-pm-dashboard-chart1>
+    </div>
+    <div *ngIf="dashboardSettings.is_tasks_status_chart" class="col-xl-4 col-lg-12">
+        <div class="card card-height-chart">
+            <div class="card-header">
+                <h4 class="card-title">{{'dashboard.chart1' | translate}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="height-250 donut" id="donut-dashboard-chart">
+                    <x-chartist [data]="donutChart[0].data" [events]="donutChart[0].events" [options]="donutChart[0].options" [responsiveOptions]="donutChart[0].responsiveOptions" [type]="donutChart[0].type"></x-chartist>
+                </div>
+                <div class="card-block mb-2">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <span class="d-block pr-chart">{{getPercentage(taskChartData[0]) |  number:'1.0-2'}}% - {{'common.status.open' | translate}}</span>
+                            <div class="progress height-5">
+                                <div [style.width]="getPercentage(taskChartData[0])+'%'" aria-valuemax="100" aria-valuemin="0" class="progress-bar bg-open" role="progressbar"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="d-block pr-chart">{{getPercentage(taskChartData[1] + taskChartData[2] + taskChartData[3]) |  number:'1.0-2'}}% - {{'common.status.in_progress' | translate}}</span>
+                            <div class="progress height-5">
+                                <div [style.width]="getPercentage(taskChartData[1] + taskChartData[2] + taskChartData[3])+'%'" aria-valuemax="100" aria-valuemin="0" class="progress-bar bg-inprogress" role="progressbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <span class="d-block pr-chart">{{getPercentage(taskChartData[4]) |  number:'1.0-2'}}% - {{'common.status.cancel' | translate}}</span>
+                            <div class="progress height-5">
+                                <div [style.width]="getPercentage(taskChartData[4])+'%'" aria-valuemax="100" aria-valuemin="0" class="progress-bar bg-cancel"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="d-block pr-chart">{{getPercentage(taskChartData[5]) |  number:'1.0-2'}}% - {{'common.status.completed' | translate}}</span>
+                            <div class="progress height-5">
+                                <div [style.width]="getPercentage(taskChartData[5])+'%'" aria-valuemax="100" aria-valuemin="0" class="progress-bar bg-completed" role="progressbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dashboardSettings.is_monthly_report_chart" class="col-xl-4 col-lg-12">
+        <app-pm-dashboard-chart2 [monthlyReport]="monthlyReport"></app-pm-dashboard-chart2>
+    </div>
+</div>

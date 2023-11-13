@@ -1,0 +1,72 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'estimates.title' | translate}}</span></h4>
+                    <div *ngxPermissionsOnly="['admin', 'super_admin', 'estimates_create']" class="card-buttons">
+                        <a [routerLink]="['/estimates/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="estimate_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'estimates.columns.estimate_number' | translate}} #</th>
+                                            <th>{{'estimates.columns.customer' | translate}}</th>
+                                            <th>{{'estimates.columns.estimate_date' | translate}}</th>
+                                            <th>{{'estimates.columns.valid_till' | translate}}</th>
+                                            <th>{{'estimates.columns.total_amount' | translate}}</th>
+                                            <th>{{'estimates.columns.status' | translate}}</th>
+                                            <th>{{'common.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let estimate of estimates; index as i">
+                                            <td>
+                                                <a [routerLink]="['/estimates/detail', estimate.id]">{{estimate.estimate_number}}</a>
+                                            </td>
+                                            <td>{{estimate.client_firstname}} {{estimate.client_lastname}}</td>
+                                            <td>{{estimate.estimate_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{estimate.valid_till | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{loginUser.currency.symbol}}{{estimate.total_amount | number : '1.2-2'}}</td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let status of ('estimates.status' | translate)">
+                                                    <span *ngIf="status.id == estimate.status" class="{{status.class}}">{{status.label}}</span>
+                                                </ng-container>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a *ngxPermissionsOnly="['admin', 'super_admin', 'estimates_edit']" [routerLink]="['/estimates/edit', estimate.id]" class="dropdown-item btn btn-edit btn-raised"><i class="fa fa-pencil-square-o" tooltip="{{'common.edit' | translate}}"></i></a>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <a (click)="deleteEstimate(estimate.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'estimates_delete']" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="estimates?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,38 @@
+<section class="detail-page">
+    <div class="card">
+        <tabset class="nav nav-tabs d-flex justify-content-center mb-2">
+            <tab (selectTab)="setActiveReportTab($event)" customClass="text-left active" id="1">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-product-hunt"></i><span class="mt-1 ml-1">{{'reports.headings.project_report' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-project-reports *ngIf="getActiveReportTab('1')"></app-project-reports>
+            </tab>
+            <tab (selectTab)="setActiveReportTab($event)" customClass="text-left" id="2">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-tasks"></i><span class="mt-1 ml-1">{{'reports.headings.task_report' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-task-reports *ngIf="getActiveReportTab('2')"></app-task-reports>
+            </tab>
+            <tab (selectTab)="setActiveReportTab($event)" customClass="text-left" id="3">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-bug"></i><span class="mt-1 ml-1">{{'reports.headings.defect_report' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-defect-reports *ngIf="getActiveReportTab('3')"></app-defect-reports>
+            </tab>
+            <tab (selectTab)="setActiveReportTab($event)" customClass="text-left" id="4">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-ticket"></i><span class="mt-1 ml-1">{{'reports.headings.incident_report' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-incident-reports *ngIf="getActiveReportTab('4')"></app-incident-reports>
+            </tab>
+        </tabset>
+    </div>
+</section>

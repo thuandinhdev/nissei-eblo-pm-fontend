@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-shopping-basket"></i>&nbsp;{{'items.title2' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="createItemForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{'items.create.fields.name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && itemControl.name.errors }" class="form-control" formControlName="name" id="name" placeholder="{{'items.create.placeholders.placeholder1' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && itemControl.name.errors" class="invalid-feedback">
+                            <div *ngIf="itemControl.name.errors.required">{{'items.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{'items.create.fields.price' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && itemControl.price.errors }" class="form-control" formControlName="price" id="price" placeholder="{{'items.create.placeholders.placeholder2' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && itemControl.price.errors" class="invalid-feedback">
+                            <div *ngIf="itemControl.price.errors.required">{{'items.create.error_messages.message2' | translate}}</div>
+                            <div *ngIf="itemControl.price.errors.pattern">{{'items.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{'items.create.fields.unit' | translate}}</label>
+                        <input class="form-control" formControlName="unit" id="unit" placeholder="{{'items.create.placeholders.placeholder3' | translate }}" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="leave_type_id">{{'items.create.fields.tax' | translate}}</label>
+                        <ng-select [items]="taxes" [multiple]="true" [searchable]="true" [selectOnTab]="true" bindLabel="tax_name" bindValue="id" formControlName="taxes" labelForId="taxes" placeholder="{{'items.create.placeholders.placeholder4' | translate }}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.tax_name}} : {{item.tax_rate}}%
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'items.create.fields.description' | translate}}</label>
+                        <textarea class="form-control" formControlName="description" id="description" placeholder="{{'items.create.placeholders.placeholder5' | translate}}"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

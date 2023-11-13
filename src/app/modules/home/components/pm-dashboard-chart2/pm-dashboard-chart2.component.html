@@ -1,0 +1,12 @@
+<div class="card card-height-chart">
+    <div class="card-header">
+        <h4 class="card-title">{{'dashboard.chart3' | translate}} {{currentDate | dateTimeFormatFilter: 'YYYY'}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="card-block">
+            <div class="height-300" id="bar-bar1">
+                <canvas [chartType]="barChartType" [colors]="barChartColors" [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend" [options]="barChartOptions" baseChart class="chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

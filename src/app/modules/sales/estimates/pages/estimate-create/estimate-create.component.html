@@ -1,0 +1,261 @@
+<section id="basic-form-layouts">
+    <form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="createEstimateForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{'estimates.title2' | translate}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i aria-hidden="true" class="ft-user"></i>{{'estimates.headings.head1' | translate}}
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && estimateControl.client_id.errors }" class="form-group">
+                                            <label for="client_id">{{'estimates.create.fields.customer' | translate}}&nbsp;<span class="text-danger">*</span>
+                                            </label>
+                                            <ng-select [clearable]="false" [items]="clients" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="client_id" labelForId="client_id" placeholder="{{'estimates.create.placeholders.placeholder1' | translate}}">
+                                                <ng-template let-item="item" ng-option-tmp>
+                                                    {{item.firstname}} {{item.lastname}}
+                                                </ng-template>
+                                            </ng-select>
+                                            <div *ngIf="isFormSubmitted && estimateControl.client_id.errors" class="invalid-feedback">
+                                                <div *ngIf="estimateControl.client_id.errors.required">{{'estimates.create.error_messages.message1' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-calendar"></i>{{'estimates.headings.head2' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && estimateControl.estimate_date.errors }" class="form-group">
+                                            <label for="estimate_date">{{'estimates.create.fields.estimate_date' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp1="bsDatepicker" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="estimate_date" id="estimate_date" placeholder="{{'estimates.create.placeholders.placeholder2' | translate}}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && estimateControl.estimate_date.errors" class="invalid-feedback">
+                                                    <div *ngIf="estimateControl.estimate_date.errors.required">{{'estimates.create.error_messages.message2' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && estimateControl.valid_till.errors }" class="form-group">
+                                            <label for="end-date">{{'estimates.create.fields.valid_till' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp2="bsDatepicker" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="valid_till" id="valid_till" placeholder="{{'estimates.create.placeholders.placeholder3' | translate}}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && estimateControl.valid_till.errors" class="invalid-feedback">
+                                                    <div *ngIf="estimateControl.valid_till.errors.required">{{'estimates.create.error_messages.message3' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">&nbsp;</div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i class="ft-box"></i>{{'estimates.headings.head3' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="reference">{{'estimates.create.fields.reference' | translate}} #</label>
+                                            <input class="form-control" formControlName="reference" id="reference" placeholder="{{'estimates.create.placeholders.placeholder4' | translate}}" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="type">{{'estimates.create.fields.discount_type' | translate}}</label>
+                                            <ng-select (change)="changeDiscountType($event)" [clearable]="false" [items]="('estimates.discount_type' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="discount_type" labelForId="discount_type" placeholder="{{'estimates.create.placeholders.placeholder5' | translate}}"></ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-form">
+                        <h4 class="card-title">{{'estimates.headings.head4' | translate}}</h4>
+                        <div class="card-button estimate-form">
+                            <ng-select (change)="changeItem($event)" [clearable]="false" [items]="items" bindLabel="name" bindValue="id" formControlName="selectedItem" placeholder="{{'estimates.create.placeholders.placeholder7' | translate}}">
+                                <ng-template let-index="index" let-item="item" let-search="searchTerm" ng-option-tmp>
+                                    <div class="card mt-1 mb-1">
+                                        <div class="card-body p-2">
+                                            <h5 [ngOptionHighlight]="search" class="card-title">({{loginUser.currency.symbol}}{{item.price}}) {{item.name}}</h5>
+                                            <p class="card-text">{{item.description}}</p>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table class="table table-bordered table-hover b4-datatable" id="estimate_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>{{'estimates.create.fields.item_name' | translate}}</th>
+                                    <th>{{'estimates.create.fields.item_description' | translate}}</th>
+                                    <th class="width-100">{{'estimates.create.fields.quantity' | translate}}</th>
+                                    <th class="width-150">{{'estimates.create.fields.unit_price' | translate}}</th>
+                                    <th class="width-250">{{'estimates.create.fields.item_tax' | translate}}</th>
+                                    <th>{{'estimates.create.fields.total_item_amount' | translate}} ({{loginUser.currency.symbol}})</th>
+                                    <th class="text-right">{{'common.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr formArrayName="item">
+                                    <td>
+                                        <div class="form-group">
+                                            <input class="form-control" formControlName="item_name" id="item_name" placeholder="{{'estimates.create.placeholders.placeholder8' | translate}}" type="text"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+												<textarea class="form-control" formControlName="item_description" id="item_description" placeholder="{{'estimates.create.placeholders.placeholder9' | translate}}">
+												</textarea>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input class="form-control" formControlName="quantity" id="quantity" min="1" placeholder="{{'estimates.create.placeholders.placeholder10' | translate}}" type="number"/>
+                                            <input class="inp" formControlName="item_unit" placeholder="{{'estimates.create.fields.unit' | translate}}" type="text"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input class="form-control" formControlName="unit_price" id="unit_price" min="0" placeholder="{{'estimates.create.placeholders.placeholder11' | translate}}" type="number"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <ng-select [clearable]="false" [items]="taxes" [multiple]="true" [searchable]="true" [selectOnTab]="true" bindLabel="tax_name" bindValue="id" formControlName="taxes" placeholder="{{'estimates.create.placeholders.placeholder12' | translate}}">
+                                                <ng-template let-index="index" let-item="item" let-search="searchTerm" ng-option-tmp>
+                                                    {{item.tax_name}}({{item.tax_rate}}%)
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td class="text-right">
+                                        <button (click)="addItem($event)" class="btn btn-secondary" placement="left" tooltip="{{'common.add' | translate}}">
+                                            <i class="fa fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let item of itemsArray; index as i">
+                                    <td>
+                                        <inline-edit-input (updateValue)="saveItemDetail(i, 'item_name', $event);" [elementFor]="'estimates.inline_edit.item_name' | translate" [fieldValue]="item.item_name" [isRequired]="'true'" [name]="'item_name'" [type]="'text'"></inline-edit-input>
+                                    </td>
+                                    <td>
+                                        <inline-edit-textarea (updateValue)="saveItemDetail(i, 'item_description', $event);" [elementFor]="'estimates.inline_edit.item_description' | translate" [fieldValue]="item.item_description" [isRequired]="'false'" [name]="'item_description'"></inline-edit-textarea>
+                                    </td>
+                                    <td>
+                                        <inline-edit-input (updateValue)="saveItemDetail(i, 'quantity', $event);" [elementFor]="'estimates.inline_edit.quantity' | translate" [fieldValue]="item.quantity" [isRequired]="'true'" [name]="'quantity'" [type]="'number'"></inline-edit-input>
+                                    </td>
+                                    <td>
+                                        <inline-edit-input (updateValue)="saveItemDetail(i, 'unit_price', $event);" [elementFor]="'estimates.inline_edit.unit_price' | translate" [fieldValue]="item.unit_price" [isRequired]="'true'" [name]="'unit_price'" [type]="'number'"></inline-edit-input>
+                                    </td>
+                                    <td>
+                                        <inline-edit-select-items (updateValue)="saveItemDetail(i, 'taxes', $event);" [elementFor]="'estimates.inline_edit.item_tax' | translate" [isRequired]="'true'" [name]="'taxes'" [options]="taxes" [selectedValue]="item.taxes" [txtField]="'Taxes'"></inline-edit-select-items>
+                                    </td>
+                                    <td class="text-center">{{item.quantity * item.unit_price}}</td>
+                                    <td class="actions-dropdown text-right">
+                                        <div class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li role="menuitem">
+                                                    <a (click)="deleteItem(i)" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tbody class="mt-4">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <strong>{{'estimates.create.fields.sub_total' | translate}}:</strong></td>
+                                    <td class="text-center">{{loginUser.currency.symbol}}{{ estimates.sub_total | number : '1.2-2' }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let tax of itemTaxes | keyvalue">
+                                    <ng-container *ngIf="tax">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right">
+                                            <strong>{{taxesNameValues[tax.key].tax_name}}({{taxesNameValues[tax.key].tax_rate}}%)</strong>
+                                        </td>
+                                        <td class="text-center">{{loginUser.currency.symbol}}{{tax.value | number : '1.2-2'}}</td>
+                                        <td></td>
+                                    </ng-container>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <strong>{{'estimates.create.fields.discount' | translate}}</strong></td>
+                                    <td>
+                                        <input (change)="changeDiscountAdjustment($event, 'discount')" class="form-control" formControlName="discount" name="discount" placeholder="00.00" type="number">
+                                    </td>
+                                    <td class="danger text-center">(-) {{loginUser.currency.symbol}}{{total_discount | number : '1.2-2'}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <strong>{{'estimates.create.fields.adjustment' | translate}}</strong></td>
+                                    <td>
+                                        <input (change)="changeDiscountAdjustment($event, 'adjustment')" class="form-control" formControlName="adjustment" min="0" name="adjustment" placeholder="00.00" type="number">
+                                    </td>
+                                    <td class="text-center">{{loginUser.currency.symbol}}{{ estimates.adjustment }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <strong>{{'estimates.create.fields.total_amount' | translate}}:</strong></td>
+                                    <td class="text-center">{{loginUser.currency.symbol}}{{ estimates.total | number : '1.2-2'}}</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 text-right pt-3 pb-3">
+                            <a [routerLink]="['/estimates']" class="btn btn-cancel mb-0">{{'common.cancel' | translate }}</a>
+                            <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

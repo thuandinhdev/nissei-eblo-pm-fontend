@@ -1,0 +1,166 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'holidays.title' | translate}}</span></h4>
+                    <div [ngClass]="{'d-flex': holidayTab != 'all'}" class="card-buttons d-flex text-center">
+                        <div *ngIf="holidayTab != 'all'" class="form-group mr-2 mt-2 mb-0 width-150">
+                            <form class="form">
+                                <div class="position-relative has-icon-left">
+                                    <input #dp="bsDatepicker" (bsValueChange)="holidayYearChange($event)" [(bsValue)]="year" [bsConfig]="{ dateInputFormat: 'MM-YYYY', minMode : minMode }" aria-describedby="inputGroupPrepend1" bsDatepicker class="form-control" id="search_for_month" name="search_for_month" placeholder="Search For Year" type="text" value="{{ year | dateTimeFormatFilter:'MM-YYYY' }}"/>
+                                    <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                </div>
+                            </form>
+                        </div>
+                        <button (click)="openHolidayCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                            <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3 custom-nav-tabs">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <tabset #tabset [vertical]="false" type="pills">
+                                    <tab (selectTab)="setHolidayTab($event)" heading="All" id="all">
+                                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="holiday_table" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{'holidays.columns.date' | translate}}</th>
+                                                    <th>{{'holidays.columns.event_name' | translate}}</th>
+                                                    <th>{{'holidays.columns.location' | translate}}</th>
+                                                    <th>{{'holidays.columns.color' | translate}}</th>
+                                                    <th>{{'holidays.columns.actions' | translate}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody *ngIf="holidays?.length != 0">
+                                                <tr *ngFor="let holiday of holidays; index as i">
+                                                    <td>
+                                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock2; then thenBlock2"></div>
+                                                        <ng-template #elseBlock2>
+                                                            {{holiday.date | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                        </ng-template>
+                                                        <ng-template #thenBlock2>
+                                                            <inline-edit-date (updateValue)="saveHolidayListDetail(i, 'date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'holidays.inline_edit.holiday_date' | translate" [fieldValue]="holiday.date" [format]="loginUser.settings.date_format" [isRequired]="'true'" [name]="'date'"></inline-edit-date>
+                                                        </ng-template>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock; then thenBlock"></div>
+                                                        <ng-template #elseBlock>{{holiday.event_name}}</ng-template>
+                                                        <ng-template #thenBlock>
+                                                            <inline-edit-input (updateValue)="saveHolidayListDetail(i, 'event_name', $event);" [elementFor]="'holidays.inline_edit.event_name' | translate" [fieldValue]="holiday.event_name" [isRequired]="'true'" [maxLength]="50" [name]="'event_name'" [type]="'text'"></inline-edit-input>
+                                                        </ng-template>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock5; then thenBlock5"></div>
+                                                        <ng-template #elseBlock5>{{holiday.location}}</ng-template>
+                                                        <ng-template #thenBlock5>
+                                                            <inline-edit-input (updateValue)="saveHolidayListDetail(i, 'location', $event);" [elementFor]="'holidays.inline_edit.location' | translate" [fieldValue]="holiday.location" [name]="'location'" [type]="'text'"></inline-edit-input>
+                                                        </ng-template>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngStyle]="{'background-color': holiday.color}" class="width-30 height-30"></div>
+                                                    </td>
+                                                    <td class="actions-dropdown">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                                <i class="fa fa-ellipsis-v"></i></button>
+                                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']" role="menuitem">
+                                                                    <a (click)="openHolidayEditModal(holiday)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                                </li>
+                                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_delete']" role="menuitem">
+                                                                    <a (click)="removeHoliday(holiday.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot *ngIf="holidays?.length == 0" class="tfoot_dt">
+                                                <tr>
+                                                    <td class="text-center" colspan="5">
+                                                        <img src="assets/img/norecord-img.png" width="50">
+                                                        <p class="mt-1">{{ 'common.empty_message.holidays' | translate }}</p>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </tab>
+                                    <ng-container *ngIf="isPageLoaded">
+                                        <tab (selectTab)="setHolidayTab($event)" *ngFor="let month of ('months' | translate); index as i" heading="{{month}}" id="{{i + 1}}">
+                                            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                                                <table class="table table-bordered table-hover b4-datatable" width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="width-200">{{'holidays.columns.date' | translate}}</th>
+                                                        <th>{{'holidays.columns.event_name' | translate}}</th>
+                                                        <th class="width-200">{{'holidays.columns.location' | translate}}</th>
+                                                        <th class="width-50">{{'holidays.columns.color' | translate}}</th>
+                                                        <th class="width-50">{{'holidays.columns.actions' | translate}}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody *ngIf="holidayLists.years[holidayTab]?.length != 0">
+                                                    <tr *ngFor="let holiday of holidayLists.years[holidayTab]; index as i">
+                                                        <td>
+                                                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock4; then thenBlock4"></div>
+                                                            <ng-template #elseBlock4>
+                                                                {{holiday.date | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                            </ng-template>
+                                                            <ng-template #thenBlock4>
+                                                                <inline-edit-date (updateValue)="saveHolidayDetail(holidayTab, i, 'date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'holidays.inline_edit.holiday_date' | translate" [fieldValue]="holiday.date" [format]="loginUser.settings.date_format" [isRequired]="'false'" [name]="'date'"></inline-edit-date>
+                                                            </ng-template>
+                                                        </td>
+                                                        <td>
+                                                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock3; then thenBlock3"></div>
+                                                            <ng-template #elseBlock3>{{holiday.event_name}}</ng-template>
+                                                            <ng-template #thenBlock3>
+                                                                <inline-edit-input (updateValue)="saveHolidayDetail(holidayTab, i, 'event_name', $event);" [elementFor]="'holidays.inline_edit.event_name' | translate" [fieldValue]="holiday.event_name" [isRequired]="'true'" [maxLength]="50" [name]="'event_name'" [type]="'text'"></inline-edit-input>
+                                                            </ng-template>
+                                                        </td>
+                                                        <td>
+                                                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']; else elseBlock6; then thenBlock6"></div>
+                                                            <ng-template #elseBlock6>{{holiday.location}}</ng-template>
+                                                            <ng-template #thenBlock6>
+                                                                <inline-edit-input (updateValue)="saveHolidayDetail(holidayTab, i, 'location', $event);" [elementFor]="'holidays.inline_edit.location' | translate" [fieldValue]="holiday.location" [name]="'location'" [type]="'text'"></inline-edit-input>
+                                                            </ng-template>
+                                                        </td>
+                                                        <td>
+                                                            <div [ngStyle]="{'background-color': holiday.color}" class="width-30 height-30"></div>
+                                                        </td>
+                                                        <td class="actions-dropdown">
+                                                            <div class="btn-group" dropdown>
+                                                                <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                                    <i class="fa fa-ellipsis-v"></i></button>
+                                                                <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                                    <li *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_edit']" role="menuitem">
+                                                                        <a (click)="openHolidayEditModal(holiday)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                                    </li>
+                                                                    <li *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_delete']" role="menuitem">
+                                                                        <a (click)="removeHoliday(holiday.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot *ngIf="holidayLists.years[holidayTab]?.length == 0">
+                                                    <tr>
+                                                        <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </tab>
+                                    </ng-container>
+                                </tabset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

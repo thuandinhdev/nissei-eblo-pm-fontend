@@ -1,0 +1,104 @@
+<section *ngIf="isPageLoad">
+    <div class="row">
+        <div class="col-12 text-center text-sm-right">
+            <a *ngIf="isDownloadable" class="btn btn-secondary text-white mb-0" href="{{apiUrl}}/payments/download/{{payment.secret_id}}/{{payment.client_id}}" type="button"><i class="ft-upload mr-1"></i>{{'invoices.view.download' | translate}}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-sm-2">
+                <div class="pb-3">
+                    <div *ngIf="payment.status == 'in_progress'" class="ribbon ribbon-bookmark ribbon-inprogress">{{'payments.view.in_progress' | translate}}</div>
+                    <div *ngIf="payment.status == 'successful'" class="ribbon ribbon-bookmark ribbon-successful">{{'payments.view.successful' | translate}}</div>
+                    <div *ngIf="payment.status == 'failed'" class="ribbon ribbon-bookmark ribbon-failed">{{'payments.view.failed' | translate}}</div>
+                </div>
+                <h4 class="main-title mt-4 text-right">{{'payments.view.payment_receipt' | translate}}
+                    <a [routerLink]="['/invoices/detail', payment.invoice.id]" tooltip="{{'common.view' | translate}}">{{payment.invoice.invoice_number}}</a>
+                </h4>
+                <div class="card-content p-3">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-md-5 col-12">
+                                <div class="media logo-img">
+                                    <img *ngIf="invoiceSettings.invoice_logo" alt="invoice logo" height="80" src="{{apiUrl}}/uploads/invoice_logo/{{invoiceSettings.invoice_logo}}" width="80">
+                                    <img *ngIf="!invoiceSettings.invoice_logo" alt="invoice logo" height="80" src="assets/img/logos/vipspm_logo.png" width="80">
+                                    <div class="media-body ml-4">
+                                        <ul class="m-0 list-unstyled">
+                                            <li class="text-bold-800">{{loginUser.settings.company_name}}</li>
+                                            <li class="nl2br">{{loginUser.settings.company_address}}</li>
+                                            <li>{{loginUser.settings.company_phone}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-12 text-right">
+                                <ul class="m-0 list-unstyled">
+                                    <li class="text-bold-800">{{payment.client.firstname}} {{payment.client.lastname}}</li>
+                                    <li class="nl2br">{{payment.client.address}}</li>
+                                    <li>{{payment.client.phone}}</li>
+                                    <li>{{payment.client.mobile}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row mt-3 mt-sm-0 pt-4">
+                            <div class="col-md-6 col-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table class="table" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-border-top text-bold-500">{{'payments.create.fields.payment_mode' | translate}}</td>
+                                            <td class="text-right no-border-top">{{payment.payment_method}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-bold-500">{{'payments.create.fields.date' | translate}}</td>
+                                            <td class="text-right">{{payment.date | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                        </tr>
+                                        <tr *ngIf="payment.transaction_id">
+                                            <td class="text-bold-500">{{'payments.create.fields.transaction_id' | translate}}</td>
+                                            <td class="text-right">{{payment.transaction_id}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-bold-500">{{'payments.create.fields.amount' | translate}}</td>
+                                            <td class="text-right">{{loginUser.currency.symbol}}{{payment.amount}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2 mt-sm-0 pt-4">
+                            <div class="col-md-12">
+                                <h6><strong>{{'payments.view.payment_for' | translate}}</strong></h6>
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table class="table table-bordered table-hover b4-datatable" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'payments.view.invoice_number' | translate}} #</th>
+                                            <th>{{'payments.view.invoice_date' | translate}}</th>
+                                            <th>{{'payments.view.invoice_amount' | translate}}</th>
+                                            <th>{{'payments.view.payment_amount' | translate}}</th>
+                                            <th class="text-bold-500 text-right danger">{{'invoices.create.fields.total_amount_due' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <a [routerLink]="['/invoices/detail', payment.invoice.id]" tooltip="{{'common.view' | translate}}">{{payment.invoice.invoice_number}}</a>
+                                            </td>
+                                            <td>{{payment.invoice.invoice_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{loginUser.currency.symbol}}{{payment.invoice.total_amount}}</td>
+                                            <td>{{loginUser.currency.symbol}}{{payment.amount}}</td>
+                                            <td class="text-bold-500 text-right danger">{{loginUser.currency.symbol}} {{ payment.invoice.total_due_amount | number : '1.2-2'}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

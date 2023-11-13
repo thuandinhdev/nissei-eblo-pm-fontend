@@ -1,0 +1,5 @@
+<section class="row detail-page">
+    <div *ngIf="isPageLoaded" class="card bg-transparent">
+        <app-defect-details [apiUrl]="apiUrl" [defect]="defect" [loginUser]="loginUser" [permission]="permission"></app-defect-details>
+    </div>
+</section>

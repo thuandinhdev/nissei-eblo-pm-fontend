@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-file"></i>&nbsp;{{'file_browser.title4' | translate}}</h2>
+    <button (click)="bsEditFileModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="editFileForm" class="bs4-forms">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="name">{{'file_browser.create.fields.file_name' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isSubmitted && fileControl.file_name.errors }" class="form-control" formControlName="file_name" id="file_name" placeholder="{{'file_browser.create.placeholders.placeholder3' | translate}}" type="text"/>
+                    <div *ngIf="isSubmitted && fileControl.file_name.errors" class="invalid-feedback">
+                        <div *ngIf="fileControl.file_name.errors.required">{{'file_browser.create.error_messages.message3' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit"><span>{{'common.update' | translate}}</span></button>
+    </div>
+</form>

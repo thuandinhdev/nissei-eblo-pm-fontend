@@ -1,0 +1,41 @@
+<section>
+    <div class="row">
+        <!-- Tree view -->
+        <div class="col-md-4">
+            <category-articles-tree></category-articles-tree>
+        </div>
+        <div *ngIf="isPageLoaded" class="col-md-8">
+            <div class="card">
+                <div class="col-md-12">
+                    <!-- Card header -->
+                    <div class="card-header pl-0 pr-0">
+                        <h4 class="sub-title mt-2"><span>{{article.article_title}}</span></h4>
+                        <div class="card-buttons">
+                            <button (click)="openEditArticleModal(article)" class="btn btn-create mb-2 mb-lg-0" tooltip="{{'common.edit' | translate}}">
+                                <i class="fa fa-pencil-square-o"></i></button>
+                            <button [routerLink]="['/knowledgebase/category/',article.category_id]" class="btn btn-create mb-2 mb-lg-0" tooltip="{{'common.back' | translate}}">
+                                <i class="fa fa-angle-double-left"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-content pb-2">
+                        <div class="card-body">
+                            <div class="row" class="knowledgebase-meta">
+                                <div class="col-md-12">
+                                    <ul>
+                                        <li>
+                                            <strong>{{'common.created' | translate}} :</strong> {{article.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format}}
+                                        </li>
+                                        <li>
+                                            <strong>{{'common.last_updated' | translate}} :</strong> {{article.updated_at | dateTimeFormatFilter: loginUser.settings.date_time_format}}
+                                        </li>
+                                    </ul>
+                                    <div [innerHTML]="article.description"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,168 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-2">
+                <!-- Card header -->
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'tasks.title' | translate}}</span></h4>
+
+                    <!-- Filter buttons -->
+                    <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex">
+                        <div class="pr-0">
+                            <div class="btn-group mr-2 mb-2">
+                                <label (click)="filterByStatus(statusfilterId, taskFilterKey)" [(ngModel)]="taskFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
+                                <label (click)="filterByStatus(statusfilterId, taskFilterKey)" [(ngModel)]="taskFilterKey" btnRadio="selected" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class=" pl-lg-0 btn-filters ">
+                            <button (click)="filterByStatus(1, taskFilterKey)" [ngClass]="{'active': statusfilterId ==1}" class="btn btn-raised open" type="button">
+                                <p>{{'common.status.open' | translate}}</p><span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.open; else elseCondition2;">{{countStatus.open}}</ng-container>
+                                    <ng-template #elseCondition2>0</ng-template>
+                                </span>
+                            </button>
+                            <button (click)="filterByStatus(2, taskFilterKey)" [ngClass]="{'active': statusfilterId==2}" class="btn btn-raised in_progress" type="button">
+                                <p>{{'common.status.in_progress' | translate}}</p><span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.in_progress; else elseCondition3;">{{countStatus.in_progress}}</ng-container>
+                                    <ng-template #elseCondition3>0</ng-template>
+                                </span>
+                            </button>
+                            <button (click)="filterByStatus(6, taskFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised completed" type="button">
+                                <p>{{'common.status.completed' | translate}}</p><span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.completed; else elseCondition4;">{{countStatus.completed}}</ng-container>
+                                    <ng-template #elseCondition4>0</ng-template>
+                                </span>
+                            </button>
+                            <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/tasks', 0, taskFilterKey]" class="btn btn-raised btn-secondary" type="button">
+                                <p>{{'common.status.total' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.all; else elseCondition1;">{{countStatus.all}}</ng-container>
+                                    <ng-template #elseCondition1>0</ng-template>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/taskboard']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
+<!--
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" class="btn btn-create mb-0" download="import_tasks.csv" href="{{ apiUrl }}/csv/import_tasks.csv" placement="top" tooltip="{{'common.tooltip.task_csv_sample' | translate}}"><i class="fa fa-files-o"></i></a>
+                        <button (click)="openTaskImportModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" class="btn btn-create mb-0" tooltip="{{'common.import' | translate}}">
+                            <i class="fa fa-upload"></i></button> -->
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" [routerLink]="['/tasks/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3">
+                    <!-- Card body -->
+                    <div class="card-body ">
+                        <!-- Tasks lists -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="tasks_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'tasks.columns.id' | translate}}</th>
+                                            <th>{{'tasks.columns.task_name' | translate}}</th>
+                                            <th>{{'tasks.columns.start_date' | translate}}</th>
+                                            <th>{{'tasks.columns.end_date' | translate}}</th>
+                                            <th>{{'tasks.columns.hours' | translate}}</th>
+                                            <th>{{'tasks.columns.assigned' | translate}}</th>
+                                            <th>{{'tasks.columns.priority' | translate}}</th>
+                                            <th>{{'tasks.columns.status' | translate}}</th>
+                                            <th>{{'tasks.columns.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="tasks?.length != 0">
+                                        <tr *ngFor="let task of tasks; index as i">
+                                            <td>
+                                                <a [routerLink]="['/tasks/detail', task.id]" tooltip="{{'common.view' | translate}}">{{task.generated_id}}</a>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="getCheckPermission(task); else elseBlock1">
+                                                    <inline-edit-input (updateValue)="saveTaskDetail(i, 'name', $event);" [elementFor]="'tasks.inline_edit.task_name' | translate" [fieldValue]="task.name" [isRequired]="'true'" [name]="'name'" [type]="'text'"></inline-edit-input>
+                                                </ng-container>
+                                                <ng-template #elseBlock1>{{task.name}}</ng-template>
+                                            </td>
+                                            <td>{{task.task_start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{task.task_end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{task.actual_hours}}</td>
+                                            <td class="people-lists">
+                                                <ng-container *ngIf="task.assign_to == null; else elseBlock3">
+                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                    </a>
+                                                </ng-container>
+                                                <ng-template #elseBlock3>
+                                                    <a [routerLink]="['/users/profile', task.assign_to]" class="btn btn-profile-danger rounded-circle text-dark" placement="top" tooltip="{{task.assign_firstname}} {{task.assign_lastname}}">
+                                                        <img *ngIf="task.assign_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{task.assign_avatar}}"/>
+                                                        <img *ngIf="!task.assign_avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                    </a>
+                                                </ng-template>
+                                            </td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let priority of ('tasks.priorities' | translate)">
+                                                    <div class="budges-status">
+                                                        <span *ngIf="priority.id == task.priority" class="{{priority.class}}">{{priority.label}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </td>
+                                            <td class="status-dropdown">
+                                                <div class="overdue-td">
+                                                    <ng-container *ngIf="getCheckPermission(task); else elseBlock2">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(task.status) | translate}}&nbsp;<span class="caret"></span>
+                                                            </button>
+                                                            <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                                <li *ngFor="let status of (getTaskStatus(task.status) | translate)" role="menuitem">
+                                                                    <a (click)="changeTaskStatus([task.id], status);task.status = status.id" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock2>
+                                                        <ng-container *ngFor="let status of (getTaskStatus(task.status) | translate)">
+                                                            <div class="budges-status">
+                                                                <span *ngIf="status.id == task.status" class="{{status.class}}">{{status.label}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-container *ngIf="task.is_overdue">
+                                                        <i aria-hidden="true" class="fa fa-clock-o overdue-icon" tooltip="{{'common.overdue' | translate}} : {{task.is_overdue}} {{'common.days' | translate}}"></i>
+                                                    </ng-container>
+                                                </div>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li *ngIf="getCheckPermission(task)" role="menuitem">
+                                                            <a [routerLink]="['/tasks/edit', task.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" role="menuitem">
+                                                            <a [routerLink]="['/tasks/copy', task.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.copy' | translate}}"><i class="fa fa-clone"></i></a>
+                                                        </li>
+                                                        <li *ngIf="getCheckPermission(task)" role="menuitem">
+                                                            <a (click)="deleteTask(task.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="tasks?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

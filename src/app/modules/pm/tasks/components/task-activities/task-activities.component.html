@@ -1,0 +1,22 @@
+<div class="activity-timeline">
+    <div class="card overflow-hidden shadow-none p-2">
+        <div [perfectScrollbar]="scrollConfig" class="card-body">
+            <ul class="timeline pr-2">
+                <li *ngFor="let activity of task.activities; index as i" class="d-flex flex-column">
+                    <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between">
+                        <a [routerLink]="['/users/profile', activity.user.id]" placement="top" tooltip="{{activity.user.firstname}} {{activity.user.lastname}}">
+                            <img *ngIf="!activity.user.avatar" alt="Profile Photo" class="user-profile" src="../assets/img/profile_small.jpg"/>
+                            <img *ngIf="activity.user.avatar" alt="Profile Photo" class="user-profile" src="{{apiUrl}}/uploads/profile/{{activity.user.avatar}}"/>
+                            <span class="ml-1 activity-user">{{activity.user.firstname}} {{activity.user.lastname}}</span>
+                        </a>
+                        <a class="float-left activity-date" href="javascript:void(0)">
+                            <span class="badge badge-secondary">{{activity.diff_for_humans}}</span>
+                            {{activity.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format }}
+                        </a>
+                    </div>
+                    <p [innerHTML]="activity.description"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

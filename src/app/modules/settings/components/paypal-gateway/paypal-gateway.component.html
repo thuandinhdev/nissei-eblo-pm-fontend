@@ -1,0 +1,74 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.payment_gateway_settings.title' | translate}}</span></h4>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoad" [formGroup]="settingsForm" class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="paypal_checkout_label">{{'settings.paypal_settings.create.fields.paypal_checkout_label' | translate}}&nbsp;&nbsp;</label>
+                    <span><a href="https://developer.paypal.com/docs/platforms/checkout/reference/style-guide/" target="_blank"><i class="fa fa-lightbulb-o fa-1" placement="top" tooltip="{{'settings.custom_fields.create.fields.help_text' | translate}}"></i></a></span>
+                    <input class="form-control" formControlName="paypal_checkout_label" id="paypal_checkout_label" placeholder="{{'settings.paypal_settings.create.placeholders.placeholder1' | translate}}" type="input"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="paypal_checkout_client_id">{{'settings.paypal_settings.create.fields.paypal_checkout_client_id' | translate}}</label>
+                    <input class="form-control" formControlName="paypal_checkout_client_id" id="paypal_checkout_client_id" placeholder="{{'settings.paypal_settings.create.placeholders.placeholder2' | translate}}" type="input"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>{{'settings.paypal_settings.create.fields.paypal_checkout_status' | translate}}</label>
+                    <div class="onoffswitch">
+                        <input class="onoffswitch-checkbox" formControlName="paypal_checkout_status" id="paypal_checkout_status" name="paypal_checkout_status" type="checkbox"/>
+                        <label class="onoffswitch-label m-b-none" for="paypal_checkout_status">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top pt-2">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="stripe_label">{{'settings.stripe_settings.create.fields.stripe_label' | translate}}</label>
+                    <input class="form-control" formControlName="stripe_label" id="stripe_label" placeholder="{{'settings.stripe_settings.create.placeholders.placeholder1' | translate}}" type="input"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="stripe_api_key">{{'settings.stripe_settings.create.fields.stripe_api_key' | translate}}</label>
+                    <input class="form-control" formControlName="stripe_api_key" id="stripe_api_key" placeholder="{{'settings.stripe_settings.create.placeholders.placeholder2' | translate}}" type="input"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="stripe_secret_key">{{'settings.stripe_settings.create.fields.stripe_secret_key' | translate}}</label>
+                    <input class="form-control" formControlName="stripe_secret_key" id="stripe_secret_key" placeholder="{{'settings.stripe_settings.create.placeholders.placeholder3' | translate}}" type="input"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>{{'settings.stripe_settings.create.fields.stripe_status' | translate}}</label>
+                    <div class="onoffswitch">
+                        <input class="onoffswitch-checkbox" formControlName="stripe_status" id="stripe_status" name="stripe_status" type="checkbox"/>
+                        <label class="onoffswitch-label m-b-none" for="stripe_status">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button *ngxPermissionsOnly="['admin', 'super_admin', 'paymentgatewaysettings_create', 'paymentgatewaysettings_edit']" class="btn btn-submit" type="submit">
+                    <span>{{'common.save' | translate}}</span></button>
+            </div>
+        </div>
+    </div>
+</form>

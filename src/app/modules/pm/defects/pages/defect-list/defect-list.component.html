@@ -1,0 +1,168 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-2">
+                <!-- Card header -->
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'defects.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/defects/kanban']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/defects/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Filter buttons -->
+                        <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex mb-3">
+                            <div class=" pr-0">
+                                <div class="btn-group mr-2 mb-2">
+                                    <label (click)="filterByStatus(statusfilterId, defectFilterKey)" [(ngModel)]="defectFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
+                                    <label (click)="filterByStatus(statusfilterId, defectFilterKey)" [(ngModel)]="defectFilterKey" btnRadio="selected" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="pl-lg-0 btn-filters">
+                                <button (click)="filterByStatus(4, defectFilterKey)" [ngClass]="{'active': statusfilterId==4}" class="btn btn-raised open" type="button">
+                                    <p>{{'common.status.open' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.open || countStatus.re_open; else elseCondition2;">{{countStatus.open + countStatus.re_open}}</ng-container>
+                                        <ng-template #elseCondition2>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(1, defectFilterKey)" [ngClass]="{'active': statusfilterId ==1}" class="btn btn-raised assigned" type="button">
+                                    <p>{{'common.status.assigned' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.assigned; else elseCondition3;">{{countStatus.assigned}}</ng-container>
+                                        <ng-template #elseCondition3>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(3, defectFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised in_progress" type="button">
+                                    <p>{{'common.status.in_progress' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.in_progress; else elseCondition4;">{{countStatus.in_progress}}</ng-container>
+                                        <ng-template #elseCondition4>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(5, defectFilterKey)" [ngClass]="{'active': statusfilterId==5}" class="btn btn-raised solved" type="button">
+                                    <p>{{'common.status.solved' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.solved || countStatus.deferred || countStatus.closed; else elseCondition5;">{{countStatus.solved + countStatus.deferred + countStatus.closed}}</ng-container>
+                                        <ng-template #elseCondition5>0</ng-template>
+                                    </span>
+                                </button>
+                                <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/defects', 0, defectFilterKey]" class="btn btn-raised btn-secondary" type="button">
+                                    <p>{{'common.status.total' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.all; else elseCondition1;">{{countStatus.all}}</ng-container>
+                                        <ng-template #elseCondition1>0</ng-template>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Defect list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="defects_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'defects.columns.id' | translate}}</th>
+                                            <th>{{'defects.columns.defect_name' | translate}}</th>
+                                            <th>{{'defects.columns.start_date' | translate}}</th>
+                                            <th>{{'defects.columns.end_date' | translate}}</th>
+                                            <th>{{'defects.columns.actual_hours' | translate}}</th>
+                                            <th>{{'defects.columns.assigned' | translate}}</th>
+                                            <th>{{'defects.columns.severity' | translate}}</th>
+                                            <th>{{'defects.columns.status' | translate}}</th>
+                                            <th>{{'defects.columns.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="defects?.length != 0">
+                                        <tr *ngFor="let defect of defects; index as i">
+                                            <td>
+                                                <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="getCheckPermission(defect); else elseBlock">
+                                                    <inline-edit-input (updateValue)="saveDefectDetail(i, 'defect_name', $event);" [elementFor]="'defects.inline_edit.defect_name' | translate" [fieldValue]="defect.defect_name" [isRequired]="'true'" [name]="'defect_name'" [type]="'text'"></inline-edit-input>
+                                                </ng-container>
+                                                <ng-template #elseBlock>{{defect.defect_name}}</ng-template>
+                                            </td>
+                                            <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{defect.actual_hours}}</td>
+                                            <td class="people-lists">
+                                                <ng-container *ngIf="defect.assign_member == 'Unassign' || defect.assign_member == '' || defect.assign_member == null; else elseBlock2;">
+                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                    </a>
+                                                </ng-container>
+                                                <ng-template #elseBlock2>
+                                                    <a [routerLink]="['/users/profile', defect.assign_member]" class="btn btn-profile-danger rounded-circle text-dark" placement="top" tooltip="{{defect.assigned_firstname}} {{defect.assigned_lastname}}">
+                                                        <img *ngIf="defect.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.assigned_avatar}}"/>
+                                                        <img *ngIf="!defect.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                    </a>
+                                                </ng-template>
+                                            </td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let severity of ('defects.severities' | translate)">
+                                                    <span *ngIf="severity.id == defect.severity" class="{{severity.class}}">{{severity.label}}</span>
+                                                </ng-container>
+                                            </td>
+                                            <td class="status-dropdown">
+                                                <div class="overdue-td">
+                                                    <ng-container *ngIf="getCheckPermission(defect); else elseBlock3">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(defect.status) | translate}}&nbsp;<span class="caret"></span>
+                                                            </button>
+                                                            <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                                <li *ngFor="let status of ('defects.status' | translate)" role="menuitem">
+                                                                    <a (click)="changeDefectStatus([defect.id], status);defect.status = status.id" [ngClass]="{'active': defect.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock3>
+                                                        <ng-container *ngFor="let status of ('defects.status' | translate)">
+                                                            <div class="budges-status">
+                                                                <span *ngIf="status.id == defect.status" class="{{status.class}}">{{status.label}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-container *ngIf="defect.is_overdue">
+                                                        <i aria-hidden="true" class="fa fa-clock-o danger overdue-icon" tooltip="{{'common.overdue' | translate}} : {{defect.is_overdue}} {{'common.days' | translate}}"></i>
+                                                    </ng-container>
+                                                </div>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li *ngIf="getCheckPermission(defect)" role="menuitem">
+                                                            <a [routerLink]="['/defects/edit', defect.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngIf="getCheckPermission(defect)" role="menuitem">
+                                                            <a (click)="deleteDefect(defect.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="defects?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

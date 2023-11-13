@@ -1,0 +1,57 @@
+<section *ngIf="isPageloaded">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mb-0 mt-2"><span>{{'todos.title' | translate}}</span></h4>
+                    <button (click)="openTodoCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'todos_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                        <i class="fa fa-plus"></i></button>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="drag-container">
+                                    <div class="section-heading">{{'common.status.open' | translate}}</div>
+                                    <div #pendingList="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[doneList]" [cdkDropListData]="todos.open" cdkDropList class="item-list">
+                                        <div *ngFor="let item of todos.open" cdkDrag class="item-box">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <inline-edit-textarea (updateValue)="saveTodosDetail(item, 'description', $event);" [elementFor]="'todos.inline_edit.description' | translate" [fieldValue]="item.description" [isRequired]="'true'" [name]="'description'"></inline-edit-textarea>
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        <inline-edit-date (updateValue)="saveTodosDetail(item, 'due_date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'todos.inline_edit.due_date' | translate" [fieldValue]="item.due_date" [format]="loginUser.settings.date_format" [isRequired]="'true'" [name]="'due_date'"></inline-edit-date>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="drag-container">
+                                    <div class="section-heading">{{'common.status.completed' | translate}}</div>
+                                    <div #doneList="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[pendingList]" [cdkDropListData]="todos.completed" cdkDropList class="item-list">
+                                        <div *ngFor="let item of todos.completed" cdkDrag class="item-box">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <inline-edit-textarea (updateValue)="saveTodosDetail(item, 'description', $event);" [elementFor]="'todos.inline_edit.description' | translate" [fieldValue]="item.description" [isRequired]="'true'" [name]="'description'"></inline-edit-textarea>
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        <inline-edit-date (updateValue)="saveTodosDetail(item, 'due_date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'todos.inline_edit.due_date' | translate" [fieldValue]="item.due_date" [format]="loginUser.settings.date_format" [isRequired]="'true'" [name]="'due_date'"></inline-edit-date>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

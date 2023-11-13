@@ -1,0 +1,144 @@
+<section *ngIf="isPageLoaded" class="project_planner">
+    <div class="card pl-2 pr-2">
+        <!-- Card header -->
+        <div class="card-header pl-0 pr-0">
+            <h4 class="main-title mt-2"><span>{{'project_planner.title' | translate}}</span></h4>
+
+            <!-- Filter buttons -->
+            <div class="row btn-filters ng-star-inserted">
+                <div class="col-sm-12">
+                    <button (click)="filterByStatus(1)" [ngClass]="{ 'active': statusfilterId == 1 }" class="btn btn-raised open" type="button">
+                        <p>{{'common.status.open' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.open}}
+                        </span>
+                    </button>
+                    <button (click)="filterByStatus(2)" [ngClass]="{ 'active': statusfilterId ==2  }" class="btn btn-raised in_progress" type="button">
+                        <p>{{'common.status.in_progress' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.inProgress}}
+                        </span>
+                    </button>
+                    <button (click)="filterByStatus(3)" [ngClass]="{ 'active': statusfilterId == 3 }" class="btn btn-raised on_hold" type="button">
+                        <p>{{'common.status.on_hold' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.onHold}}
+                        </span>
+                    </button>
+                    <button (click)="filterByStatus(4)" [ngClass]="{ 'active': statusfilterId == 4 }" class="btn btn-raised cancel" type="button">
+                        <p>{{'common.status.cancel' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.cancel}}
+                        </span>
+                    </button>
+                    <button (click)="filterByStatus(5)" [ngClass]="{ 'active': statusfilterId == 5 }" class="btn btn-raised completed" type="button">
+                        <p>{{'common.status.completed' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.completed}}
+                        </span>
+                    </button>
+                    <button (click)="filterByStatus(0)" [ngClass]="{ 'active': statusfilterId == 0 }" class="btn btn-raised btn-secondary" type="button">
+                        <p>{{'common.status.total' | translate}}</p>
+                        <span class="badge badge-light">
+                            {{projectPlanners.statusCount.all}}
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!-- Button filter end -->
+            <div class="card-buttons">
+                <button (click)="openCreateProjectModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'projects_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                    <i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row project-planner-list">
+        <ng-container *ngFor="let project of projectPlanners.projects; let i = index">
+            <div class="col-lg-6 ">
+                <div class="card list-details">
+                    <div class="card-body p-2">
+                        <div class="card-header-action">
+                            <div class="dropdown card-widgets"></div>
+                        </div>
+                        <div class=" task-name d-lg-flex d-md-flex">
+                            <h4 class="task-id">
+                                <a [routerLink]="['/projects-planner/detail', project.id]" tooltip="{{'common.view' | translate}}"><span>#{{project.generated_id}}</span></a>
+                            </h4>
+                            <p class="task-title ml-lg-2"> - {{project.project_name}}</p>
+                        </div>
+                        <div class="text-size d-lg-flex d-md-flex justify-content-between mt-2 mb-2">
+                            <div class="d-flex ">
+                                <div class="mb-lg-0 mb-2">
+                                    <strong>{{'project_planner.columns.start_date' | translate}}:</strong></div>
+                                <div class="ml-2 mr-2">
+                                    <span>{{ project.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</span>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="mb-lg-0 mb-2">
+                                    <strong>{{'project_planner.columns.end_date' | translate}}:</strong></div>
+                                <div class="ml-2 mr-2">
+                                    <span>{{ project.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-2 text-size">
+                            <span class="pr-2 text-nowrap mb-2 d-inline-block">
+                                <i class="fa fa-indent mr-1 text-muted"></i>
+                                <b>{{project.sprints_count}}</b> {{'project_planner.columns.sprint' | translate}}
+                            </span>
+                            <span class="pr-2 text-nowrap mb-2 d-inline-block">
+                                <i class="fa fa-tasks mr-1 text-muted"></i>
+                                <b>{{project.sprintTaskCount}}</b> {{'project_planner.sprint_task.title4' | translate}}
+                            </span>
+                            <span class="text-nowrap mb-2 d-inline-block">
+                                <i class="fa fa-list mr-1 text-muted"></i>
+                                <b>{{project.sprintStoryCount}}</b> {{'project_planner.sprint_task.title5' | translate}}
+                            </span>
+                        </p>
+                        <div class="d-lg-flex d-md-flex d-sm-table justify-content-between align-items-center">
+                            <div class=" py-1">
+                                <div class="people-lists ml-2 mb-1">
+                                    <ng-container *ngIf="project.assign_members == 'Unassign' || project.assign_members == '' || project.assign_members == null; else elseBlock2">
+                                        <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                            <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                        </a>
+                                    </ng-container>
+                                    <ng-template #elseBlock2>
+                                        <ng-container *ngFor="let user_id of project.assign_members | stringToArrayFilter index as i; odd as isOdd; even as isEven">
+                                            <a *ngIf="userLists[user_id]" [ngClass]="{'btn-profile-info': isOdd, 'btn-profile-danger': isEven}" [routerLink]="['/users/profile', user_id]" class="btn rounded-circle popover-item text-dark" tooltip="{{userLists[user_id].firstname}} {{userLists[user_id].lastname}}">
+                                                <img *ngIf="userLists[user_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[user_id].avatar}}"/>
+                                                <img *ngIf="!userLists[user_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                            </a>
+                                        </ng-container>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="budges-status mb-1">
+                                <ng-container *ngFor="let status of ('projects.status' | translate)">
+                                    <span *ngIf="status.id == project.status" class="{{status.class}}">{{status.label}}</span>
+                                </ng-container>
+                            </div>
+                            <div class="">
+                                <a [routerLink]="['/projects-planner/detail', project.id]" class="btn btn-view mb-0" tooltip="{{'common.view' | translate}}"><i class="fa fa-eye"></i> {{'common.view_more' | translate}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div *ngIf="projectPlanners.projects?.length == 0" class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-content pt-2">
+                        <div class="text-center">
+                            <img src="assets/img/norecord-img.png" width="50">
+                            <p class="mt-1">{{'common.empty_message.projects' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

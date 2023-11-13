@@ -1,0 +1,73 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'announcements.title' | translate }}</span></h4>
+                    <a *ngxPermissionsOnly="['admin', 'super_admin', 'announcements_create']" [routerLink]="['/announcements/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="announcement_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'announcements.columns.title' | translate}}</th>
+                                    <th>{{'announcements.columns.creator' | translate}}</th>
+                                    <th>{{'announcements.columns.start_date' | translate}}</th>
+                                    <th>{{'announcements.columns.end_date' | translate}}</th>
+                                    <th>{{'announcements.columns.status' | translate}}</th>
+                                    <th>{{'announcements.columns.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="announcements?.length != 0">
+                                <tr *ngFor="let announcement of announcements; index as i">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        <ng-container *ngIf="getCheckPermission(announcement); else elseBlock1;">
+                                            <inline-edit-input (updateValue)="saveAnnouncementDetail(i, 'title', $event);" [elementFor]="'announcements.columns.title' | translate" [fieldValue]="announcement.title" [isRequired]="'true'" [maxLength]="100" [name]="'title'" [type]="'text'"></inline-edit-input>
+                                        </ng-container>
+                                        <ng-template #elseBlock1>{{announcement.title}}</ng-template>
+                                    </td>
+                                    <td class="people-lists">
+                                        <a [routerLink]="['/users/profile', announcement.user_id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{announcement.firstname}} {{announcement.lastname}}">
+                                            <img *ngIf="announcement.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{announcement.avatar}}"/>
+                                            <img *ngIf="!announcement.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </td>
+                                    <td>{{announcement.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                    <td>{{announcement.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                                    <td class="budges-status">
+                                        <span *ngIf="announcement.status == 0" class="waiting">{{'common.status.unpublished' | translate}}</span>
+                                        <span *ngIf="announcement.status != 0" class="completed">{{'common.status.published' | translate}}</span>
+                                    </td>
+                                    <td class="actions-dropdown">
+                                        <div *ngIf="getCheckPermission(announcement)" class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li role="menuitem">
+                                                    <a [routerLink]="['edit', announcement.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a (click)="deleteAnnouncement(announcement.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="announcements?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

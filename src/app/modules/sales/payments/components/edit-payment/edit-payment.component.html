@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-money"></i>&nbsp;{{'payments.title' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="paymentForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">{{'payments.create.fields.amount' | translate}} ({{loginUser.currency.symbol}})<span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && paymentControl.amount.errors }" class="form-control" formControlName="amount" id="amount" placeholder="00.00" type="number"/>
+                        <div *ngIf="isFormSubmitted && paymentControl.amount.errors" class="invalid-feedback">
+                            <div *ngIf="paymentControl.amount.errors.required">{{'payments.create.error_messages.message1' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && paymentControl.payment_method.errors }" class="form-group">
+                        <label for="payment_method">{{'payments.create.fields.payment_mode' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <ng-select [items]="paymentMethods" [searchable]="true" [selectOnTab]="true" bindLabel="method_name" bindValue="method_name" formControlName="payment_method" labelForId="payment_method" placeholder="{{'payments.create.placeholders.placeholder2' | translate }}"></ng-select>
+                        <div *ngIf="isFormSubmitted && paymentControl.payment_method.errors" class="invalid-feedback">
+                            <div *ngIf="paymentControl.payment_method.errors.required">{{'payments.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">{{'payments.create.fields.transaction_id' | translate}}</label>
+                        <input class="form-control" formControlName="transaction_id" id="transaction_id" placeholder="{{'payments.create.placeholders.placeholder4' | translate}}" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="notes">{{'payments.create.fields.notes' | translate}}</label>
+                        <textarea class="form-control" formControlName="notes" id="notes" placeholder="{{'payments.create.placeholders.placeholder3' | translate }}"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

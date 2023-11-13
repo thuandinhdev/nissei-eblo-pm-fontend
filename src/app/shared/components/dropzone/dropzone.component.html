@@ -1,0 +1,12 @@
+<div #logodropzone class="dropzone dz-clickable">
+    <div *ngIf="isFileLoaded && defaultValue" class="dz-preview dz-image-preview">
+        <div class="dz-image">
+            <img height="100" src="{{apiUrl}}/uploads/project/{{defaultValue}}" width="100"/>
+        </div>
+        <a (click)="removeDropzoneImage()" class="btn btn-default btn-sm btn-block">{{ 'common.remove_file' | translate }}</a>
+    </div>
+
+    <!-- <div class="dz-default dz-message">
+        <span><strong>{{ 'projects.create.error_messages.message14' | translate }}</strong></span>
+    </div> -->
+</div>

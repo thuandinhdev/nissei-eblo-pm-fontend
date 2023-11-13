@@ -1,0 +1,325 @@
+// ================================================================================================
+// 	File Name: datatables.scss
+// 	Description: Datatables class override form angular datatables etc..
+// 				 related customiztion.
+// ================================================================================================
+.b4-datatable {
+	th, td{
+		border: 0px;
+		border-bottom: 1px solid #e8eef3;
+	}
+	> thead {
+		> tr {
+			 background-color: $btn-bg;
+			// background: -moz-linear-gradient(top, $table-action-btn 0, $table-action-btn 100%);
+			// background: -webkit-gradient(linear, left top, left bottom, color-stop(0, $table-action-btn), color-stop(100%, $table-action-btn));
+			// background: -webkit-linear-gradient(top, $table-action-btn 0, $table-action-btn 100%);
+			// background: -o-linear-gradient(top, $table-action-btn 0, $table-action-btn 100%);
+			// background: -ms-linear-gradient(top, $table-action-btn 0, $table-action-btn 100%);
+			// background: linear-gradient(to bottom, $table-action-btn 0, $table-action-btn 100%);
+			 color: $primary-main;
+			> th {
+				text-transform: uppercase;
+				font-size: 12px;
+				font-weight: 600;
+				padding: 10px 10px;
+				white-space: nowrap;
+				&:after, &:before{
+					top: 50%;
+					bottom: 0.4em !important;
+					transform: translateY(-50%);
+					line-height: normal;
+					opacity: 0.7 !important;
+				}
+			}
+		}
+	}
+	> tbody {
+		> tr {
+			> th {
+				border-bottom-width: 0;
+				text-transform: uppercase;
+				font-size: 12px;
+				font-weight: 600;
+				white-space: nowrap;
+				&:after, &:before{
+					top: 50%;
+					transform: translateY(-50%);
+					line-height: normal;
+				}
+			}
+			> td {
+				padding: 10px 10px;
+				font-weight: 400;
+				font-size: 15px;
+			}
+		}
+	}
+	.btn-actions {
+		text-align: center;
+		line-height: 1;
+		.btn-group {
+			.dropdown-menu {
+				width: auto;
+				min-width: auto;
+				background: transparent;
+				border: none;
+				li {
+					margin-bottom: 0.20rem;
+					a {
+						font-size: 0.55rem;
+					}
+				}
+			}
+		}
+	}
+	.people-list {
+		a {
+			width: 30px;
+			height: 30px;
+			width: 30px;
+			height: 30px;
+			padding: 0.50rem;
+			border-radius: 50%;
+			text-align: center;
+			background-color: $white;
+			border: 1px solid #159957;
+			color: #159957;
+			margin-right: 3px;
+			font-weight: 400;
+			&:hover, &:focus {
+				background-color: #159957;
+				color: $white;
+			}
+		}
+	}
+	.duration {
+		line-height: 1.5rem;
+	}
+}
+.completion {
+	line-height: 1.5rem;
+	.progress {
+		height: 0.5rem;
+		.progress-bar {
+			background-image: linear-gradient(45deg, $primary-light, $primary-main);
+		}
+	}
+}
+
+// --
+// Export buttons
+.html5buttons {
+	float: right;
+
+	.btn-datatable-gredient {
+		height: 40px;
+		width: 40px;
+		// box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
+		background: $white !important;
+		color: $table-action-btn !important;
+		position: relative;
+		border-radius: 4px;
+		border: 1px solid #bce6e7 !important;
+
+		span {
+			&:before {
+				font-size: 14px;
+			}
+		}
+
+		&:hover {
+			background: $table-action-btn !important;
+			color: #fff !important;
+			border:none;
+		}
+	}
+
+}
+
+.buttons-excel {
+	span {
+		&:before {
+			content: "\f1c3";
+			font-family: FontAwesome;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+			font-size: 20px;
+		}
+	  
+	}
+}
+
+.buttons-pdf {
+	span {
+		&:before {
+			content: "\f1c1";
+			font-family: FontAwesome;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+
+			font-size: 20px;
+		}
+
+	  
+	}
+}
+
+.buttons-print {
+	span {
+		
+		&:before {
+			content: "\f02f";
+			font-family: FontAwesome;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+
+			font-size: 20px;
+		}
+
+	  
+	}
+}
+
+.buttons-csv {
+	span {
+		&:before {
+			content: "\f15b";
+			font-family: FontAwesome;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 100%;
+
+			font-size: 20px;
+		}
+
+	  
+	}
+}
+
+// --
+// Pagination
+div.dataTables_wrapper div.dataTables_filter input {
+	margin: 0.5rem 2rem;
+	display: block;
+	border: none;
+	padding: 10px 0;
+	border-radius: 0;
+	border-bottom: 2px solid $primary-main;
+	font-size: 1rem;
+}
+
+table.dataTable.no-footer,
+table.dataTable tfoot td,
+table.dataTable thead th {
+	border: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	padding: 0;
+	margin-left: 0;
+
+	&:hover {
+		background: none;
+		border: 1px solid $white;
+	}
+}
+
+.pagination {
+	display: inline-block;
+
+	.previous,
+	.next {
+		.page-link {
+			width: auto !important;
+			padding: 0 25px;
+			border-radius: 4px;
+		}
+	}
+
+	.page-link {
+		position: relative;
+		display: block;
+		color: #000;
+		background-color: #fff;
+		border: 1px solid #dee2e6;
+		margin: 0 5px;
+		width: 40px !important;
+		height: 40px;
+		line-height: 40px;
+		font-size: 14px;
+		padding: 0;
+		text-align: center;
+		border-radius: 4px;
+		box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.01), 0 8px 9px 0 rgba(0, 0, 0, 0.01);
+	}
+
+	.page-item.active {
+		.page-link {
+			color: $white;
+			box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.1), 0 8px 9px 0 rgba(0, 0, 0, 0.1) !important;
+			background-color: $primary-main;
+		}
+	}
+
+	.page-item {
+		&:hover .page-link {
+			color: $white;
+			box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.1), 0 8px 9px 0 rgba(0, 0, 0, 0.1) !important;
+			background-color: $primary-main;
+		}
+	}
+}
+
+table.table-bordered.dataTable tbody td {
+	border-bottom-width: 1px;
+	font-size: 14px;
+}
+
+table.table-bordered.dataTable tbody td p {
+	font-size: 14px;
+}
+
+// --
+// Pagination lengh
+div.dataTables_wrapper div.dataTables_length {
+	margin-top: 1rem;
+
+	select {
+		width: 100%;
+		border: none;
+		border-bottom: 2px solid $primary-main;
+		border-radius: 0;
+	}
+}
+
+div.dataTables_wrapper div.dataTables_info {
+	padding-top: 1rem;
+	font-size: 12px;
+}
+
+// --
+// Sorting icons
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting {
+	background-image: none;
+}
+
+.page-item.active .page-link {
+	z-index: inherit !important;
+}
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+	padding: 0 25px;
+	width: auto !important;
+	border-radius: 4px;
+}

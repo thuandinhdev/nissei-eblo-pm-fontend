@@ -1,0 +1,378 @@
+<div class="row">
+    <div *ngIf="dashboardSettings.is_projects_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <a [routerLink]="['/projects']">
+            <div class="card blackberry-gradient card-icon">
+                <div class="card-body">
+                    <div class="card-block p-1">
+                        <div class="media d-block">
+                            <div class="media-right white d-flex justify-content-center widgets-icon">
+                                <i class="fa fa-product-hunt"></i>
+                                <h3 class=" ml-2 mt-2">{{'projects.title' | translate}}</h3>
+                            </div>
+                            <div class="media-body white">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.in_progress_projects}}</b><span> {{'common.status.in_progress' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.overdue_projects}}</b><span> {{'common.status.overdue' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div *ngIf="dashboardSettings.is_tasks_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <a [routerLink]="['/tasks']">
+            <div class="card pomegranate-gradient card-icon">
+                <div class="card-body">
+                    <div class="card-block p-1">
+                        <div class="media d-block">
+                            <div class="media-right white d-flex justify-content-center widgets-icon">
+                                <i class="fa fa-tasks"></i>
+                                <h3 class=" ml-2 mt-2"> {{'tasks.title' | translate}}</h3>
+                            </div>
+                            <div class="media-body white">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.in_progress_tasks}}</b><span> {{'common.status.in_progress' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.overdue_tasks}}</b><span> {{'common.status.overdue' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div *ngIf="dashboardSettings.is_defects_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <a [routerLink]="['/defects']">
+            <div class="card green-tea-gradient card-icon">
+                <div class="card-body">
+                    <div class="card-block p-1">
+                        <div class="media d-block">
+                            <div class="media-right white d-flex justify-content-center widgets-icon">
+                                <i class="fa fa-bug"></i>
+                                <h3 class=" ml-2 mt-2"> {{'defects.title' | translate}}</h3>
+                            </div>
+                            <div class="media-body white">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.in_progress_defects}}</b><span> {{'common.status.in_progress' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.overdue_defects}}</b><span> {{'common.status.overdue' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div *ngIf="dashboardSettings.is_incidents_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <a [routerLink]="['/incidents']">
+            <div class="card ibiza-sunset-gradient card-icon">
+                <div class="card-body">
+                    <div class="card-block p-1">
+                        <div class="media d-block">
+                            <div class="media-right white d-flex justify-content-center widgets-icon">
+                                <i class="fa fa-ticket"></i>
+                                <h3 class=" ml-2 mt-2"> {{'incidents.title' | translate}}</h3>
+                            </div>
+                            <div class="media-body white">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.in_progress_incidents}}</b><span> {{'common.status.in_progress' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div>
+                                                    <h6>
+                                                        <b>{{dashboardLists1.overdue_incidents}}</b><span> {{'common.status.overdue' | translate}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <ng-container *ngxPermissionsOnly="['admin', 'super_admin']">
+        <div *ngIf="dashboardSettings.is_estimates_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <a [routerLink]="['/estimates']">
+                <div class="card celestial-gradient card-icon">
+                    <div class="card-body">
+                        <div class="card-block p-1">
+                            <div class="media d-block">
+                                <div class="media-right white d-flex justify-content-center widgets-icon">
+                                    <i class="fa fa-external-link"></i>
+                                    <h3 class="ml-2 mt-2"> {{'estimates.title' | translate}}</h3>
+                                </div>
+                                <div class="media-body white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.accepted_estimate}}</b><span> {{'common.status.accepted' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.declined_estimate}}</b><span> {{'common.status.declined' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div *ngIf="dashboardSettings.is_invoices_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <a [routerLink]="['/invoices']">
+                <div class="card deep-orange-orange-gradient card-icon">
+                    <div class="card-body">
+                        <div class="card-block p-1">
+                            <div class="media d-block">
+                                <div class="media-right white d-flex justify-content-center widgets-icon">
+                                    <i class="fa fa-file-pdf-o"></i>
+                                    <h3 class=" ml-2 mt-2"> {{'invoices.title' | translate}}</h3>
+                                </div>
+                                <div class="media-body white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.paid_invoice}}</b><span> {{'common.status.paid' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.unpaid_invoice}}</b><span> {{'common.status.unpaid' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div *ngIf="dashboardSettings.is_payments_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <a [routerLink]="['/payments']">
+                <div class="card red-pink-gradient card-icon">
+                    <div class="card-body">
+                        <div class="card-block p-1">
+                            <div class="media d-block">
+                                <div class="media-right white d-flex justify-content-center widgets-icon">
+                                    <i class="fa fa-money"></i>
+                                    <h3 class=" ml-2 mt-2"> {{'payments.title' | translate}}</h3>
+                                </div>
+                                <div class="media-body white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.due_payment}}</b><span> {{'dashboard.widgets.due_payment' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.received_payment}}</b><span> {{'dashboard.widgets.recieved_payment' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div *ngIf="dashboardSettings.is_leaves_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <a [routerLink]="['/leaves/request']">
+                <div class="card politics-gradient card-icon">
+                    <div class="card-body">
+                        <div class="card-block p-1">
+                            <div class="media d-block">
+                                <div class="media-right white d-flex justify-content-center widgets-icon">
+                                    <i class="fa fa-calendar-times-o"></i>
+                                    <h3 class=" ml-2 mt-2"> {{'leaves.title' | translate}}</h3>
+                                </div>
+                                <div class="media-body white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.pending_leave}}</b><span> {{'dashboard.widgets.received_request' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 text-center">
+                                                    <div>
+                                                        <h6>
+                                                            <b>{{dashboardLists1.approved_leave}}</b><span> {{'dashboard.widgets.approved_request' | translate}}</span>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </ng-container>
+</div>
+<div *ngIf="!loginUser.is_client" class="row">
+    <div *ngIf="dashboardSettings.is_users_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-block p-3">
+                    <div class="media">
+                        <div class="media-right white mr-3 card-icon-1 cosmic-fusion-gradient">
+                            <i class="fa fa-users font-l-1"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                            <h3 class="font-l-1 mb-1">{{dashboardLists.total_user}}</h3>
+                            <span>{{'users.title' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dashboardSettings.is_clients_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-block p-3">
+                    <div class="media">
+                        <div class="media-right white mr-3 card-icon-1 green-teal-gradient">
+                            <i class="fa fa-user-circle font-l-1"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                            <h3 class="font-l-1 mb-1">{{dashboardLists.total_client}}</h3>
+                            <span>{{'clients.title' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dashboardSettings.is_teams_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-block p-3">
+                    <div class="media">
+                        <div class="media-right white mr-3 card-icon-1 purple-deep-purple-gradient">
+                            <i class="fa fa-universal-access font-l-1"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                            <h3 class="font-l-1 mb-1">{{dashboardLists.total_team}}</h3>
+                            <span>{{'teams.title' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dashboardSettings.is_articles_widget" class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-block p-3">
+                    <div class="media">
+                        <div class="media-right white mr-3 card-icon-1 purple-amber-gradient">
+                            <i class="fa fa-newspaper-o font-l-1"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                            <h3 class="font-l-1 mb-1">{{dashboardLists.total_kb_article}}</h3>
+                            <span>{{'knowledge_base.article.title1' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

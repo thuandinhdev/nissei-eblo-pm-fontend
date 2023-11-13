@@ -1,0 +1,53 @@
+<div class="card card-height overflow-y">
+    <div class="card-header border-bottom mb-3">
+        <h4 class="card-title mt-2">{{'projects.title' | translate}}</h4>
+        <div class="card-buttons">
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'projects_view']" [routerLink]="['/projects']" class="btn btn-rounded mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>&nbsp;&nbsp;
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'projects_create']" [routerLink]="['/projects/create']" class="btn btn-rounded mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <div [perfectScrollbar]="scrollConfig" class="card-body sidebar-content">
+        <div class="card-block pt-0">
+            <div *ngIf="projects.length !=0" class="list-elements">
+                <div *ngFor="let project of projects" class="feed-element {{projectstatusKeyClass[project.status]}}">
+                    <div class="feed-element-body">
+                        <div class="justify-content-center justify-content-lg-between">
+                            <h6>
+                                <a [routerLink]="['/projects/detail', project.id]" tooltip="{{'common.view' | translate}}">{{project.generated_id}}</a><span> - {{project.project_name}}</span>
+                            </h6>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="people-lists">
+                                <ng-container *ngIf="project.assign_members == 'Unassign' || project.assign_members == '' || project.assign_members == null; else elseBlock">
+                                    <a class="btn rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                    </a>
+                                </ng-container>
+                                <ng-template #elseBlock>
+                                    <ng-container *ngFor="let user_id of project.assign_members | stringToArrayFilter index as i;">
+                                        <a *ngIf="userLists[user_id]" [routerLink]="['/users/profile', user_id]" class="btn rounded-circle popover-item text-dark" tooltip="{{userLists[user_id].firstname}} {{userLists[user_id].lastname}}">
+                                            <img *ngIf="userLists[user_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[user_id].avatar}}"/>
+                                            <img *ngIf="!userLists[user_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </ng-container>
+                                </ng-template>
+                            </div>
+                            <!-- <div  class="badge badge-pill mt-2">{{ project.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</div> -->
+                            <div class="budges-status">
+                                <ng-container *ngFor="let status of ('projects.status' | translate)">
+                                    <span *ngIf="status.id == project.status" class="{{status.class}}">{{status.label}}</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="projects?.length == 0" class="text-center">
+                <img src="assets/img/norecord-img.png" width="50">
+                <p class="mt-1">{{ 'common.empty_message.projects' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>

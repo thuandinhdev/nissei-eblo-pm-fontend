@@ -1,0 +1,28 @@
+// ====================================
+// 	File Name: layout.scss
+// 	Description: Layout mixin file
+// 				 related customiztion.
+// ====================================
+
+/** *********************
+	Breakpoints
+	***********************/
+$S:     480px;
+$M:     768px;
+$L:     1100px;
+
+/** *********************
+	Media queries
+	***********************/
+@mixin MQ($canvas) {
+	@if $canvas == S {
+		@media only screen and (min-width: $S) { @content; } 
+	}
+	@else if $canvas == M {
+		@media only screen and (min-width: $M) { @content; } 
+	}
+	@else if $canvas == L {
+		@media only screen and (min-width: $L) { @content; } 
+	}
+}
+

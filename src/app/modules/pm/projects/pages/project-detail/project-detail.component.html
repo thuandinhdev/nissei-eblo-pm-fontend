@@ -1,0 +1,52 @@
+<section class="detail-page">
+    <div *ngIf="isPageLoaded" class="card bg-transparent">
+        <tabset class="nav nav-tabs d-flex justify-content-center p-0">
+            <tab (selectTab)="setActiveProjectTab($event)" customClass="text-left" id="1">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-info-circle"></i><span class="mt-1 ml-1">{{'common.details' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-project-details *ngIf="getActiveProjectTab('1')" [apiUrl]="apiUrl" [loginUser]="loginUser" [permissions]="permissions" [project]="project"></app-project-details>
+            </tab>
+            <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="2">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-calendar"></i><span class="mt-1 ml-1">{{'calendar.title' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-project-calendar *ngIf="getActiveProjectTab('2')" [loginUser]="loginUser" [project]="project"></app-project-calendar>
+            </tab>
+            <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="3">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-tasks"></i><span class="mt-1 ml-1">{{'tasks.title' | translate}}</span></div>
+                </ng-template>
+                <app-project-tasks *ngIf="getActiveProjectTab('3')" [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-project-tasks>
+            </tab>
+            <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="4">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-bug"></i><span class="mt-1 ml-1">{{'defects.title' | translate}}</span></div>
+                </ng-template>
+                <app-project-defects *ngIf="getActiveProjectTab('4')" [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-project-defects>
+            </tab>
+            <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="5">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-ticket"></i><span class="mt-1 ml-1">{{'incidents.title' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-projects-incidents *ngIf="getActiveProjectTab('5')" [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-projects-incidents>
+            </tab>
+            <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="6">
+                <ng-template tabHeading>
+                    <div class="d-flex">
+                        <i class="fa fa-clock-o"></i><span class="mt-1 ml-1">{{'timesheet.title' | translate}}</span>
+                    </div>
+                </ng-template>
+                <app-project-timesheet *ngIf="getActiveProjectTab('6')" [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-project-timesheet>
+            </tab>
+        </tabset>
+    </div>
+</section>

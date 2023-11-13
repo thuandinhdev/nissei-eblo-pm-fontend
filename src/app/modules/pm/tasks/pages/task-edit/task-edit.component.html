@@ -1,0 +1,241 @@
+<section *ngIf="isPageLoaded" id="basic-form-layouts">
+    <form (ngSubmit)="onSubmit()" [formGroup]="editTaskForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <ng-container *ngIf="task.parent_task_id == 0;">{{'tasks.title4' | translate}}</ng-container>
+                            <ng-container *ngIf="task.parent_task_id != 0;">{{'tasks.title5' | translate}}</ng-container>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-type"></i> {{'tasks.headings.head1' | translate}}
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label *ngIf="task.parent_task_id == 0" for="generated_id">{{'tasks.create.fields.task_ID' | translate }}&nbsp;<span class="text-danger">*</span></label>
+                                            <label *ngIf="task.parent_task_id !=0" for="generated_id">{{'tasks.create.fields.subtask_Id' | translate }}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.generated_id.errors }" class="form-control" formControlName="generated_id" id="generated_id" readonly type="text"/>
+                                            <div *ngIf="isFormSubmitted && taskControl.generated_id.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.generated_id.errors.required">{{'tasks.create.error_messages.message3' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="name">{{'tasks.create.fields.task_name' | translate }}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.name.errors }" class="form-control" formControlName="name" id="name" placeholder="{{'tasks.create.placeholders.placeholder1' | translate }}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && taskControl.name.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.name.errors.required">{{'tasks.create.error_messages.message1' | translate }}</div>
+                                                <div *ngIf="taskControl.name.errors.maxlength">{{'tasks.create.error_messages.message2' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-calendar"></i> {{'tasks.headings.head2' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.planned_start_date.errors }" class="form-group">
+                                            <label for="planned_start_date">{{'tasks.create.fields.plan_startdate' | translate }}</label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp1="bsDatepicker" (onHidden)="planstartDateChange($event)" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="planned_start_date" id="planned_start_date" placeholder="{{'tasks.create.placeholders.placeholder2' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && taskControl.planned_start_date.errors" class="invalid-feedback">
+                                                    <div *ngIf="taskControl.planned_start_date.errors">{{'tasks.create.error_messages.message4' | translate }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.planned_end_date.errors }" class="form-group">
+                                            <label for="planned_end_date">{{'tasks.create.fields.plan_enddate' | translate }}</label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp2="bsDatepicker" [bsConfig]="datepickerConfig" [minDate]="editTaskForm.get('planned_start_date').value" bsDatepicker class="form-control" formControlName="planned_end_date" id="planned_end_date" placeholder="{{'tasks.create.placeholders.placeholder3' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && taskControl.planned_end_date.errors" class="invalid-feedback">
+                                                    <div *ngIf="taskControl.planned_end_date.errors">{{'tasks.create.error_messages.message5' | translate }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.task_start_date.errors }" class="form-group">
+                                            <label for="task_start_date">{{'tasks.create.fields.actual_startdate' | translate }}</label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp3="bsDatepicker" (onHidden)="taskstartDateChange($event)" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="task_start_date" id="task_start_date" placeholder="{{'tasks.create.placeholders.placeholder4' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && taskControl.task_start_date.errors" class="invalid-feedback">
+                                                    <div *ngIf="taskControl.task_start_date.errors">{{'tasks.create.error_messages.message6' | translate }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.task_end_date.errors }" class="form-group">
+                                            <label for="task_end_date">{{'tasks.create.fields.actual_enddate' | translate }}</label>
+                                            <div class="position-relative has-icon-left">
+                                                <input #dp4="bsDatepicker" [bsConfig]="datepickerConfig" [minDate]="editTaskForm.get('task_start_date').value" bsDatepicker class="form-control" formControlName="task_end_date" id="task_end_date" placeholder="{{'tasks.create.placeholders.placeholder5' | translate }}" type="text"/>
+                                                <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                                <div *ngIf="isFormSubmitted && taskControl.task_end_date.errors" class="invalid-feedback">
+                                                    <div *ngIf="taskControl.task_end_date.errors">{{'tasks.create.error_messages.message7' | translate }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-trending-up"></i> {{'tasks.headings.head3' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'tasks.create.fields.progress' | translate }}</label>
+                                            <ng5-slider [options]="progressOptions" formControlName="progress"></ng5-slider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">&nbsp;</div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i class="fa ft-zap"></i> {{'tasks.headings.head4' | translate}}</h4>
+                                <div *ngIf="task.parent_task_id == 0" class="row">
+                                    <div class="col-md-7">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.project_id.errors }" class="form-group">
+                                            <label for="project_id">{{'tasks.create.fields.project_name' | translate }}&nbsp;<span class="text-danger">*</span></label>
+                                            <ng-select (change)="projectChange($event)" (clear)="clearVersionValues('project_version')" [items]="projects" [searchable]="true" [selectOnTab]="true" bindLabel="project_name" bindValue="id" formControlName="project_id" labelForId="project_id" placeholder="{{'tasks.create.placeholders.placeholder6' | translate }}">
+                                                <ng-template let-item="item" ng-option-tmp>
+                                                    {{item.project_name}}
+                                                </ng-template>
+                                            </ng-select>
+                                            <div *ngIf="isFormSubmitted && taskControl.project_id.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.project_id.errors.required">{{'tasks.create.error_messages.message8' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="project_version">{{'tasks.create.fields.project_version' | translate }}</label>
+                                            <ng-select [items]="projectVersions" [searchable]="true" [selectOnTab]="true" formControlName="project_version" placeholder="{{'tasks.create.placeholders.placeholder7' | translate }}">
+                                                <ng-template let-item="item" ng-option-tmp>
+                                                    {{item}}
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="task.parent_task_id != 0;" class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'tasks.create.fields.project_name' | translate }}:</label>
+                                            <span class="badge badge-secondary">{{task.project1.project_name}}</span><br>
+                                            <label>{{'tasks.create.fields.project_version' | translate }}:</label>
+                                            <span class="badge badge-secondary">{{parentTask.project_version}}</span><br>
+                                            <label>{{'tasks.create.fields.parent_taskID' | translate }}:</label><span class="badge badge-secondary">{{parentTask.generated_id}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section">
+                                    <i class="ft-file-text"></i> {{'tasks.headings.head5' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="assign_to">{{'tasks.create.fields.assigned_To' | translate }}</label>
+                                            <ng-select [items]="users" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="assign_to" labelForId="assign_to" placeholder="{{'tasks.create.placeholders.placeholder8' | translate }}">
+                                                <ng-template let-item="item" ng-option-tmp>{{item.firstname}} {{item.lastname}}</ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.status.errors }" class="form-group">
+                                            <label for="status">{{'tasks.create.fields.status' | translate }}&nbsp;<span class="text-danger">*</span>
+                                            </label>
+                                            <ng-select [items]="(getTaskStatus(task.status) | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="status" labelForId="status" placeholder="{{'tasks.create.placeholders.placeholder9' | translate }}"></ng-select>
+                                            <div *ngIf="isFormSubmitted && taskControl.status.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.status.errors.required">{{'tasks.create.error_messages.message11' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.priority.errors }" class="form-group">
+                                            <label for="status">{{'tasks.create.fields.priority' | translate }}&nbsp;<span class="text-danger">*</span></label>
+                                            <ng-select [items]="('tasks.priorities' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="priority" labelForId="priority" placeholder="{{'tasks.create.placeholders.placeholder10' | translate }}"></ng-select>
+                                            <div *ngIf="isFormSubmitted && taskControl.priority.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.priority.errors.required">{{'tasks.create.error_messages.message12' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="estimated_hours">{{'tasks.create.fields.estimate_hours' | translate }}</label>
+                                            <input [ngClass]="{ 'is-invalid': (isFormSubmitted && taskControl.estimated_hours.errors || isHoursValid) }" class="form-control" formControlName="estimated_hours" placeholder="00:00" type='text'>
+                                            <div *ngIf="isFormSubmitted && taskControl.estimated_hours.errors" class="invalid-feedback">
+                                                <div *ngIf="taskControl.estimated_hours.errors.pattern">{{'tasks.create.error_messages.message13' | translate }}</div>
+                                            </div>
+                                            <div *ngIf="isHoursValid" class="invalid-feedback">
+                                                <div *ngIf="isHoursValid">{{'tasks.create.error_messages.message14' | translate }} {{this.task.project1.estimated_hours}}.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="customFields.length > 0" class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-star"></i> {{'tasks.headings.head6' | translate}}
+                                </h4>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <app-show-custom-field-element [controls]="editTaskForm.get('custom_field')" [customFields]="customFields" [formArray]="'custom_field'" [formName]="editTaskForm" [isFormSubmitted]="isFormSubmitted"></app-show-custom-field-element>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section">
+                                    <i class="ft-message-square"></i> {{'tasks.headings.head7' | translate}}</h4>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="description">{{'tasks.create.fields.description' | translate }}</label>
+                                            <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <a [routerLink]="['/tasks']" class="btn btn-cancel mb-0">{{'common.cancel' | translate}}</a>
+                                        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -1,0 +1,113 @@
+// ======================================================================================================================
+//  File Name: variables.scss
+//  Description: Variables file like fonts, theme colors, spacing variable etc.. and related customization
+// ======================================================================================================================
+
+// --
+
+// Main Global Primary Colors
+$primary-main: #009092;
+$secondary-main: #000000;
+$primary-light:#08dfe2;
+$btn-bg: rgba(0, 157, 160, 0.11);
+$table-action-btn: #009092;
+
+// Theme Colors
+$theme-colors: (
+	primary: #009DA0,
+	success: #0CC27E,
+	info: #1CBCD8,
+	warning: #FF8D60,
+	danger: #FF586B,
+	secondary: #868e96,
+	light: #f8f9fa,
+	dark: #343a40
+);
+
+// --
+//  Spacing
+$spacer: 1.5rem;
+$spacers: (
+	0: 0,
+	1: ($spacer * .25),
+	2: ($spacer * .50),
+	3: $spacer,
+	4: ($spacer * 1.5),
+	5: ($spacer * 3)
+) !default;
+
+// --
+// Body
+$body-bg: #f5f7fa;
+
+// --
+// Fonts families/sizes
+$font-family-montserrat: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-rubik: "Rubik", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font_0: Montserrat;
+$font_1: Segoe UI;
+$font_2: Roboto;
+$font_3: Helvetica Neue;
+$font_4: Arial;
+$font_5: sans-serif;
+
+$font-size-root: 16px;
+
+/** ********
+	Colors
+	*********/
+$color_martinique_approx: #35364b;
+$color_french_gray_approx: #bdbdc7;
+$color_gun_powder_approx: #404258;
+$color_persian_green_approx: #009da0;
+$color_dolphin_approx: #616279;
+$white: #fff;
+$black: #000;
+$color_bombay_approx: #b1b1bb;
+$color_topaz_approx: #77798e;
+$color_scarpa_flow_approx: #4f5069;
+$color_mulled_wine_approx: #494b62;
+$black_20: rgba(0, 0, 0, .2);
+$color_carnation_approx: #f05f57;
+$color_blush_approx: #c83d5c;
+$color_camelot_approx: #99245a;
+$color_tawny_port_approx: #671351;
+$color_valentino_approx: #360940;
+$color_eminence_approx: #662d86;
+$color_vivid_violet_approx: #8b2a8a;
+$color_medium_red_violet_approx: #ae2389;
+$color_red_violet_approx: #cf1d83;
+$color_cerise_approx: #ed1e79;
+$color_chathams_blue_approx: #144e68;
+$color_blue_lagoon_approx: #006d83;
+$color_blue_chill_approx: #008d92;
+$color_emerald_approx: #57ca85;
+$color_purple_heart_approx: #4a00e0;
+$color_jordy_blue_approx: #97abff;
+$color_chetwode_blue_approx: #798ce5;
+$color_indigo_approx: #5b6ecb;
+$color_azure_approx: #3b51b1;
+$color_torea_bay_approx: #123597;
+$color_gravel_approx: #474747;
+$color_abbey_approx: #4c4d4d;
+$color_fuscous_gray_approx: #4f5050;
+$black_1: rgba(0, 0, 0, .01);
+$black_14: rgba(0, 0, 0, .14);
+$black_15: rgba(0, 0, 0, .15);
+$black_50: rgba(0, 0, 0, .5);
+$white_30: rgba(255, 255, 255, .3);
+$color_scooter_approx: #1cbcd8;
+$color_salmon_approx: #ff8d60;
+$color_oslo_gray_approx: #868e96;
+$black_87: rgba(0, 0, 0, .87);
+$black_30: rgba(0, 0, 0, .3);
+$black_80: rgba(0, 0, 0, .8);
+
+/** ********************
+	Backgound image URL
+	*******************/
+$url_0: url(dark-bg.030c2b61779310cd0195.jpg);
+$url_1: url(/assets/img/gallery/bg_glass_1.jpg);
+$url_2: url(/assets/img/gallery/bg_glass_2.jpg);
+$url_3: url(/assets/img/gallery/bg_glass_3.jpg);
+$url_4: url(/assets/img/gallery/bg_glass_4.jpg);

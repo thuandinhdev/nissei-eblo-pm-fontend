@@ -1,0 +1,49 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-3">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'leaves.title5' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/leaves']" class="btn btn-create mb-0" tooltip="{{'leaves.title3' | translate}}"><i class="fa fa-list"></i></a>
+                        <a [routerLink]="['/leaves/request']" class="btn btn-create mb-0" tooltip="{{'leaves.title2' | translate}}"><i class="fa fa-trello"></i></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'reports_view']" [routerLink]="['/leaves/report']" class="btn btn-create mb-0" tooltip="{{'common.report' | translate}}"><i class="fa fa-area-chart"></i></a>
+                    </div>
+                </div>
+                <div class="card-body pt-3">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row text-center">
+                                <div class="col-md-6 d-flex mb-lg-0 mb-2 ml-lg-0 ml-4">
+                                    <div (viewDateChange)="closeOpenMonthViewDay()" [(viewDate)]="viewDate" [view]="view" class="btn calender-day" mwlCalendarPreviousView>
+                                        <i class="calendar-icon fa fa-chevron-left"></i>
+                                    </div>
+                                    <div class="ml-2 mr-2">
+                                        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'): loginUser.language }}</h3>
+                                    </div>
+                                    <div (viewDateChange)="closeOpenMonthViewDay()" [(viewDate)]="viewDate" [view]="view" class="btn calender-day" mwlCalendarNextView>
+                                        <i class="calendar-icon fa fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-lg-0 mb-2 text-lg-right">
+                                    <div class="btn-view-date">
+                                        <div [(viewDate)]="viewDate" class="btn calender-today mb-1" mwlCalendarToday>{{'calendar.today' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month" class="btn calender-today mb-1">{{'calendar.month' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week" class="btn calender-today mb-1">{{'calendar.week' | translate}}</div>
+                                        <div (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day" class="btn calender-today mb-1">{{'calendar.day' | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div [ngSwitch]="view">
+                                <mwl-calendar-month-view (dayClicked)="dayClicked($event.day)" *ngSwitchCase="CalendarView.Month" [activeDayIsOpen]="activeDayIsOpen" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-month-view>
+                                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-week-view>
+                                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [events]="events" [locale]="loginUser.language" [refresh]="refresh" [viewDate]="viewDate"></mwl-calendar-day-view>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

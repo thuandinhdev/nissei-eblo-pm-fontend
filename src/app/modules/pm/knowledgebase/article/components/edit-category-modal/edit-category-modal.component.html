@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-list modal-icon"></i>&nbsp;{{'knowledge_base.category.title' | translate}}
+    </h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="categoryEditForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="category_name">{{'knowledge_base.category.create.fields.category_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && categoryControl.category_name.errors }" class="form-control" formControlName="category_name" placeholder="{{'knowledge_base.category.create.placeholders.placeholder1' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && categoryControl.category_name.errors" class="invalid-feedback">
+                            <div *ngIf="categoryControl.category_name.errors.required">{{'knowledge_base.category.create.error_messages.message1' | translate}}</div>
+                            <div *ngIf="categoryControl.category_name.errors.maxlength">{{'knowledge_base.category.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && categoryControl.file.errors }" class="form-group">
+                        <label>{{'knowledge_base.category.create.fields.category_logo' | translate}}</label>
+                        <input formControlName="file" type="hidden">
+                        <div #logodropzone class="dropzone dz-clickable">
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'knowledge_base.category.create.error_messages.message3' | translate}}</strong></span>
+                            </div>
+                            <div *ngIf="category.category_logo && isCompanyLogoUploaded" class="dz-preview dz-image-preview" id="dropZoneFile">
+                                <div class="dz-image">
+                                    <img src="{{apiUrl}}/uploads/category_attachment/{{category.category_logo}}"/>
+                                </div>
+                                <a (click)="removeDropzoneFiles()" class="btn btn-default btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                            </div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && categoryControl.file.errors" class="invalid-feedback">
+                            <div *ngIf="categoryControl.file.errors.required">{{'knowledge_base.category.create.error_messages.message4' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <input formControlName="file_extension" type="hidden">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

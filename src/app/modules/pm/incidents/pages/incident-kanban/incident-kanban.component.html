@@ -1,0 +1,242 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-2">
+                <!-- Card header -->
+                <div class="card-header pl-0 pr-0">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3 p-0">
+                                <h4 class="main-title mt-2 text-left">
+                                    <span>{{'kanban_board.title2' | translate }}</span></h4>
+                            </div>
+                            <div class="col-sm-9 p-0">
+                                <div class="card-buttons d-lg-flex float-lg-right">
+                                    <div class="mr-md-1 mt-lg-0 mt-2">
+                                        <ng-select (change)="getIncidents($event?.id, filter)" [(ngModel)]="projectId" [items]="projects" [searchable]="true" [selectOnTab]="true" bindLabel="project_name" bindValue="id" labelForId="projectId" placeholder="{{'common.placeholders.placeholder1' | translate}}">
+                                            <ng-template let-item="item" ng-option-tmp>
+                                                {{item.project_name}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                    <div class="mr-1 mt-lg-0 mt-2 float-left tab-filter">
+                                        <div class="btn-group">
+                                            <label (click)="getIncidents(projectId, filter)" [(ngModel)]="filter" btnRadio="all" class="btn btn-secondary" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
+                                            <label (click)="getIncidents(projectId, filter)" [(ngModel)]="filter" btnRadio="my" class="btn btn-secondary" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="float-right mt-lg-0 mt-2">
+                                        <a [routerLink]="['/incidents']" class="btn btn-create mb-0 mr-1" tooltip="{{'common.switch_to_list' | translate}}"><i class="fa fa-list"></i><span>{{'common.list' | translate}}</span></a>
+                                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'incidents_create']" [routerLink]="['/incidents/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row mb-4 taskboard">
+                        <div class="col-md-3 col-lg-3 col-xl-3 col-12">
+                            <h4 class="ml-2 mt-2 text-bold-500">
+                                <i class="ft-list mr-1"></i>&nbsp;{{'common.status.open' | translate}}</h4>
+                            <p class="ml-2 small">
+                                <i class="fa fa-hand-o-up"></i>&nbsp;{{'kanban_board.budges.budges1' | translate }}</p>
+                            <div class="drag-container">
+                                <div #openLists="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[assignedList, inprogressLists, completedLists]" [cdkDropListData]="openIncidents" cdkDropList class="item-list">
+                                    <ul class="pl-0 open">
+                                        <li *ngFor="let incident of openIncidents | orderBy: 'orders'" cdkDrag class="card">
+                                            <div class="card-box">
+                                                <div class="row">
+                                                    <h6 class="col-12 card-text">
+                                                        <a [routerLink]="['/incidents/detail', incident.id]" class="text-info" tooltip="{{'common.view' | translate}}">{{incident.generated_id}}</a>
+                                                        <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                                            <div class="budges-status d-inline">
+                                                                <span *ngIf="priority.id == incident.priority" class="{{priority.class}} pull-right">{{priority.label | strToFirstLetter}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <br>{{incident.incident_name}}
+                                                    </h6>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <div class="taskboard-foot d-flex justify-content-between">
+                                                            <div class="taskboard-date">
+                                                                <i class="fa fa-calendar-o"></i>&nbsp;{{incident.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                            </div>
+                                                            <div class="people-lists">
+                                                                <ng-container *ngIf="incident.assign_user == null; else elseBlock">
+                                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                                    </a>
+                                                                </ng-container>
+                                                                <ng-template #elseBlock>
+                                                                    <a [routerLink]="['/users/profile', incident.assign_user.id]" class="btn rounded-circle text-dark btn-profile-danger" placement="top" tooltip="{{incident.assign_user.firstname}} {{incident.assign_user.lastname}}">
+                                                                        <img *ngIf="incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assign_user.avatar}}"/>
+                                                                        <img *ngIf="!incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                                    </a>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 col-12">
+                            <h4 class="ml-2 mt-2 text-bold-500">
+                                <i class="ft-user-check mr-1"></i>&nbsp;{{'common.status.assigned' | translate}}</h4>
+                            <p class="ml-2 small">
+                                <i class="fa fa-hand-o-up"></i>&nbsp;{{'kanban_board.budges.budges1' | translate }}</p>
+                            <div class="drag-container">
+                                <div #assignedList="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[openLists, inprogressLists, completedLists]" [cdkDropListData]="assignedIncidents" cdkDropList class="item-list">
+                                    <ul class="pl-0 assigned">
+                                        <li *ngFor="let incident of assignedIncidents | orderBy: 'orders'" cdkDrag class="card">
+                                            <div class="card-box">
+                                                <div class="row">
+                                                    <h6 class="col-12 card-text">
+                                                        <a [routerLink]="['/incidents/detail', incident.id]" class="text-info" tooltip="{{'common.view' | translate}}">{{incident.generated_id}}</a>
+                                                        <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                                            <div class="budges-status d-inline">
+                                                                <span *ngIf="priority.id == incident.priority" class="{{priority.class}} pull-right">{{priority.label | strToFirstLetter}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <br>{{incident.incident_name}}
+                                                    </h6>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <div class="taskboard-foot d-flex justify-content-between">
+                                                            <div class="taskboard-date">
+                                                                <i class="fa fa-calendar-o"></i>&nbsp;{{incident.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                            </div>
+                                                            <div class="people-lists">
+                                                                <ng-container *ngIf="incident.assign_user == null; else elseBlock1">
+                                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                                    </a>
+                                                                </ng-container>
+                                                                <ng-template #elseBlock1>
+                                                                    <a [routerLink]="['/users/profile', incident.assign_user.id]" class="btn rounded-circle text-dark btn-profile-danger" placement="top" tooltip="{{incident.assign_user.firstname}} {{incident.assign_user.lastname}}">
+                                                                        <img *ngIf="incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assign_user.avatar}}"/>
+                                                                        <img *ngIf="!incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                                    </a>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 col-12">
+                            <h4 class="ml-2 mt-2 text-bold-500">
+                                <i class="ft-trending-up mr-1"></i>&nbsp;{{'common.status.in_progress' | translate}}
+                            </h4>
+                            <p class="ml-2 small">
+                                <i class="fa fa-hand-o-up"></i>&nbsp;{{'kanban_board.budges.budges1' | translate }}</p>
+                            <div class="drag-container">
+                                <div #inprogressLists="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[assignedList, openLists, completedLists]" [cdkDropListData]="inprogressIncidents" cdkDropList class="item-list">
+                                    <ul class="pl-0 in-progress">
+                                        <li *ngFor="let incident of inprogressIncidents | orderBy: 'orders'" cdkDrag class="card">
+                                            <div class="card-box">
+                                                <div class="row">
+                                                    <h6 class="col-12 card-text">
+                                                        <a [routerLink]="['/incidents/detail', incident.id]" class="text-info" tooltip="{{'common.view' | translate}}">{{incident.generated_id}}</a>
+                                                        <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                                            <div class="budges-status d-inline">
+                                                                <span *ngIf="priority.id == incident.priority" class="{{priority.class}} pull-right">{{priority.label | strToFirstLetter}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <br>{{incident.incident_name}}
+                                                    </h6>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <div class="taskboard-foot d-flex justify-content-between">
+                                                            <div class="taskboard-date">
+                                                                <i class="fa fa-calendar-o"></i>&nbsp;{{incident.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                            </div>
+                                                            <div class="people-lists">
+                                                                <ng-container *ngIf="incident.assign_user == null; else elseBlock2">
+                                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                                    </a>
+                                                                </ng-container>
+                                                                <ng-template #elseBlock2>
+                                                                    <a [routerLink]="['/users/profile', incident.assign_user.id]" class="btn rounded-circle text-dark btn-profile-danger" placement="top" tooltip="{{incident.assign_user.firstname}} {{incident.assign_user.lastname}}">
+                                                                        <img *ngIf="incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assign_user.avatar}}"/>
+                                                                        <img *ngIf="!incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                                    </a>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 col-12">
+                            <h4 class="ml-2 mt-2 text-bold-500">
+                                <i class="ft-thumbs-up mr-1"></i>&nbsp;{{'common.status.completed' | translate}}</h4>
+                            <p class="ml-2 small">
+                                <i class="fa fa-hand-o-up"></i>&nbsp;{{'kanban_board.budges.budges1' | translate }}</p>
+                            <div class="drag-container">
+                                <div #completedLists="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[assignedList, openLists, inprogressLists]" [cdkDropListData]="completedIncidents" cdkDropList class="item-list">
+                                    <ul class="pl-0 completed">
+                                        <li *ngFor="let incident of completedIncidents | orderBy: 'orders'" cdkDrag class="card">
+                                            <div class="card-box">
+                                                <div class="row">
+                                                    <h6 class="col-12 card-text">
+                                                        <a [routerLink]="['/incidents/detail', incident.id]" class="text-info" tooltip="{{'common.view' | translate}}">{{incident.generated_id}}</a>
+                                                        <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                                            <div class="budges-status d-inline">
+                                                                <span *ngIf="priority.id == incident.priority" class="{{priority.class}} pull-right">{{priority.label | strToFirstLetter}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <br>{{incident.incident_name}}
+                                                    </h6>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <div class="taskboard-foot d-flex justify-content-between">
+                                                            <div class="taskboard-date">
+                                                                <i class="fa fa-calendar-o"></i>&nbsp;{{incident.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                                            </div>
+                                                            <div class="people-lists">
+                                                                <ng-container *ngIf="incident.assign_user == null; else elseBlock3">
+                                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                                    </a>
+                                                                </ng-container>
+                                                                <ng-template #elseBlock3>
+                                                                    <a [routerLink]="['/users/profile', incident.assign_user.id]" class="btn rounded-circle text-dark btn-profile-danger" placement="top" tooltip="{{incident.assign_user.firstname}} {{incident.assign_user.lastname}}">
+                                                                        <img *ngIf="incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assign_user.avatar}}"/>
+                                                                        <img *ngIf="!incident.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                                    </a>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,61 @@
+<section>
+    <div class="row">
+        <!-- Tree view -->
+        <div class="col-md-4">
+            <category-articles-tree></category-articles-tree>
+        </div>
+        <div *ngIf="isPageLoaded" class="col-md-8">
+            <div class="card">
+                <div class="col-md-12">
+                    <!-- Card header -->
+                    <div class="card-header pl-0 pr-0">
+                        <h4 class="main-title mt-2"><span>{{'knowledge_base.category.title2' | translate}}</span></h4>
+                        <div class="card-buttons d-flex">
+                            <div *ngIf="categories?.length != 0" class="btn-round-search mr-1">
+                                <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+                                    <div class="input-group">
+                                        <input aria-describedby="button-addon2" class="form-control" formControlName="search" placeholder="{{'knowledge_base.category.create.placeholders.placeholder2' | translate}}" type="text">
+                                        <button class="btn btn-raised btn-round" type="button" type="submit">
+                                            <i class="fa fa-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <button (click)="openCreateCategoryModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'knowledgebase_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-content pb-2">
+                        <div class="card-body">
+                            <div *ngIf="categories?.length != 0" class="row">
+                                <div *ngFor="let category of categories" class="col-md-4 col-12">
+                                    <div class="knowledge-technology">
+                                        <figure class="effect-marley">
+                                            <figcaption>
+                                                <h2>{{category.category_name}}</h2>
+                                                <ul>
+                                                    <li *ngFor="let article of category.articles">
+                                                        <a [routerLink]="['category/',category.id,'article',article.id]">{{article.article_title}}</a>
+                                                    </li>
+                                                    <li class="listing-articles">
+                                                        <a [routerLink]="['category/',category.id]">{{'knowledge_base.article.title1' | translate}}</a>
+                                                    </li>
+                                                </ul>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="image-box">
+                                            <img alt="Laravel" src="{{apiUrl}}/uploads/category_attachment/{{category.category_logo}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="categories?.length == 0" class="text-center">
+                                <img src="assets/img/norecord-img.png" width="50">
+                                <p class="mt-1">{{'common.empty_message.categories' | translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

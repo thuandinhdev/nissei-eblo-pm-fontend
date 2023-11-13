@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-clock-o"></i>&nbsp;{{'timesheet.create.title2' | translate}}</h2>
+    <button (click)="bsEditRoleModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="editTimesheetForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.start_time.errors }" class="form-group">
+                        <label for="start_time">{{'timesheet.create.fields.start_time' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #startDT></owl-date-time>
+                            <input (dateTimeChange)="startTimeChange($event)" [owlDateTimeTrigger]="startDT" [owlDateTime]="startDT" aria-describedby="inputGroupPrepend1" class="form-control" formControlName="start_time" id="start_time" placeholder="{{'timesheet.create.placeholders.placeholder1' | translate}}"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && timesheetControl.start_time.errors" class="invalid-feedback">
+                            <div *ngIf="timesheetControl.start_time.errors.required">{{'timesheet.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.end_time.errors }" class="form-group">
+                        <label for="end_time">{{'timesheet.create.fields.end_time' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #endDT></owl-date-time>
+                            <input [min]="editTimesheetForm.get('start_time').value" [owlDateTimeTrigger]="endDT" [owlDateTime]="endDT" aria-describedby="inputGroupPrepend2" class="form-control" formControlName="end_time" id="end_time" placeholder="{{'timesheet.create.placeholders.placeholder2' | translate}}"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && timesheetControl.end_time.errors" class="invalid-feedback">
+                            <div *ngIf="timesheetControl.end_time.errors.required">{{'timesheet.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="note">{{'timesheet.create.fields.note' | translate}}</label>
+                        <textarea [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.note.errors }" class="form-control" formControlName="note" id="note" placeholder="{{'timesheet.create.placeholders.placeholder3' | translate}}"></textarea>
+                        <div *ngIf="isFormSubmitted && timesheetControl.note.errors" class="invalid-feedback">
+                            <div *ngIf="timesheetControl.note.errors.required">{{'timesheet.create.error_messages.message4' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

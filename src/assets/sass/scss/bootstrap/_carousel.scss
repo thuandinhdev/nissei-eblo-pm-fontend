@@ -1,0 +1,11 @@
+// ================================================================================================
+// 	File Name: carousel.scss
+// 	Description: Badge classes override from bootstrap provides related customiztion etc..
+// 				 
+// ================================================================================================
+.carousel-inner > .carousel-item > img {
+	display: block;
+    max-width: 100%;
+    height: auto;
+    line-height: 1;
+}

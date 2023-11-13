@@ -1,0 +1,58 @@
+<section *ngIf="isPageLoaded" class="detail-page">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h4 class="main-title"><span>{{client.firstname}} {{client.lastname}}</span></h4>
+            <button [routerLink]="['/users/profile', client.id]" class="btn btn-create mb-0 " tooltip="{{'common.profile' | translate}}">
+                <i class="fa fa-eye"></i></button>
+        </div>
+        <div class="card-body p-2">
+            <div class="row">
+                <form class="form-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.company_name' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.company_name}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.company_email' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.company_email}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.company_phone' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.company_phone}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.company_address' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.company_address}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h4 class="detail-page-title"><span>{{'clients.headings.head3' | translate}}</span></h4>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.hosting_company' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.hosting_company}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.username' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.host_username}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'clients.create.fields.port' | translate}}</label>
+                                <div class="detail-inline">{{client.clients.host_port}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 	<tabset class="nav nav-tabs d-flex justify-content-center">
+			<tab customClass="text-left">
+				<ng-template tabHeading><i class="fa fa-suitcase"></i>{{'clients.headings.head2' | translate}}</ng-template>
+				
+			</tab>
+		</tabset> -->
+    </div>
+</section>

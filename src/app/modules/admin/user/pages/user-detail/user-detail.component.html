@@ -1,0 +1,262 @@
+<section *ngIf="isPageLoaded" class="users-profile mt-lg-2 mt-4">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card user-profile-head">
+                <div class="profile-head">
+                    <div class="profile-image">
+                        <img *ngIf="user.avatar" alt="Profile Image" class="rounded-circle img-border" height="150" src="{{apiUrl}}/uploads/profile/{{user.avatar}}" width="150">
+                        <img *ngIf="!user.avatar" alt="Profile Image" class="rounded-circle img-border" height="150" src="../assets/img/profile_large.jpg" width="150">
+                    </div>
+                    <div class="profile-image">
+                        <h3>{{user.firstname}} {{user.lastname}}</h3>
+                        <p class="status-text">{{user.emp_id}}</p>
+                        <p class="small">
+							<span>
+								<ng-container *ngIf="loginUser.online_status; else elseBlock">
+									<i class="fa fa-dot-circle-o text-success"></i>&nbsp;{{'common.online' | translate}}
+								</ng-container>
+								<ng-template #elseBlock>
+									<i class="fa fa-dot-circle-o text-danger"></i>&nbsp;{{'common.offline' | translate}}
+								</ng-template>
+							</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="budges-status">
+                    <ng-container *ngFor="let department of user.departments;">
+                        <span *ngFor="let role of department.roles;" [ngClass]="{'cancel': role.id == 1, 'completed': role.id != 1}">{{role.name}} ({{department.name}})</span>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="px-3 pt-3">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-danger">{{user.projects_count}}</span>&nbsp;{{'projects.title' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-primary">{{user.tasks_count}}</span>&nbsp;{{'tasks.title' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-info">{{user.defects_count}}</span>&nbsp;{{'defects.title' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-success">{{user.incidents_count}}</span>&nbsp;{{'incidents.title' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-info">{{user.comment}}</span>&nbsp;{{'users.profile.comments' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-warning">{{user.activities.countActivities}}</span>&nbsp;{{'users.profile.activities' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-danger">{{user.mailbox.countMailbox}}</span>&nbsp;{{'users.profile.total_messages' | translate}}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-12 mb-3">
+                            <div class="list-inline-buttons">
+                                <span class="btn-primary">{{user.articles.countArticle}}</span>&nbsp;{{'users.profile.articles' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!loginUser.is_client && !user.is_client" class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card blackberry-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet.total_hour_time}}</h3>
+                                <span>{{'users.profile.total_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-clock-o fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card green-tea-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[2]}}</h3>
+                                <span>{{'users.profile.task_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-tasks fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card ibiza-sunset-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[3]}}</h3>
+                                <span>{{'users.profile.defect_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-bug fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card plum-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[4]}}</h3>
+                                <span>{{'users.profile.incident_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-ticket fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card cosmic-fusion-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[5]}}</h3>
+                                <span>{{'users.profile.meeting_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-group fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card blackberry-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[7]}}</h3>
+                                <span>{{'users.profile.leave_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-calendar-times-o fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+            <div class="card green-tea-gradient">
+                <div class="card-body">
+                    <div class="card-block pt-2 pb-2">
+                        <div class="media">
+                            <div class="media-body white text-left">
+                                <h3 class="font-l-1 mb-0">{{user.timesheet[6]}}</h3>
+                                <span>{{'users.profile.other_hours' | translate}}</span>
+                            </div>
+                            <div class="media-right white text-right pt-1">
+                                <i class="fa fa-cube fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" class="detail-page">
+        <div class="card">
+            <tabset class="nav nav-tabs d-flex justify-content-center">
+                <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="1">
+                    <ng-template tabHeading>
+                        <div class="d-flex">
+                            <i class="fa fa-info-circle"></i><span class="mt-1 ml-1">{{'common.details' | translate}}</span>
+                        </div>
+                    </ng-template>
+                    <app-user-detail-update *ngIf="getActiveUserTab('1')" [loginUser]="loginUser" [permission]="permission" [user]="user"></app-user-detail-update>
+                </tab>
+                <div *ngIf="permission">
+                    <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="2">
+                        <ng-template tabHeading>
+                            <div class="d-flex">
+                                <i class="fa fa-product-hunt"></i><span class="mt-1 ml-1">{{'users.profile.projects' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <app-user-projects *ngIf="getActiveUserTab('2')" [loginUser]="loginUser"></app-user-projects>
+                    </tab>
+                    <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="3">
+                        <ng-template tabHeading>
+                            <div class="d-flex">
+                                <i class="fa fa-tasks"></i><span class="mt-1 ml-1">{{'users.profile.tasks' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <app-user-tasks *ngIf="getActiveUserTab('3')" [loginUser]="loginUser"></app-user-tasks>
+                    </tab>
+                    <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="4">
+                        <ng-template tabHeading>
+                            <div class="d-flex">
+                                <i class="fa fa-bug"></i><span class="mt-1 ml-1">{{'users.profile.defects' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <app-user-defects *ngIf="getActiveUserTab('4')" [loginUser]="loginUser"></app-user-defects>
+                    </tab>
+                    <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="5">
+                        <ng-template tabHeading>
+                            <div class="d-flex">
+                                <i class="fa fa-ticket"></i><span class="mt-1 ml-1">{{'users.profile.incidents' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <app-user-incidents *ngIf="getActiveUserTab('5')" [apiUrl]="apiUrl" [loginUser]="loginUser"></app-user-incidents>
+                    </tab>
+                    <tab (selectTab)="setActiveUserTab($event)" customClass="text-left" id="6">
+                        <ng-template tabHeading>
+                            <div class="d-flex">
+                                <i class="fa fa-history"></i><span class="mt-1 ml-1">{{'users.profile.activities' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <app-user-activities *ngIf="getActiveUserTab('6')" [loginUser]="loginUser" [user]="user"></app-user-activities>
+                    </tab>
+                </div>
+            </tabset>
+        </div>
+    </div>
+</section>

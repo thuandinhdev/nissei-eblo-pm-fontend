@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="col-md-12">
+        <!-- Card header -->
+        <div class="card-header pl-0 pr-0">
+            <h4 class="main-title mt-2"><span>{{'knowledge_base.title' | translate}}</span></h4>
+        </div>
+        <div class="card-content pb-2">
+            <div class="card-body overflow-x-auto overflow-y-hidden height-600">
+                <div class="jstree_size" id="jstree1">
+                    <ul>
+                        <li *ngFor="let category of categoryLists" data-jstree='{ "opened" : true, "disabled" : true }'>{{category.category_name}}
+                            <ul>
+                                <li *ngFor="let article of category.articles" data-jstree='{"type":"html"}'>
+                                    <a href="{{basURL}}/#/knowledgebase/category/{{category.id}}/article/{{article.id}}">{{article.article_title}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

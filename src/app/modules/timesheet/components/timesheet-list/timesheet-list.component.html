@@ -1,0 +1,81 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card bg-transparent mt-0 mb-0">
+                <!-- Card header -->
+                <div class="card-header p-0">
+                    <h4 class="sub-title mt-3"><span>{{'timesheet.title' | translate}}</span></h4>
+                    <div *ngxPermissionsOnly="['admin', 'super_admin', 'timesheet_create']" class="card-buttons pt-2 pb-2 pr-1">
+                        <a (click)="addTimesheet()" *ngIf="module_id==5" class="btn btn-create mb-0" placement="top" tooltip="{{'common.add_to_timesheet' | translate}}"><i class="fa fa-plus"></i></a>
+                        <a (click)="openTimesheetCreateModal()" *ngIf="module_id!=5" class="btn btn-create mb-0" placement="top" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content">
+                    <!-- Card body -->
+                    <div *ngIf="timesheets?.length != 0" class="card-body">
+                        <!-- Timesheet list -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div *ngIf="isPageLoaded" class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                                    <table class="table table-bordered table-hover b4-datatable">
+                                        <thead>
+                                        <tr>
+                                            <th class="width-50">{{'timesheet.columns.photo' | translate}}</th>
+                                            <th class="width-50">{{'timesheet.columns.user' | translate}}</th>
+                                            <th>{{'timesheet.columns.note' | translate}}</th>
+                                            <th class="width-110">{{'timesheet.columns.start_time' | translate}}</th>
+                                            <th class="width-110">{{'timesheet.columns.end_time' | translate}}</th>
+                                            <th class="width-50">{{'timesheet.columns.time_h' | translate}}</th>
+                                            <th class="width-50">{{'timesheet.columns.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="timesheets?.length != 0">
+                                        <tr *ngFor="let timesheet of timesheets; index as i">
+                                            <td class="people-lists">
+                                                <a [routerLink]="['/users/profile', timesheet.user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{timesheet.user.firstname}} {{timesheet.user.lastname}}">
+                                                    <img *ngIf="timesheet.user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{timesheet.user.avatar}}"/>
+                                                    <img *ngIf="!timesheet.user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                </a>
+                                            </td>
+                                            <td>{{timesheet.user.firstname}} {{timesheet.user.lastname}}</td>
+                                            <td>
+                                                <ng-container *ngIf="getCheckPermission(timesheet) else elseBlock;">
+                                                    <inline-edit-textarea (updateValue)="saveTimesheetDetail(i, 'note', $event);" [elementFor]="'timesheet.inline_edit.note' | translate" [fieldValue]="timesheet.note" [isRequired]="'false'" [name]="'note'"></inline-edit-textarea>
+                                                </ng-container>
+                                                <ng-template #elseBlock>{{timesheet.note}}</ng-template>
+                                            </td>
+                                            <td>{{timesheet.start_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{timesheet.end_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{timesheet.hour_time}}</td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-10" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-10" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-10" class="dropdown-menu animated fadeIn" id="dropdown-basic-10" role="menu">
+                                                        <li *ngIf="getCheckPermission(timesheet)" role="menuitem">
+                                                            <a (click)="editTimesheet(timesheet)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngIf="getCheckPermission(timesheet)" role="menuitem">
+                                                            <a (click)="deleteTimesheet(timesheet.id,i)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="timesheets?.length == 0">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,8 @@
+.hide_empty_message ::ng-deep .odd {
+    display: none
+}
+
+.btn-filters .status-dropdown .btn.assigned,
+.btn-filters .status-dropdown .btn.open {
+    background: none;
+}

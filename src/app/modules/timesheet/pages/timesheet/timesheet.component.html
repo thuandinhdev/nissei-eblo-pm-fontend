@@ -1,0 +1,160 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'timesheet.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'holidays_view']" [routerLink]="['/holidays']" class="btn btn-create mb-0" placement="top" tooltip="{{'holidays.title' | translate}}"><i class="fa fa-tree"></i></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'timesheet_view']" [routerLink]="['/timesheet']" class="btn btn-create mb-0" tooltip="{{'timesheet.title1' | translate}}"><i class="fa fa-clock-o"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3 pb-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Filter buttons -->
+                        <form (ngSubmit)="onSubmit()" [formGroup]="timesheetFilterForm">
+                            <div *ngIf="isPageLoaded" class="row d-flex">
+                                <div class="col-sm-2">
+                                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && filterControl.range.errors }" class="form-group">
+                                        <label class="sr-only" for="range"></label>
+                                        <ng-select (change)="rangeChange($event)" [clearable]="false" [items]="range" [multiple]="false" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="range" labelForId="range"></ng-select>
+                                        <div *ngIf="isFormSubmitted && filterControl.range.errors" class="invalid-feedback">
+                                            <div *ngIf="filterControl.range.errors.required">{{'timesheet.filter.error_messages.message1' | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="filterControl.range.value == 'period'" class="col-sm-3">
+                                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && filterControl.period_from.errors }" class="form-group">
+                                        <label class="sr-only" for="period_from"></label>
+                                        <div class="position-relative has-icon-left">
+                                            <input #dp1="bsDatepicker" (bsValueChange)="periodFromDateChange($event)" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="period_from" id="period_from" placeholder="{{'timesheet.filter.placeholders.placeholder3' | translate }}"/>
+                                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                            <div *ngIf="isFormSubmitted && filterControl.period_from.errors" class="invalid-feedback">
+                                                <div *ngIf="filterControl.period_from.errors">{{'timesheet.filter.error_messages.message2' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="filterControl.range.value == 'period'" class="col-sm-3">
+                                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && filterControl.period_to.errors }" class="form-group">
+                                        <label class="sr-only" for="period_to"></label>
+                                        <div class="position-relative has-icon-left">
+                                            <input #dp2="bsDatepicker" [bsConfig]="datepickerConfig" [minDate]="timesheetFilterForm.get('period_from').value" bsDatepicker class="form-control" formControlName="period_to" id="period_to" placeholder="{{'timesheet.filter.placeholders.placeholder4' | translate }}"/>
+                                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                                            <div *ngIf="isFormSubmitted && filterControl.period_to.errors" class="invalid-feedback">
+                                                <div *ngIf="filterControl.period_to.errors">{{'timesheet.filter.error_messages.message3' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="user_id"></label>
+                                        <ng-select (change)="onSubmit()" [items]="users" [multiple]="false" [searchable]="true" [selectOnTab]="true" [selectableGroup]="false" bindLabel="firstname" bindValue="id" formControlName="user_id" labelForId="user_id" placeholder="{{'timesheet.filter.placeholders.placeholder5' | translate }}">
+                                            <ng-template let-item="item" ng-option-tmp>
+                                                {{item.firstname}} {{item.lastname}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="client_id"></label>
+                                        <ng-select (change)="onSubmit()" [items]="clients" [multiple]="false" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="client_id" labelForId="client_id" placeholder="{{'timesheet.filter.placeholders.placeholder2' | translate }}">
+                                            <ng-template let-item="item" ng-option-tmp>
+                                                {{item.firstname}} {{item.lastname}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="project_ids"></label>
+                                        <ng-select (change)="onSubmit()" [items]="projects" [multiple]="true" [searchable]="true" [selectOnTab]="true" [selectableGroup]="false" bindLabel="project_name" bindValue="id" formControlName="project_ids" labelForId="project_ids" placeholder="{{'timesheet.filter.placeholders.placeholder1' | translate }}">
+                                            <ng-template let-item="item" ng-option-tmp>{{item.project_name}}</ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col text-left btn_apply d-none">
+                                    <button class="btn btn-submit btn-sm mb-0" type="submit">{{'common.apply' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Timesheet list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="timesheets_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th class="width-30">{{'timesheet.columns.user' | translate}}</th>
+                                            <th class="width-50">{{'timesheet.columns.project_name' | translate}}</th>
+                                            <th>{{'timesheet.columns.entry' | translate}}</th>
+                                            <th class="width-150">{{'timesheet.columns.note' | translate}}</th>
+                                            <th class="width-75">{{'timesheet.columns.start_time' | translate}}</th>
+                                            <th class="width-75">{{'timesheet.columns.end_time' | translate}}</th>
+                                            <th class="width-50">{{'timesheet.columns.time_h' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="timesheets?.length != 0">
+                                        <tr *ngFor="let timesheet of timesheets; index as i">
+                                            <td class="people-lists">
+                                                <a [routerLink]="['/users/profile', timesheet.user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{timesheet.user.firstname}} {{timesheet.user.lastname}}">
+                                                    <img *ngIf="timesheet.user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{timesheet.user.avatar}}"/>
+                                                    <img *ngIf="!timesheet.user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="timesheet.project_id; else elseBlock">
+                                                    <a [routerLink]="['/projects/detail', timesheet.project_id]" class="text-info" tooltip="{{timesheet.project_name}}">#{{timesheet.project_generated_id}}</a>
+                                                </ng-container>
+                                                <ng-template #elseBlock>-</ng-template>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="timesheet.module_id == 2">
+                                                    <a [routerLink]="['/tasks/detail', timesheet.module_related_id]" class="text-info">#{{timesheet.task_generated_id}}</a> - {{timesheet.task_name}}
+                                                </ng-container>
+                                                <ng-container *ngIf="timesheet.module_id == 3">
+                                                    <a [routerLink]="['/defects/detail', timesheet.module_related_id]" class="text-info">#{{timesheet.defect_generated_id}}</a> - {{timesheet.defect_name}}
+                                                </ng-container>
+                                                <ng-container *ngIf="timesheet.module_id == 4">
+                                                    <a [routerLink]="['/incidents/detail', timesheet.module_related_id]" class="text-info">#{{timesheet.incident_generated_id}}</a> - {{timesheet.incident_name}}
+                                                </ng-container>
+                                                <ng-container *ngIf="timesheet.module_id == 5">
+                                                    <a [routerLink]="['/meetings/detail', timesheet.module_related_id]" class="text-info">#{{timesheet.meeting_generated_id}}</a> - {{timesheet.meeting_title}}
+                                                </ng-container>
+                                                <ng-container *ngIf="timesheet.module_id == 6">-</ng-container>
+                                                <ng-container *ngIf="timesheet.module_id == 7">
+                                                    {{timesheet.leave_title}}
+                                                </ng-container>
+                                            </td>
+                                            <td>{{timesheet.note}}</td>
+                                            <td>{{timesheet.start_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{timesheet.end_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{timesheet.hour_time}}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody *ngIf="timesheets?.length != 0">
+                                        <tr>
+                                            <td colspan="5"></td>
+                                            <td class="text-center"><b>{{'common.total' | translate}}</b></td>
+                                            <td><b>{{totalHours.hour_time}}</b></td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot class="tfoot_dt d-none">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

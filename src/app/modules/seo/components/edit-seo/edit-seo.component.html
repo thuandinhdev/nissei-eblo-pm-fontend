@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h2 class="modal-title font-weight-normal">
+    <i aria-hidden="true" class="fa fa-shopping-basket"></i>&nbsp;{{'seo.title2' | translate}}
+  </h2>
+  <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+    <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="editSeoForm" class="form">
+  <div class="modal-body">
+    <div class="form-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="attr">{{'seo.create.fields.attr' | translate}}
+              <span class="text-danger">&nbsp;*</span></label>
+            <input [ngClass]="{ 'is-invalid': isFormSubmitted && seoControl.attr.errors }" class="form-control"
+              formControlName="attr" id="attr" placeholder="{{'seo.create.placeholders.placeholder1' | translate }}"
+              type="text" />
+            <div *ngIf="isFormSubmitted && seoControl.attr.errors" class="invalid-feedback">
+              <div *ngIf="seoControl.attr.errors.required">{{'seo.create.error_messages.message1' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="value">{{'seo.create.fields.value' | translate}}
+              <span class="text-danger">&nbsp;*</span></label>
+            <input [ngClass]="{ 'is-invalid': isFormSubmitted && seoControl.value.errors }" class="form-control"
+              formControlName="value" id="value" placeholder="{{'seo.create.placeholders.placeholder2' | translate }}"
+              type="text" />
+            <div *ngIf="isFormSubmitted && seoControl.value.errors" class="invalid-feedback">
+              <div *ngIf="seoControl.value.errors.required">{{'seo.create.error_messages.message2' | translate}}</div>
+              <div *ngIf="seoControl.value.errors.pattern">{{'seo.create.error_messages.message2' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="attr">{{'seo.create.fields.default' | translate}}
+            </label>
+            <input class="form-control" formControlName="default" id="default"
+              placeholder="{{'seo.create.placeholders.placeholder1' | translate }}" type="text" />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div [ngClass]="{ 'is-invalid': isFormSubmitted && seoControl.type.errors }" class="form-group">
+            <label for="status">{{'seo.create.fields.type' | translate}}&nbsp;<span class="text-danger">*</span>
+            </label>
+            <ng-select [items]="types" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="type"
+             placeholder="{{'seo.create.placeholders.placeholder4' | translate}}"></ng-select>
+            <div *ngIf="isFormSubmitted && seoControl.type.errors" class="invalid-feedback">
+              <div *ngIf="seoControl.type.errors.required">{{'seo.create.error_messages.message3' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+    <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+  </div>
+</form>

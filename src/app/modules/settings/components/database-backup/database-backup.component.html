@@ -1,0 +1,51 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.database_backups.title' | translate}}</span></h4>
+    <a (click)="backupDatabase()" *ngxPermissionsOnly="['admin', 'super_admin', 'backupdatabase_create']" class="btn btn-create mb-0" placement="top" tooltip="{{'settings.database_backups.title2' | translate}}"><i class="fa fa-plus"></i></a>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+            <table class="table table-bordered table-hover b4-datatable" id="database_table" width="100%">
+                <thead>
+                <tr>
+                    <th>{{'settings.database_backups.columns.date' | translate}}</th>
+                    <th>{{'settings.database_backups.columns.file_name' | translate}}</th>
+                    <th class="width-50">{{'settings.database_backups.columns.actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="databases?.length != 0">
+                <tr *ngFor="let database of databases; index as i">
+                    <td>{{database.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format }}</td>
+                    <td>{{database.file_name}}</td>
+                    <td class="actions-dropdown">
+                        <div class="btn-group" dropdown>
+                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                <i class="fa fa-ellipsis-v"></i></button>
+                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'backupdatabase_view']" role="menuitem">
+                                    <a class="dropdown-item btn btn-download btn-raised" download="{{database.file_name}}" href="{{apiUrl}}/database_backup/{{database.file_name}}" target="_blank" tooltip="{{'common.download' | translate}}"><i class="fa fa-download"></i></a>
+                                </li>
+                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'backupdatabase_edit']" role="menuitem">
+                                    <a (click)="restoreDatabase(database)" class="dropdown-item btn btn-restore btn-raised" tooltip="{{'common.restore' | translate}}"><i class="fa fa-undo"></i></a>
+                                </li>
+                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'backupdatabase_delete']" role="menuitem">
+                                    <a (click)="deleteDatatabase(database.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot *ngIf="databases?.length == 0" class="tfoot_dt">
+                <tr>
+                    <td class="text-center" colspan="3">
+                        <img src="assets/img/norecord-img.png" width="50">
+                        <p class="mt-1">{{'common.empty_message.database_backups' | translate}}</p>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

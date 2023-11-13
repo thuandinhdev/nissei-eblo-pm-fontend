@@ -1,0 +1,721 @@
+// ==================================================================
+//  File Name: app-colors.scss
+//  Description: Application background, font color etc .. variables file
+//         related customiztion.
+// ==================================================================
+$white-color: (
+	"base": #FFFFFF
+);
+$black-color: (
+	"base": #000000
+);
+$primary: (
+	"lighter-5":  #E0F3F4,
+	"lighter-4":  #B3E2E3,
+	"lighter-3":  #80CED0,
+	"lighter-2":  #4DBABD,
+	"lighter-1":  #26ACAE,
+	"base":       #009DA0,
+	"darker-1":   #009598,
+	"darker-2":   #008B8E,
+	"darker-3":   #008184,
+	"darker-4":   #006F73,
+	"accent-1":   #A1FBFF,
+	"accent-2":   #6EF9FF,
+	"accent-3":   #3BF7FF,
+	"accent-4":   #22F6FF
+);
+$success: (
+	"lighter-5":  #E2F8F0,
+	"lighter-4":  #B6EDD8,
+	"lighter-3":  #86E1BF,
+	"lighter-2":  #55D4A5,
+	"lighter-1":  #30CB91,
+	"base":       #0CC27E,
+	"darker-1":   #0ABC76,
+	"darker-2":   #08B46B,
+	"darker-3":   #06AC61,
+	"darker-4":   #039F4E,
+	"accent-1":   #C9FFE0,
+	"accent-2":   #96FFC3,
+	"accent-3":   #63FFA5,
+	"accent-4":   #4AFF96
+);
+$info: (
+	"lighter-5":  #E4F7FA,
+	"lighter-4":  #BBEBF3,
+	"lighter-3":  #8EDEEC,
+	"lighter-2":  #60D0E4,
+	"lighter-1":  #3EC6DE,
+	"base":       #1CBCD8,
+	"darker-1":   #19B6D4,
+	"darker-2":   #14ADCE,
+	"darker-3":   #11A5C8,
+	"darker-4":   #0997BF,
+	"accent-1":   #EAFAFF,
+	"accent-2":   #B7EDFF,
+	"accent-3":   #84E1FF,
+	"accent-4":   #6ADAFF
+);
+$warning: (
+	"lighter-5":  #FFF1EC,
+	"lighter-4":  #FFDDCF,
+	"lighter-3":  #FFC6B0,
+	"lighter-2":  #FFAF90,
+	"lighter-1":  #FF9E78,
+	"base":       #FF8D60,
+	"darker-1":   #FF8558,
+	"darker-2":   #FF7A4E,
+	"darker-3":   #FF7044,
+	"darker-4":   #FF5D33,
+	"accent-1":   #FFFFFF,
+	"accent-2":   #FFEFEC,
+	"accent-3":   #FFE4DE,
+	"accent-4":   #FFCFC4
+);
+$danger: (
+	"lighter-5":  #FFEBED,
+	"lighter-4":  #FFCDD3,
+	"lighter-3":  #FFACB5,
+	"lighter-2":  #FF8A97,
+	"lighter-1":  #FF7181,
+	"base":       #FF586B,
+	"darker-1":   #FF5063,
+	"darker-2":   #FF4758,
+	"darker-3":   #FF3D4E,
+	"darker-4":   #FF2D3C,
+	"accent-1":   #FFFFFF,
+	"accent-2":   #FBEBED,
+	"accent-3":   #FFD9DB,
+	"accent-4":   #FFBFC3
+);
+$red-color: (
+	"lighter-5":  #ffebee,
+	"lighter-4":  #ffcdd2,
+	"lighter-3":  #ef9a9a,
+	"lighter-2":  #e57373,
+	"lighter-1":  #ef5350,
+	"base":       #f44336,
+	"darker-1":   #e53935,
+	"darker-2":   #d32f2f,
+	"darker-3":   #c62828,
+	"darker-4":   #b71c1c,
+	"accent-1":   #ff8a80,
+	"accent-2":   #ff5252,
+	"accent-3":   #ff1744,
+	"accent-4":   #d50000
+);
+$pink: (
+	"lighter-5":  #fce4ec,
+	"lighter-4":  #f8bbd0,
+	"lighter-3":  #f48fb1,
+	"lighter-2":  #f06292,
+	"lighter-1":  #ec407a,
+	"base":       #e91e63,
+	"darker-1":   #d81b60,
+	"darker-2":   #c2185b,
+	"darker-3":   #ad1457,
+	"darker-4":   #880e4f,
+	"accent-1":   #ff80ab,
+	"accent-2":   #ff4081,
+	"accent-3":   #f50057,
+	"accent-4":   #c51162
+);
+$purple: (
+	"lighter-5":  #f3e5f5,
+	"lighter-4":  #e1bee7,
+	"lighter-3":  #ce93d8,
+	"lighter-2":  #ba68c8,
+	"lighter-1":  #ab47bc,
+	"base":       #9c27b0,
+	"darker-1":   #8e24aa,
+	"darker-2":   #7b1fa2,
+	"darker-3":   #6a1b9a,
+	"darker-4":   #4a148c,
+	"accent-1":   #ea80fc,
+	"accent-2":   #e040fb,
+	"accent-3":   #d500f9,
+	"accent-4":   #a0f
+);
+$deep-purple: (
+	"lighter-5":  #ede7f6,
+	"lighter-4":  #d1c4e9,
+	"lighter-3":  #b39ddb,
+	"lighter-2":  #9575cd,
+	"lighter-1":  #7e57c2,
+	"base":       #673ab7,
+	"darker-1":   #5e35b1,
+	"darker-2":   #512da8,
+	"darker-3":   #4527a0,
+	"darker-4":   #311b92,
+	"accent-1":   #b388ff,
+	"accent-2":   #7c4dff,
+	"accent-3":   #651fff,
+	"accent-4":   #6200ea
+);
+$indigo: (
+	"lighter-5":  #e8eaf6,
+	"lighter-4":  #c5cae9,
+	"lighter-3":  #9fa8da,
+	"lighter-2":  #7986cb,
+	"lighter-1":  #5c6bc0,
+	"base":       #3f51b5,
+	"darker-1":   #3949ab,
+	"darker-2":   #303f9f,
+	"darker-3":   #283593,
+	"darker-4":   #1a237e,
+	"accent-1":   #8c9eff,
+	"accent-2":   #536dfe,
+	"accent-3":   #3d5afe,
+	"accent-4":   #304ffe
+);
+$blue: (
+	"lighter-5":  #e3f2fd,
+	"lighter-4":  #bbdefb,
+	"lighter-3":  #90caf9,
+	"lighter-2":  #64b5f6,
+	"lighter-1":  #42a5f5,
+	"base":       #2196f3,
+	"darker-1":   #1e88e5,
+	"darker-2":   #1976d2,
+	"darker-3":   #1565c0,
+	"darker-4":   #0d47a1,
+	"accent-1":   #82b1ff,
+	"accent-2":   #448aff,
+	"accent-3":   #2979ff,
+	"accent-4":   #2962ff
+);
+$light-blue: (
+	"lighter-5":  #e1f5fe,
+	"lighter-4":  #b3e5fc,
+	"lighter-3":  #81d4fa,
+	"lighter-2":  #4fc3f7,
+	"lighter-1":  #29b6f6,
+	"base":       #03a9f4,
+	"darker-1":   #039be5,
+	"darker-2":   #0288d1,
+	"darker-3":   #0277bd,
+	"darker-4":   #01579b,
+	"accent-1":   #80d8ff,
+	"accent-2":   #40c4ff,
+	"accent-3":   #00b0ff,
+	"accent-4":   #0091ea
+);
+$cyan: (
+	"lighter-5":  #e0f7fa,
+	"lighter-4":  #b2ebf2,
+	"lighter-3":  #80deea,
+	"lighter-2":  #4dd0e1,
+	"lighter-1":  #26c6da,
+	"base":       #00bcd4,
+	"darker-1":   #00acc1,
+	"darker-2":   #0097a7,
+	"darker-3":   #00838f,
+	"darker-4":   #006064,
+	"accent-1":   #84ffff,
+	"accent-2":   #18ffff,
+	"accent-3":   #00e5ff,
+	"accent-4":   #00b8d4
+);
+$teal: (
+	"lighter-5":  #e0f2f1,
+	"lighter-4":  #b2dfdb,
+	"lighter-3":  #80cbc4,
+	"lighter-2":  #4db6ac,
+	"lighter-1":  #26a69a,
+	"base":       #009688,
+	"darker-1":   #00897b,
+	"darker-2":   #00796b,
+	"darker-3":   #00695c,
+	"darker-4":   #004d40,
+	"accent-1":   #a7ffeb,
+	"accent-2":   #64ffda,
+	"accent-3":   #1de9b6,
+	"accent-4":   #00bfa5
+);
+$green: (
+	"lighter-5":  #e8f5e9,
+	"lighter-4":  #c8e6c9,
+	"lighter-3":  #a5d6a7,
+	"lighter-2":  #81c784,
+	"lighter-1":  #66bb6a,
+	"base":       #4caf50,
+	"darker-1":   #43a047,
+	"darker-2":   #388e3c,
+	"darker-3":   #2e7d32,
+	"darker-4":   #1b5e20,
+	"accent-1":   #b9f6ca,
+	"accent-2":   #69f0ae,
+	"accent-3":   #00e676,
+	"accent-4":   #00c853
+);
+$light-green: (
+	"lighter-5":  #f1f8e9,
+	"lighter-4":  #dcedc8,
+	"lighter-3":  #c5e1a5,
+	"lighter-2":  #aed581,
+	"lighter-1":  #9ccc65,
+	"base":       #8bc34a,
+	"darker-1":   #7cb342,
+	"darker-2":   #689f38,
+	"darker-3":   #558b2f,
+	"darker-4":   #33691e,
+	"accent-1":   #ccff90,
+	"accent-2":   #b2ff59,
+	"accent-3":   #76ff03,
+	"accent-4":   #64dd17
+);
+$lime: (
+	"lighter-5":  #f9fbe7,
+	"lighter-4":  #f0f4c3,
+	"lighter-3":  #e6ee9c,
+	"lighter-2":  #dce775,
+	"lighter-1":  #d4e157,
+	"base":       #cddc39,
+	"darker-1":   #c0ca33,
+	"darker-2":   #afb42b,
+	"darker-3":   #9e9d24,
+	"darker-4":   #827717,
+	"accent-1":   #f4ff81,
+	"accent-2":   #eeff41,
+	"accent-3":   #c6ff00,
+	"accent-4":   #aeea00
+);
+$yellow: (
+	"lighter-5":  #fffde7,
+	"lighter-4":  #fff9c4,
+	"lighter-3":  #fff59d,
+	"lighter-2":  #fff176,
+	"lighter-1":  #ffee58,
+	"base":       #ffeb3b,
+	"darker-1":   #fdd835,
+	"darker-2":   #fbc02d,
+	"darker-3":   #f9a825,
+	"darker-4":   #f57f17,
+	"accent-1":   #ffff8d,
+	"accent-2":   #ff0,
+	"accent-3":   #ffea00,
+	"accent-4":   #ffd600
+);
+$amber: (
+	"lighter-5":  #fff8e1,
+	"lighter-4":  #ffecb3,
+	"lighter-3":  #ffe082,
+	"lighter-2":  #ffd54f,
+	"lighter-1":  #ffca28,
+	"base":       #ffc107,
+	"darker-1":   #ffb300,
+	"darker-2":   #ffa000,
+	"darker-3":   #ff8f00,
+	"darker-4":   #ff6f00,
+	"accent-1":   #ffe57f,
+	"accent-2":   #ffd740,
+	"accent-3":   #ffc400,
+	"accent-4":   #ffab00
+);
+$orange: (
+	"lighter-5":  #fff3e0,
+	"lighter-4":  #ffe0b2,
+	"lighter-3":  #ffcc80,
+	"lighter-2":  #ffb74d,
+	"lighter-1":  #ffa726,
+	"base":       #ff9800,
+	"darker-1":   #fb8c00,
+	"darker-2":   #f57c00,
+	"darker-3":   #ef6c00,
+	"darker-4":   #e65100,
+	"accent-1":   #ffd180,
+	"accent-2":   #ffab40,
+	"accent-3":   #ff9100,
+	"accent-4":   #ff6d00
+);
+$deep-orange: (
+	"lighter-5":  #fbe9e7,
+	"lighter-4":  #ffccbc,
+	"lighter-3":  #ffab91,
+	"lighter-2":  #ff8a65,
+	"lighter-1":  #ff7043,
+	"base":       #ff5722,
+	"darker-1":   #f4511e,
+	"darker-2":   #e64a19,
+	"darker-3":   #d84315,
+	"darker-4":   #bf360c,
+	"accent-1":   #ff9e80,
+	"accent-2":   #ff6e40,
+	"accent-3":   #ff3d00,
+	"accent-4":   #dd2c00
+);
+$brown: (
+	"lighter-5":  #efebe9,
+	"lighter-4":  #d7ccc8,
+	"lighter-3":  #bcaaa4,
+	"lighter-2":  #a1887f,
+	"lighter-1":  #8d6e63,
+	"base":       #795548,
+	"darker-1":   #6d4c41,
+	"darker-2":   #5d4037,
+	"darker-3":   #4e342e,
+	"darker-4":   #3e2723,
+	"accent-1":   #d7ccc8,
+	"accent-2":   #bcaaa4,
+	"accent-3":   #8d6e63,
+	"accent-4":   #5d4037
+);
+$grey: (
+	"lighter-5":  #fafafa,
+	"lighter-4":  #f5f5f5,
+	"lighter-3":  #eee,
+	"lighter-2":  #e0e0e0,
+	"lighter-1":  #bdbdbd,
+	"base":       #9e9e9e,
+	"darker-1":   #757575,
+	"darker-2":   #616161,
+	"darker-3":   #424242,
+	"darker-4":   #212121,
+	"accent-1":   #f5f5f5,
+	"accent-2":   #eee,
+	"accent-3":   #bdbdbd,
+	"accent-4":   #616161
+);
+$blue-grey: (
+	"lighter-5":  #eceff1,
+	"lighter-4":  #cfd8dc,
+	"lighter-3":  #b0bec5,
+	"lighter-2":  #90a4ae,
+	"lighter-1":  #78909c,
+	"base":       #607d8b,
+	"darker-1":   #546e7a,
+	"darker-2":   #455a64,
+	"darker-3":   #37474f,
+	"darker-4":   #263238,
+	"accent-1":   #cfd8dc,
+	"accent-2":   #b0bec5,
+	"accent-3":   #78909c,
+	"accent-4":   #455a64
+);
+
+
+$shades: (
+	"black":        #000000,
+	"white":        #FFFFFF,
+	"transparent":  transparent
+);
+
+$colors: (
+	"white": $white-color,
+	"black": $black-color,
+	"primary": $primary,
+	"success": $success,
+	"info": $info,
+	"warning": $warning,
+	"danger": $danger,
+	"red": $red-color,
+	"pink": $pink,
+	"purple": $purple,
+	"deep-purple": $deep-purple,
+	"indigo": $indigo,
+	"blue": $blue,
+	"light-blue": $light-blue,
+	"cyan": $cyan,
+	"teal": $teal,
+	"green": $green,
+	"light-green": $light-green,
+	"lime": $lime,
+	"yellow": $yellow,
+	"amber": $amber,
+	"orange": $orange,
+	"deep-orange": $deep-orange,
+	"brown": $brown,
+	"grey": $grey,
+	"blue-grey": $blue-grey,
+	"shades": $shades
+);
+
+$gradient-colors: (
+	indigo-light-blue-gradient: (
+		'start-color' : map-get($indigo, lighter-4 ),
+		'end-color' : map-get($light-blue, lighter-4 ),
+	),
+
+	light-blue-indigo-gradient: (
+		'start-color' : map-get($light-blue, lighter-4 ),
+		'end-color' : map-get($indigo, lighter-3 ),
+	),
+
+	yellow-green-gradient: (
+		'start-color' : map-get($yellow, accent-1 ),
+		'end-color' : map-get($green, accent-1 ),
+	),
+
+	orange-deep-orange-gradient: (
+		'start-color' : map-get($orange, lighter-4 ),
+		'end-color' : map-get($deep-orange, lighter-4 ),
+	),
+
+	deep-purple-purple-gradient: (
+		'start-color' : map-get($deep-purple, lighter-4 ),
+		'end-color' : map-get($purple, lighter-5 ),
+	),
+
+	red-pink-gradient: (
+		'start-color' : map-get($red-color, accent-2 ),
+		'end-color' : map-get($pink, lighter-3 ),
+	),
+
+	light-green-amber-gradient: (
+		'start-color' : map-get($light-green, lighter-3 ),
+		'end-color' : map-get($amber, lighter-5 ),
+	),
+
+	amber-amber-gradient: (
+		'start-color' : map-get($amber, darker-4 ),
+		'end-color' : map-get($amber, lighter-1 ),
+	),
+
+	purple-pink-gradient: (
+		'start-color' : map-get($purple, accent-1 ),
+		'end-color' : map-get($pink, lighter-5 ),
+	),
+
+	indigo-dark-blue-gradient: (
+		'start-color' : map-get($indigo, darker-1 ),
+		'end-color' : map-get($light-blue, lighter-2 ),
+	),
+
+	teal-cyan-gradient: (
+		'start-color' : map-get($teal, lighter-5 ),
+		'end-color' : map-get($cyan, accent-3 ),
+	),
+
+	blue-grey-blue-grey-gradient: (
+		'start-color' : map-get($blue-grey, lighter-4 ),
+		'end-color' : map-get($blue-grey, darker-1 ),
+	),
+
+	cyan-dark-green-gradient: (
+		'start-color' : map-get($cyan, darker-2 ),
+		'end-color' : map-get($light-green, accent-2 ),
+	),
+
+	orange-amber-gradient: (
+		'start-color' : map-get($orange, darker-4 ),
+		'end-color' : map-get($amber, darker-2 ),
+	),
+
+	gradient-indigo-blue: (
+		'start-color' : map-get($indigo, darker-2 ),
+		'end-color' : map-get($blue, darker-2 ),
+	),
+
+	brown-brown-gradient: (
+		'start-color' : map-get($brown, darker-1 ),
+		'end-color' : map-get($brown, lighter-4 ),
+	),
+
+	blue-grey-blue-gradient: (
+		'start-color' : map-get($blue-grey, darker-4 ),
+		'end-color' : map-get($blue, accent-3 ),
+	),
+
+	purple-deep-orange-gradient: (
+		'start-color' : map-get($purple, darker-1 ),
+		'end-color' : map-get($deep-orange, accent-2 ),
+	),
+
+	green-teal-gradient: (
+		'start-color' : map-get($green, darker-1 ),
+		'end-color' : map-get($teal, accent-3 ),
+	),
+
+	purple-light-blue-gradient: (
+		'start-color' : map-get($purple, accent-2 ),
+		'end-color' : map-get($light-blue, lighter-2 ),
+	),
+
+	cyan-cyan-gradient: (
+		'start-color' : map-get($cyan, accent-2 ),
+		'end-color' : map-get($cyan, accent-3 ),
+	),
+
+	yellow-teal-gradient: (
+		'start-color' : map-get($yellow, lighter-4 ),
+		'end-color' : map-get($teal, accent-2 ),
+	),
+
+	purple-deep-purple-gradient: (
+		'start-color' : map-get($purple, darker-2 ),
+		'end-color' : map-get($deep-purple, accent-2 ),
+	),
+
+	cyan-light-green-gradient: (
+		'start-color' : map-get($cyan, accent-3 ),
+		'end-color' : map-get($light-green, accent-1 ),
+	),
+
+	purple-amber-gradient: (
+		'start-color' : map-get($purple, accent-3 ),
+		'end-color' : map-get($amber, darker-2 ),
+	),
+
+	indigo-purple-gradient: (
+		'start-color' : map-get($indigo, darker-2 ),
+		'end-color' : map-get($purple, darker-2 ),
+	),
+
+	deep-purple-blue-gradient: (
+		'start-color' : map-get($deep-purple, accent-4 ),
+		'end-color' : map-get($blue, darker-2 ),
+	),
+
+	deep-orange-orange-gradient: (
+		'start-color' : map-get($deep-orange, darker-4 ),
+		'end-color' : map-get($orange, darker-2 ),
+	),
+
+	light-blue-cyan-gradient: (
+		'start-color' : map-get($light-blue, darker-2 ),
+		'end-color' : map-get($cyan, lighter-1 ),
+	),
+
+	blue-indigo-gradient: (
+		'start-color' : map-get($blue, accent-4 ),
+		'end-color' : map-get($indigo, darker-1 ),
+	),
+
+	strawberry-gradient: (
+		'start-color' : #FE0B46,
+		'end-color' : #FFAB96,
+	),
+	blueberry-gradient: (
+		'start-color' : #6078EA,
+		'end-color' : #17EAD9,
+	),
+	mint-gradient: (
+		'start-color' : #23BCBB,
+		'end-color' : #45E994,
+	),
+	orange-gradient: (
+		'start-color' : #C471F3,
+		'end-color' : #F671CD,
+	),
+	pomegranate-gradient: (
+		'start-color' : #9B3cb7,
+		'end-color' : #FF396f,
+	),
+	green-tea-gradient: (
+		'start-color' : #004b91,
+		'end-color' : #78cc37,
+	),
+	blackberry-gradient: (
+		'start-color' : #843cf7,
+		'end-color' : #38b8f2,
+	),
+	plum-gradient: (
+		'start-color' : #e35c67,
+		'end-color' : #381ce2,
+	),
+	passion-fruit-gradient: (
+		'start-color' : #8137F7,
+		'end-color' : #F6AB3E,
+	),
+	sublime-vivid-gradient: (
+		'start-color' : #FC466B,
+		'end-color' : #3F5EFB,
+	),
+	king-yna-gradient: (
+		'start-color' : #1a2a6c,
+		'end-color' : #b21f1f,
+	),
+	summer-gradient: (
+		'start-color' : #22c1c3,
+		'end-color' : #fdbb2d,
+	),
+	celestial-gradient: (
+		'start-color' : #C33764,
+		'end-color' : #1D2671,
+	),
+	mini-gradient: (
+		'start-color' : #30E8BF,
+		'end-color' : #FF8235,
+	),
+	ibiza-sunset-gradient: (
+		'start-color' : #ee0979,
+		'end-color' : #ff6a00,
+	),
+	dawn-gradient: (
+		'start-color' : #F3904F,
+		'end-color' : #3B4371,
+	),
+	brady-brady-fun-fun-gradient: (
+		'start-color' : #00c3ff,
+		'end-color' : #ffff1c,
+	),
+	cosmic-fusion-gradient: (
+		'start-color' : #ff00cc,
+		'end-color' : #333399,
+	),
+	nepal-gradient: (
+		'start-color' : #de6161,
+		'end-color' : #2657eb,
+	),
+	love-couple-gradient: (
+		'start-color' : #3a6186,
+		'end-color' : #89253e,
+	),
+	sunset-gradient: (
+		'start-color' : #0B486B,
+		'end-color' : #F56217,
+	),
+	grapefruit-sunset-gradient: (
+		'start-color' : #e96443,
+		'end-color' : #904e95,
+	),
+	politics-gradient: (
+		'start-color' : #2196f3,
+		'end-color' : #f44336,
+	),
+	red-ocean-gradient: (
+		'start-color' : #1D4350,
+		'end-color' : #A43931,
+	),
+	back-to-earth-gradient: (
+		'start-color' : #20CAE4,
+		'end-color' : #1CE5B7,
+	),
+	flickr-gradient: (
+		'start-color' : #33001b,
+		'end-color' : #ff0084,
+	),
+	vir-america-gradient: (
+		'start-color' : #7b4397,
+		'end-color' : #dc2430,
+	),
+	purple-bliss-gradient: (
+		'start-color' : #360033,
+		'end-color' : #0b8793,
+	),
+	man-of-steel-gradient: (
+		'start-color' : #780206,
+		'end-color' : #061161,
+	),
+	shdow-night-gradient: (
+		'start-color' : #000000,
+		'end-color' : #53346D,
+	),
+	dracula-gradient: (
+		'start-color' : #DC2424,
+		'end-color' : #4A569D,
+	),
+	bloody-mary-gradient: (
+		'start-color' : #FF512F,
+		'end-color' : #DD2476,
+	),
+	harmonic-energy-gradient: (
+		'start-color' : #16A085,
+		'end-color' : #F4D03F,
+	),
+	purple-love-gradient: (
+		'start-color' : #cc2b5e,
+		'end-color' : #753a88,
+	)
+);

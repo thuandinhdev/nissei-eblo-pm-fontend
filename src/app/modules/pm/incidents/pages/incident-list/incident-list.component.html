@@ -1,0 +1,185 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2 pb-2">
+                <!-- Card header -->
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'incidents.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/incidents/kanban']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'incidents_create']" [routerLink]="['/incidents/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <!-- Card content -->
+                <div class="card-content pt-3">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Filter buttons -->
+                        <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex btn-filters mb-3">
+                            <div class="pr-0">
+                                <div class="btn-group mr-2 mb-2">
+                                    <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
+                                    <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="selected" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="pl-lg-0">
+                                <button (click)="filterByStatus(1, incidentFilterKey)" [ngClass]="{'active': statusfilterId==1}" class="btn btn-raised open" type="button">
+                                    <p>{{'common.status.open' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.open || countStatus.re_open; else elseCondition2;">{{countStatus.open + countStatus.re_open}}</ng-container>
+                                        <ng-template #elseCondition2>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(2, incidentFilterKey)" [ngClass]="{'active': statusfilterId ==2}" class="btn btn-raised assigned" type="button">
+                                    <p>{{'common.status.assigned' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.assigned; else elseCondition3;">{{countStatus.assigned}}</ng-container>
+                                        <ng-template #elseCondition3>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(3, incidentFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised in_progress" type="button">
+                                    <p>{{'common.status.in_progress' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.in_progress; else elseCondition4;">{{countStatus.in_progress}}</ng-container>
+                                        <ng-template #elseCondition4>0</ng-template>
+                                    </span>
+                                </button>
+                                <button (click)="filterByStatus(4, incidentFilterKey)" [ngClass]="{'active': statusfilterId==4}" class="btn btn-raised solved" type="button">
+                                    <p>{{'common.status.solved' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.solved || countStatus.deferred || countStatus.closed; else elseCondition5;">{{countStatus.solved + countStatus.deferred + countStatus.closed}}</ng-container>
+                                        <ng-template #elseCondition5>0</ng-template>
+                                    </span>
+                                </button>
+                                <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/incidents', 0, incidentFilterKey]" class="btn btn-raised  btn-secondary" type="button">
+                                    <p>{{'common.status.total' | translate}}</p>
+                                    <span class="badge badge-light">
+                                        <ng-container *ngIf="countStatus.all; else elseCondition1;">{{countStatus.all}}</ng-container>
+                                        <ng-template #elseCondition1>0</ng-template>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Incident list datatable -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                                    <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="incident_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>{{'incidents.columns.id' | translate}}</th>
+                                            <th>{{'incidents.columns.incident_name' | translate}}</th>
+                                            <th>{{'incidents.columns.start_date' | translate}}</th>
+                                            <th>{{'incidents.columns.end_date' | translate}}</th>
+                                            <th>{{'incidents.columns.actual_hours' | translate}}</th>
+                                            <th>{{'incidents.columns.assigned' | translate}}</th>
+                                            <th>{{'incidents.columns.priority' | translate}}</th>
+                                            <th>{{'incidents.columns.status' | translate}}</th>
+                                            <th>{{'incidents.columns.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody *ngIf="incidents?.length != 0">
+                                        <tr *ngFor="let incident of incidents; index as i">
+                                            <td>
+                                                <a [routerLink]="['/incidents/detail', incident.id]" tooltip="{{'common.view' | translate}}">{{incident.generated_id}}</a>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="getCheckPermission(incident); else elseBlock">
+                                                    <inline-edit-input (updateValue)="saveIncidentDetail(i, 'incident_name', $event);" [elementFor]="'incidents.inline_edit.incident_name' | translate" [fieldValue]="incident.incident_name" [isRequired]="'true'" [name]="'incident_name'" [type]="'text'"></inline-edit-input>
+                                                </ng-container>
+                                                <ng-template #elseBlock>{{incident.incident_name}}</ng-template>
+                                            </td>
+                                            <td>{{incident.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{incident.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>{{incident.actual_hours}}</td>
+                                            <td class="people-lists">
+                                                <ng-container *ngIf="incident.assign_to == 'Unassign' || incident.assign_to == '' || incident.assign_to == null; else elseBlock3">
+                                                    <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                        <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                    </a>
+                                                </ng-container>
+                                                <ng-template #elseBlock3>
+                                                    <a [routerLink]="['/users/profile', incident.assign_to]" class="btn rounded-circle text-dark btn-profile-danger" placement="top" tooltip="{{incident.assigned_firstname}} {{incident.assigned_lastname}}">
+                                                        <img *ngIf="incident.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{incident.assigned_avatar}}"/>
+                                                        <img *ngIf="!incident.assigned_avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                    </a>
+                                                </ng-template>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="getCheckPermission(incident); else elseBlock2">
+                                                    <div class="status-dropdown">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic" class="btn dropdown-toggle" dropdownToggle id="button-basic" type="button">{{getTranslatePriorities(incident.priority) | translate}}&nbsp;<span class="caret"></span>
+                                                            </button>
+                                                            <ul *dropdownMenu class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                                <li *ngFor="let priority of ('incidents.priorities' | translate)" role="menuitem">
+                                                                    <a (click)="changeIncidentSeverity([incident.id], priority);incident.priority = priority.id" [ngClass]="{'active': incident.priority == priority.id}" class="dropdown-item btn btn-sm {{priority.class}}">{{priority.label}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-template #elseBlock2>
+                                                    <ng-container *ngFor="let priority of ('incidents.priorities' | translate)">
+                                                        <div class="budges-status">
+                                                            <span *ngIf="priority.id == incident.priority" class="{{priority.class}}">{{priority.label}}</span>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-template>
+                                            </td>
+                                            <td class="status-dropdown">
+                                                <div class="overdue-td">
+                                                    <ng-container *ngIf="getCheckPermission(incident); else elseBlock4">
+                                                        <div class="btn-group" dropdown>
+                                                            <button aria-controls="dropdown-basic" class="btn dropdown-toggle" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(incident.status) | translate}}&nbsp;<span class="caret"></span>
+                                                            </button>
+                                                            <ul *dropdownMenu class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                                <li *ngFor="let status of ('incidents.status' | translate)" role="menuitem">
+                                                                    <a (click)="changeIncidentStatus([incident.id], status);incident.status = status.id" [ngClass]="{'active': incident.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock4>
+                                                        <ng-container *ngFor="let status of ('incidents.status' | translate)">
+                                                            <div class="budges-status">
+                                                                <span *ngIf="status.id == incident.status" class="{{status.class}}">{{status.label}}</span>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                    <ng-container *ngIf="incident.is_overdue">
+                                                        <i aria-hidden="true" class="fa fa-clock-o overdue-icon" tooltip="{{'common.overdue' | translate}} : {{incident.is_overdue}} {{'common.days' | translate}}"></i>
+                                                    </ng-container>
+                                                </div>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li *ngIf="getCheckPermission(incident)" role="menuitem">
+                                                            <a [routerLink]="['/incidents/edit', incident.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                        </li>
+                                                        <li *ngIf="getCheckPermission(incident)" role="menuitem">
+                                                            <a (click)="deleteIncident(incident.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="incidents?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

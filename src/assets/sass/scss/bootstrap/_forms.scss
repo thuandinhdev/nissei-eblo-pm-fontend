@@ -1,0 +1,201 @@
+// ================================================================================================
+// 	File Name: forms.scss
+// 	Description: Badge classes override from bootstrap provides forms inputs, selectsbox and other element's size, borders, colors etc..
+// 				 related customiztion.
+// ================================================================================================
+form {
+	label{
+		color: #75787d;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: 500;
+	}
+	.labelfocus {
+		color: #000;
+	}
+	.form-group {
+		margin-bottom: 1.5rem;
+	}
+	.form-control {
+		border: 1px solid #A6A9AE;
+		color: #75787d;
+
+		&::-webkit-input-placeholder {
+			color: darker($body-bg, 30%);
+		}
+
+		&:-moz-placeholder { /* Firefox 18- */
+			color: darker($body-bg, 30%);
+		}
+		&::-moz-placeholder {  /* Firefox 19+ */
+			color: darker($body-bg, 30%);
+		}
+		&:-ms-input-placeholder {
+			color: darker($body-bg, 30%);
+		}
+		&:focus{
+			border-color: #000;
+		}
+	}
+	.form-control-position {
+		position: absolute;
+		top: 2px;
+		right: 0;
+		z-index: 2;
+		display: block;
+		width: 2.5rem;
+		height: 2.5rem;
+		line-height: 2.5rem;
+		text-align: center;
+	}
+	.has-icon-left {
+		.form-control-position {
+			right: auto;
+			left: inherit;
+		}
+		.form-control {
+			padding-right: .85rem;
+			padding-left: 2.95rem;
+		}
+	}
+	.has-icon-right {
+		.form-control {
+			padding-right: 2.5rem;
+		}
+	}
+	.form-section {
+		color: theme-color('dark');
+		line-height: 3rem;
+		font-size: 1.2rem;
+		letter-spacing: 0.5px;
+		font-weight: 400;
+		margin-bottom: 20px;
+		border-bottom: 1px solid theme-color('dark');
+		i {
+			font-size: 20px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+	}
+	.form-actions {
+		border-top: 1px solid darker($body-bg, 10%);
+		padding: 20px 0;
+		margin-top: 20px;
+
+		&.filled {
+			background-color: $body-bg;
+		}
+		&.center {
+			text-align: center;
+		}
+		&.right {
+			text-align: right;
+		}
+		&.top {
+			border-top: 0;
+			border-bottom: 1px solid darker($body-bg, 10%);
+			margin-top: 0;
+			margin-bottom: 20px;
+		}
+
+		@include media-breakpoint-down(sm) {
+			.buttons-group{
+				float: left !important;
+				margin-bottom: 10px;
+			}
+		}
+	}
+	&.form-horizontal {
+		.form-group {
+			@include media-breakpoint-up(sm) {
+				.label-control{
+					text-align: right;
+				}
+			}
+		}
+	}
+	&.row-separator {
+		.form-group {
+			margin: 0;
+			border-bottom: 1px solid darker($body-bg, 3%);
+			.label-control{
+				padding-top: 1.5rem;
+			}
+			> div{
+				padding: 1.2rem;
+				padding-right: 0;
+			}
+			&.last{
+				border-bottom: 0;
+			}
+		}
+	}
+	&.form-bordered {
+		.form-group {
+			margin: 0;
+			border-bottom: 1px solid darker($body-bg, 3%);
+			.label-control {
+				padding-top: 1.5rem;
+			}
+			> div{
+				padding: 1.2rem;
+				padding-right: 0;
+				border-left: 1px solid darker($body-bg, 3%);
+			}
+			&.last {
+				border-bottom: 0;
+			}
+		}
+	}
+	&.striped-rows {
+		.form-group {
+			margin: 0;
+
+			.label-control {
+				padding-top: 1.5rem;
+			}
+
+			> div{
+				padding: 1.2rem;
+				padding-right: 0;
+			}
+
+			&:nth-child(even) {
+				background-color: $body-bg;
+			}
+		}
+	}
+	&.striped-labels {
+		.form-group {
+			margin: 0;
+
+			.label-control {
+				padding-top: 1.5rem;
+			}
+
+			> div{
+				padding: 1.2rem;
+				padding-right: 0;
+				background-color: white;
+			}
+
+			&:nth-child(even) {
+				background-color: $body-bg;
+			}
+		}
+	}
+}
+
+select.form-control {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+
+.form-control {
+	&:focus{
+		border-color: theme-color('primary') !important;
+		// box-shadow: none;
+	}
+}

@@ -1,0 +1,29 @@
+<!-- Wrapper - style you can find in sidebar-content.scss -->
+<div *ngIf="isSettingsLoad" class="wrapper" dir="ltr" i18n-dir>
+    <!-- App Sidebar - style you can find in sidebar-content.scss  -->
+    <div class="app-sidebar" data-active-color="white" data-background-color="black">
+        <app-sidebar [settings]="settings"></app-sidebar>
+        <div class="sidebar-background"></div>
+    </div>
+    <!-- Main panel - style you can find in base.scss -->
+    <div class="main-panel">
+        <!-- Topbar header - style you can find in navbar.scss -->
+        <app-header></app-header>
+        <!-- Main view/routes content -->
+        <div class="main-content mt-2">
+            <div class="content-wrapper">
+                <!-- Container fluid -->
+                <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <app-breadcrumb></app-breadcrumb>
+                    <!-- Router outlets -->
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <app-footer [settings]="settings"></app-footer>
+    </div>
+    <!-- Theme settings -->
+    <app-theme-settings [settings]="settings"></app-theme-settings>
+</div>

@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-newspaper-o  modal-icon"></i>&nbsp;{{'knowledge_base.article.title' | translate}}
+    </h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="articleCreateForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="article_title">{{'knowledge_base.article.create.fields.article_title' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && articleControl.article_title.errors }" class="form-control" formControlName="article_title" placeholder="{{'knowledge_base.article.create.placeholders.placeholder1' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && articleControl.article_title.errors" class="invalid-feedback">
+                            <div *ngIf="articleControl.article_title.errors.required">{{'knowledge_base.article.create.error_messages.message1' | translate}}</div>
+                            <div *ngIf="articleControl.article_title.errors.maxlength">{{'knowledge_base.article.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isPageLoaded" class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && articleControl.category_id.errors }" class="form-group">
+                        <label for="category_name">{{'knowledge_base.article.create.fields.category' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="categories" [searchable]="true" [selectOnTab]="true" bindLabel="category_name" bindValue="id" formControlName="category_id" labelForId="category_id" placeholder="{{'knowledge_base.article.create.placeholders.placeholder2' | translate}}"></ng-select>
+                        <div *ngIf="isFormSubmitted && articleControl.category_id.errors" class="invalid-feedback">
+                            <div *ngIf="articleControl.category_id.errors.required">{{'knowledge_base.article.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{'knowledge_base.article.create.fields.file' | translate}}</label>
+                        <input formControlName="file" type="hidden">
+                        <div #logodropzone class="dropzone dz-clickable">
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'knowledge_base.article.create.error_messages.message4' | translate}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input formControlName="file_extension" type="hidden">
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && articleControl.description.errors }" class="form-group">
+                        <label for="description">{{'knowledge_base.article.create.fields.description' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <app-ngx-editor [placeholder]="'knowledge_base.article.create.placeholders.placeholder3' | translate" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                        <div *ngIf="isFormSubmitted && articleControl.description.errors" class="invalid-feedback">
+                            <div *ngIf="articleControl.description.errors.required">{{'knowledge_base.article.create.error_messages.message5' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0">{{'common.create' | translate}}</button>
+    </div>
+</form>

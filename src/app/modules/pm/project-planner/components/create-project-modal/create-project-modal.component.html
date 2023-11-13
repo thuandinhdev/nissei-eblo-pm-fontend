@@ -1,0 +1,170 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-product-hunt modal-icon"></i>&nbsp;{{'projects.title1' | translate}}</h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createProjectForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="project_name">{{'projects.create.fields.project_name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.project_name.errors }" class="form-control" formControlName="project_name" id="project_name" placeholder="{{'projects.create.placeholders.placeholder1' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && projectControl.project_name.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.project_name.errors.required">{{'projects.create.error_messages.message1' | translate}}</div>
+                            <div *ngIf="projectControl.project_name.errors.maxlength">{{'projects.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="project_version">{{'projects.create.fields.version' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.project_version.errors }" class="form-control" formControlName="project_version" id="project_version" placeholder="{{'projects.create.placeholders.placeholder2' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && projectControl.project_version.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.project_version.errors.required">{{'projects.create.error_messages.message3' | translate}}</div>
+                            <div *ngIf="projectControl.project_version.errors.pattern">{{'projects.create.error_messages.message4' | translate}}</div>
+                        </div>
+                        <span class="badge badge-secondary">{{'projects.budges.version' | translate }}: 1.0, 1.1, 1.2</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.start_date.errors }" class="form-group">
+                        <label for="start_date">{{'projects.create.fields.start_date' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp1="bsDatepicker" (bsValueChange)="startDateChange($event)" [bsConfig]="datepickerConfig" bsDatepicker class="form-control" formControlName="start_date" id="start_date" placeholder="{{'projects.create.placeholders.placeholder7' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                            <div *ngIf="isFormSubmitted && projectControl.start_date.errors" class="invalid-feedback">
+                                <div *ngIf="projectControl.start_date.errors.required">{{'projects.create.error_messages.message9' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.end_date.errors }" class="form-group">
+                        <label for="end-date">{{'projects.create.fields.end_date' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp2="bsDatepicker" [bsConfig]="datepickerConfig" [minDate]="createProjectForm.get('start_date').value" bsDatepicker class="form-control" formControlName="end_date" id="end_date" placeholder="{{'projects.create.placeholders.placeholder8' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                            <div *ngIf="isFormSubmitted && projectControl.end_date.errors" class="invalid-feedback">
+                                <div *ngIf="projectControl.end_date.errors.required">{{'projects.create.error_messages.message10' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!loginUser.is_client" class="col-md-6">
+                    <div class="form-group">
+                        <label for="client_id">{{'projects.create.fields.client_name' | translate}}</label>
+                        <ng-select [items]="clients" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="client_id" labelForId="client_id" placeholder="{{'projects.create.placeholders.placeholder3' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>{{item.firstname}} {{item.lastname}}</ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="estimated_hours">{{'projects.create.fields.estimate_hours' | translate}}</label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.estimated_hours.errors }" class="form-control" formControlName="estimated_hours" placeholder="00:00" type="text">
+                        <div *ngIf="isFormSubmitted && projectControl.estimated_hours.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.estimated_hours.errors.pattern">{{'projects.create.error_messages.message11' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.status.errors }" class="form-group">
+                        <label for="status">{{'projects.create.fields.status' | translate}}&nbsp;<span class="text-danger">*</span>
+                        </label>
+                        <ng-select [items]="('projects.status' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="status" labelForId="status" placeholder="{{'projects.create.placeholders.placeholder4' | translate}}"></ng-select>
+                        <div *ngIf="isFormSubmitted && projectControl.status.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.status.errors.required">{{'projects.create.error_messages.message6' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="assign_to">{{'projects.create.fields.assigned_group' | translate}}</label>
+                        <ng-select (change)="assignGroupChange($event)" [items]="teams" [searchable]="true" [selectOnTab]="true" bindLabel="team_name" bindValue="id" formControlName="assign_to" labelForId="assign_to" placeholder="{{'projects.create.placeholders.placeholder5' | translate}}"></ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="assign_members">{{'projects.create.fields.assigned_To' | translate}}</label>
+                        <ng-select [items]="teamsMembers" [multiple]="true" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="assign_members" labelForId="assign_members" placeholder="{{'projects.create.placeholders.placeholder6' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>{{item.firstname}} {{item.lastname}}</ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.demo_url.errors }" class="form-group">
+                        <label for="demo_url">{{'projects.create.fields.demo_URL' | translate }}</label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.demo_url.errors }" class="form-control" formControlName="demo_url" id="demo_url" placeholder="https://example.com" type="text"/>
+                        <div *ngIf="isFormSubmitted && projectControl.demo_url.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.demo_url.errors.pattern">{{'projects.create.error_messages.message8' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="type">{{'projects.create.fields.billing_type' | translate }}</label>
+                        <ng-select [items]="('projects.billing_types' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="billing_type" labelForId="billing_type" placeholder="{{'projects.create.placeholders.placeholder9' | translate }}"></ng-select>
+                    </div>
+                </div>
+                <div *ngIf="createProjectForm.get('billing_type').value == 1 || createProjectForm.get('billing_type').value == 2 || createProjectForm.get('billing_type').value == null" class="col-md-6">
+                    <div class="form-group fixed_rate">
+                        <label *ngIf="createProjectForm.get('billing_type').value == 1 || createProjectForm.get('billing_type').value == null" for="price_rate">{{'projects.create.fields.fixed_price' | translate }}</label>
+                        <label *ngIf="createProjectForm.get('billing_type').value == 2" for="price_rate">{{'projects.create.fields.hourly_rate' | translate }}</label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && projectControl.price_rate.errors }" class="form-control" formControlName="price_rate" id="price_rate" placeholder="{{'projects.create.placeholders.placeholder10' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && projectControl.price_rate.errors" class="invalid-feedback">
+                            <div *ngIf="projectControl.price_rate.errors.minlength">{{'projects.create.error_messages.message12' | translate }}</div>
+                            <div *ngIf="projectControl.price_rate.errors.pattern">{{'projects.create.error_messages.message13' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="project_hours">{{'projects.create.fields.project_hours' | translate }}</label><br>
+                        <div class="form-check checkbox-container">
+                            <input class="form-check-input" formControlName="project_hours" id="project_hours" type="checkbox">
+                            <label></label>
+                            <span class="checkbox-checkmark"></span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!createProjectForm.get('project_hours').value" class="col-md-6">
+                    <div class="form-group">
+                        <label>{{'projects.create.fields.progress' | translate }}</label>
+                        <ng5-slider [options]="progressOptions" formControlName="progress"></ng5-slider>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{'projects.create.fields.project_logo' | translate }}</label>
+                        <input formControlName="project_logo" type="hidden">
+                        <div #logodropzone class="dropzone dz-clickable">
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'projects.create.error_messages.message14' | translate }}</strong></span>
+                            </div>
+                        </div>
+                        <div class="people-lists text-center">
+                            <a (click)="setLogos(logo)" *ngFor="let logo of logos;" [ngClass]="{active: isActive(logo)}" class="btn btn-profile-info rounded-circle text-dark">
+                                <img alt="Project Logo" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/project/{{logo}}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="customFields.length > 0" class="col-md-12">
+                    <app-show-custom-field-element [controls]="createProjectForm.get('custom_field')" [customFields]="customFields" [formArray]="'custom_field'" [formName]="createProjectForm" [isFormSubmitted]="isFormSubmitted"></app-show-custom-field-element>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{'projects.create.fields.description' | translate}}</label>
+                        <app-ngx-editor [placeholder]="'projects.create.placeholders.placeholder11' | translate" [spellcheck]="true" formControlName="description" height="100px" id="description" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

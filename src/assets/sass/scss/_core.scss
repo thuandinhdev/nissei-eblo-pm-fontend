@@ -1,0 +1,11 @@
+// ================================================================================================
+// 	File Name: core.scss
+// 	Description: Import all core files helper, components, utilities, pages etc..
+// ================================================================================================
+@import "core/helper";
+@import "core/components";
+@import "core/sidebar-content";
+@import "core/utilities";
+@import "core/misc";
+@import "core/pages";
+@import "core/responsive";

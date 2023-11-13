@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-arrows-alt modal-icon"></i>&nbsp;{{'project_planner.move_sprint_task.title' | translate}}
+    </h2>
+    <button (click)="onCancel()" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isPageLoaded" [formGroup]="moveTaskForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <!-- <div class="col-md-12">
+                    <div class="form-group" [ngClass]="{ 'is-invalid': isFormSubmitted && projectPlannerControl.project_id.errors }">
+                        <label for="project">{{'project_planner.move_sprint_task.create.fields.project' | translate}}<span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [searchable]="true"
+                            [items]="projects"
+                            [selectOnTab]="true"
+                            bindLabel="project_name"
+                            bindValue="id"
+                            labelForId="project_id"
+                            formControlName="project_id"
+                            placeholder="{{'project_planner.move_sprint_task.create.placeholders.placeholder1' | translate}}"
+                            (change)="projectChange($event)">
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.project_name}}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && projectPlannerControl.project_id.errors" class="invalid-feedback">
+                            <div *ngIf="projectPlannerControl.project_id.errors.required">{{'project_planner.move_sprint_task.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && projectPlannerControl.sprint_id.errors }" class="form-group">
+                        <label for="sprint_id">{{'project_planner.move_sprint_task.create.fields.sprint' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="sprints" [searchable]="true" [selectOnTab]="true" bindLabel="sprint_name" bindValue="id" formControlName="sprint_id" labelForId="sprint_id" placeholder="{{'project_planner.move_sprint_task.create.placeholders.placeholder2' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>
+                                {{item.sprint_name}}
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && projectPlannerControl.sprint_id.errors" class="invalid-feedback">
+                            <div *ngIf="projectPlannerControl.sprint_id.errors.required">{{'project_planner.move_sprint_task.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.move' | translate}}</button>
+    </div>
+</form>

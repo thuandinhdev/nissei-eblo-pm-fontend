@@ -1,0 +1,249 @@
+<section *ngIf="isPageLoad">
+    <div class="row">
+        <div class="col-md-12 col-12 text-center text-sm-right">
+            <a *ngIf="isDownloadable" class="btn btn-secondary text-white mb-0" href="{{apiUrl}}/invoices/download/{{invoice.secret_id}}/{{invoice.client.id}}" type="button"><i class="ft-upload mr-1"></i>{{'invoices.view.download' | translate}}
+            </a>
+            <ng-container *ngIf="invoice.status != 'paid'">
+                <button (click)="openPaymentCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'payments_create']" class="btn btn-create mb-0 ml-1">
+                    <i class="fa fa-plus"></i><span>{{'invoices.view.add_payment' | translate}}</span></button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="row" id="invoice_table">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-content p-3">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div *ngIf="invoice.status == 'paid'" class="ribbon ribbon-bookmark ribbon-paid">{{'invoices.view.paid' | translate}}</div>
+                                <div *ngIf="invoice.status == 'partially_paid'" class="ribbon ribbon-bookmark ribbon-partially_paid">{{'invoices.view.partially_paid' | translate}}</div>
+                                <div *ngIf="invoice.status == 'unpaid'" class="ribbon ribbon-bookmark ribbon-unpaid">{{'invoices.view.unpaid' | translate}}</div>
+
+                                <div class="media logo-img pt-5">
+                                    <img *ngIf="invoiceSettings.invoice_logo" alt="Invoice Logo" height="80" src="{{apiUrl}}/uploads/invoice_logo/{{invoiceSettings.invoice_logo}}" width="80">
+                                    <img *ngIf="!invoiceSettings.invoice_logo" alt="Invoice Logo" height="80" src="assets/img/logos/vipspm_logo.png" width="80">
+                                    <div class="media-body ml-4">
+                                        <ul class="m-0 list-unstyled">
+                                            <li class="text-bold-800">{{loginUser.settings.company_name}}</li>
+                                            <li class="nl2br">{{loginUser.settings.company_address}}</li>
+                                            <li>{{loginUser.settings.company_phone}}</li>
+                                            <li *ngIf="invoiceSettings.show_gst_number">{{'invoices.view.gst_number' | translate}}: {{invoiceSettings.gst_number}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 text-right">
+                                <h2 class="primary text-uppercase">{{'invoices.title4' | translate}}</h2>
+                                <p class="pb-3"># {{invoice.invoice_number}}</p>
+                            </div>
+                        </div>
+                        <div class="row" id="invoice-customer-details">
+                            <div class="col-12 text-left">
+                                <p class="text-muted mb-1">{{'invoices.view.bill_to' | translate}}</p>
+                            </div>
+                            <div class="col-md-4 col-12 text-left">
+                                <ul class="m-0 list-unstyled">
+                                    <li class="text-bold-800">{{invoice.client.firstname}} {{invoice.client.lastname}}</li>
+                                    <li class="nl2br">{{invoice.client.address}}</li>
+                                    <li>{{invoice.client.phone}}</li>
+                                    <li>{{invoice.client.mobile}}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8 col-12 text-right">
+                                <p *ngIf="invoice.reference">
+                                    <span class="text-muted">{{'invoices.create.fields.reference' | translate}} :</span> {{invoice.reference}}
+                                </p>
+                                <p>
+                                    <span class="text-muted">{{'invoices.view.invoice_date' | translate}} :</span> {{invoice.invoice_date | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                </p>
+                                <p class="m-0">
+                                    <span class="text-muted">{{'invoices.view.due_date' | translate}} :</span> {{invoice.due_date | dateTimeFormatFilter: loginUser.settings.date_format}}
+                                </p>
+                            </div>
+                        </div>
+                        <div id="invoice-items-details">
+                            <div class="row">
+                                <div class="table-responsive col-12">
+                                    <table class="table mt-3">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{'invoices.create.fields.item_name' | translate}} &amp; {{'invoices.create.fields.item_description' | translate}}</th>
+                                            <th>{{'invoices.create.fields.quantity' | translate}}</th>
+                                            <th>{{'invoices.create.fields.unit_price' | translate}}</th>
+                                            <th>{{'invoices.create.fields.item_tax' | translate}}</th>
+                                            <th class="text-right">{{'invoices.create.fields.total_item_amount' | translate}} ({{loginUser.currency.symbol}})</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let item of invoice.items; index as i">
+                                            <th scope="row">{{i + 1}}</th>
+                                            <td>
+                                                <p class="mb-0">{{item.item_name}}</p>
+                                                <p class="mb-0 text-muted">{{item.item_description}}</p>
+                                            </td>
+                                            <td><span>{{item.quantity}}<small>&nbsp;{{item.item_unit}}</small></span>
+                                            </td>
+                                            <td>{{item.unit_price}}</td>
+                                            <td class="budges-status">
+                                                <ng-container *ngFor="let tax of item.taxes">
+                                                    <span class="open">{{tax.tax_name}} ({{tax.tax_rate}}%)</span>
+                                                </ng-container>
+                                            </td>
+                                            <td class="text-right">{{item.unit_price * item.quantity}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mt-md-0">
+                                <div class="col-md-6 col-12"></div>
+                                <div class="col-md-6 col-12">
+                                    <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                        <table class="table" width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td>{{'invoices.create.fields.sub_total' | translate}}</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{invoices.sub_total | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr *ngFor="let tax of itemTaxes | keyvalue">
+                                                <td>{{taxesNameValues[tax.key].tax_name}} ({{taxesNameValues[tax.key].tax_rate}}%)</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{tax.value}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'invoices.create.fields.discount' | translate}}</td>
+                                                <td class="danger text-right">(-) {{loginUser.currency.symbol}}{{invoice.total_discount | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{'invoices.create.fields.adjustment' | translate}}</td>
+                                                <td class="text-right">{{loginUser.currency.symbol}}{{invoice.adjustment | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-500">{{'invoices.create.fields.total_amount' | translate}}</td>
+                                                <td class="text-bold-500 text-right"> {{loginUser.currency.symbol}}{{invoice.total_amount | number : '1.2-2'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-500 danger">{{'invoices.create.fields.total_amount_due' | translate}}</td>
+                                                <td class="text-bold-500 text-right danger"> {{loginUser.currency.symbol}} {{ invoice.total_due_amount | number : '1.2-2'}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mt-sm-0 pt-3 border-top">
+                                <div class="col-md-12 col-12 d-flex align-items-center">
+                                    <div class="terms-conditions mb-2">
+                                        <h6><strong>{{'invoices.view.terms' | translate}}</strong></h6>
+                                        <p>{{invoiceSettings.terms_conditions}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mt-sm-0 pt-3 border-top">
+                                <div class="col-md-12">
+                                    <h6><strong>{{'invoices.view.transactions' | translate}}</strong></h6>
+                                    <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                        <table class="table table-bordered table-hover b4-datatable" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th>{{'invoices.view.payment' | translate}} #</th>
+                                                <th>{{'invoices.view.payment_mode' | translate}}</th>
+                                                <th>{{'invoices.view.date' | translate}}</th>
+                                                <th>{{'invoices.view.status' | translate}}</th>
+                                                <th>{{'invoices.view.amount' | translate}} ({{loginUser.currency.symbol}})</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody *ngIf="invoice.payments?.length != 0">
+                                            <tr *ngFor="let payment of invoice.payments; index as i">
+                                                <td>
+                                                    <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'payments_view'] else elseBlock1;">
+                                                        <a [routerLink]="['/payments/detail', payment.id]" tooltip="{{'common.view' | translate}}">{{payment.receipt_number}}</a>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock1>{{payment.receipt_number}}</ng-template>
+                                                </td>
+                                                <td>{{payment.payment_method}}</td>
+                                                <td>{{payment.date | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                                <td class="budges-status">
+                                                    <ng-container *ngFor="let status of ('payments.status' | translate)">
+                                                        <span *ngIf="status.id == payment.status" class="{{status.class}}">{{status.label}}</span>
+                                                    </ng-container>
+                                                </td>
+                                                <td>{{payment.amount}}</td>
+                                            </tr>
+                                            </tbody>
+                                            <tbody *ngIf="invoice.payments?.length == 0">
+                                            <tr>
+                                                <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="invoice.status != 'paid'" class="row mt-2 mt-sm-0 pt-3 border-top">
+                                <div class="col-md-12 col-12">
+                                    <h6><strong>{{'payments.columns.payment_mode' | translate}}</strong></h6>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                                <table class="table" width="100%">
+                                                    <tbody>
+                                                    <tr *ngIf="gatewaySettings.paypal_checkout_status">
+                                                        <td class="width-600">
+                                                            <div class="form-check radio-container d-block">
+                                                                <input [(ngModel)]="paymentMethod" class="form-check-input" id="checkbox1" type="radio" value="paypal">
+                                                                <label class="form-check-label" for="checkbox1">&nbsp;{{'invoices.view.paypal' | translate}}&nbsp;</label>
+                                                                <span class="radio-checkmark"></span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="width-300">
+                                                            <ng-container *ngIf="paymentMethod == 'paypal'">
+                                                                <app-paypal-payment (onPaymentSuccess)="getPaymentSuccess($event)" [gatewaySettings]="gatewaySettings" [invoice]="invoice" [loginUser]="loginUser"></app-paypal-payment>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="gatewaySettings.stripe_status">
+                                                        <td class="width-600">
+                                                            <div class="form-check radio-container d-block">
+                                                                <input [(ngModel)]="paymentMethod" class="form-check-input" id="checkbox2" type="radio" value="stripe">
+                                                                <label class="form-check-label" for="checkbox2">&nbsp;{{'invoices.view.stripe' | translate}}</label>
+                                                                <span class="radio-checkmark"></span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="width-300">
+                                                            <ng-container *ngIf="paymentMethod == 'stripe'">
+                                                                <app-stripe-payment (onPaymentSuccess)="getPaymentSuccess($event)" [gatewaySettings]="gatewaySettings" [invoice]="invoice" [loginUser]="loginUser"></app-stripe-payment>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngFor="let mode of paymentModes; index as i">
+                                                        <ng-container *ngIf="mode.show_on_pdf && (mode.status == 'active' || mode.status == '1')">
+                                                            <td class="width-600">
+                                                                <div class="form-check radio-container d-block">
+                                                                    <input [(ngModel)]="paymentMethod" class="form-check-input" id="checkbox2_{{i}}" type="radio" value="{{mode.method_name}}">
+                                                                    <label class="form-check-label" for="checkbox2_{{i}}">&nbsp;{{mode.method_name}}</label>
+                                                                    <span class="radio-checkmark"></span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nl2br width-300">
+                                                                <ng-container *ngIf="paymentMethod == mode.method_name">
+                                                                    {{mode.description}}
+                                                                </ng-container>
+                                                            </td>
+                                                        </ng-container>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,79 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'teams.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'teams_view']" [routerLink]="['/teamboard']" class="btn btn-create mb-0" placement="top" tooltip="{{'teams.title3' | translate}}"><i class="fa fa-universal-access"></i><span>{{'teams.title3' | translate}}</span></a>
+                        <!-- <a *ngxPermissionsOnly="['admin', 'super_admin', 'teams_create']" class="btn btn-create mb-0" download="import_teams.csv" href="{{ apiUrl }}/csv/import_teams.csv" placement="top" target="_blank" tooltip="{{'common.tooltip.team_csv_sample' | translate}}"><i class="fa fa-files-o"></i></a>
+                        <button (click)="openTeamImportModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'teams_create']" class="btn btn-create mb-0" tooltip="{{'common.import' | translate}}">
+                            <i class="fa fa-upload"></i></button> -->
+                        <button (click)="openTeamCreateModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'teams_create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}">
+                            <i aria-hidden="true" class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="team_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'teams.columns.team_name' | translate}}</th>
+                                    <th>{{'teams.columns.members' | translate}}</th>
+                                    <th>{{'teams.columns.leader' | translate}}</th>
+                                    <th>{{'teams.columns.actions' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="teams?.length != 0">
+                                <tr *ngFor="let team of teams; index as i">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        <div *ngxPermissionsOnly="['admin', 'super_admin', 'teams_edit']; else elseBlock1; then thenBlock1"></div>
+                                        <ng-template #elseBlock1>{{team.team_name}}</ng-template>
+                                        <ng-template #thenBlock1>
+                                            <inline-edit-input (updateValue)="saveTeamDetail(i, 'team_name', $event);" [elementFor]="'teams.inline_edit.team_name' | translate" [fieldValue]="team.team_name" [isRequired]="'true'" [maxLength]="30" [name]="'team_name'" [type]="'text'"></inline-edit-input>
+                                        </ng-template>
+                                    </td>
+                                    <td class="people-lists">
+                                        <a *ngFor="let member of team.members index as i; odd as isOdd; even as isEven" [ngClass]="{'btn-profile-info popover-item': isOdd, 'btn-profile-danger': isEven, 'popover-item': i!=0}" [routerLink]="['/users/profile', member.id]" class="btn rounded-circle text-dark" placement="top" tooltip="{{member.firstname}} {{member.lastname}}">
+                                            <img *ngIf="member.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{member.avatar}}"/>
+                                            <img *ngIf="!member.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </td>
+                                    <td class="people-lists">
+                                        <a [routerLink]="['/users/profile', team.team_leader]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{team.firstname}} {{team.lastname}}">
+                                            <img *ngIf="team.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{team.avatar}}"/>
+                                            <img *ngIf="!team.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                        </a>
+                                    </td>
+                                    <td class="actions-dropdown">
+                                        <div class="btn-group" dropdown>
+                                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                <i class="fa fa-ellipsis-v"></i></button>
+                                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'teams_edit']" role="menuitem">
+                                                    <a (click)="openTeamEditModal(team)" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                </li>
+                                                <li *ngxPermissionsOnly="['admin', 'super_admin', 'teams_delete']" role="menuitem">
+                                                    <a (click)="removeTeam(team.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="teams?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

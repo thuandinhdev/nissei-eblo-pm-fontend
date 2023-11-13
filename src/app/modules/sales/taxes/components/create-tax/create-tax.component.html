@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-percent"></i>&nbsp;{{'taxes.title3' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createTaxForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">{{'taxes.create.fields.tax_name' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && taxControl.tax_name.errors }" class="form-control" formControlName="tax_name" id="tax_name" placeholder="{{'taxes.create.placeholders.placeholder1' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && taxControl.tax_name.errors" class="invalid-feedback">
+                            <div *ngIf="taxControl.tax_name.errors.required">{{'taxes.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tax_rate">{{'taxes.create.fields.tax_rate' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && taxControl.tax_rate.errors }" class="form-control" formControlName="tax_rate" id="tax_rate" placeholder="{{'taxes.create.placeholders.placeholder2' | translate }}" type="text"/>
+                        <div *ngIf="isFormSubmitted && taxControl.tax_rate.errors" class="invalid-feedback">
+                            <div *ngIf="taxControl.tax_rate.errors.required">{{'taxes.create.error_messages.message2' | translate}}</div>
+                            <div *ngIf="taxControl.tax_rate.errors.pattern">{{'taxes.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

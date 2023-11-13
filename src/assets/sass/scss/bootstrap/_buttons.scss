@@ -1,0 +1,329 @@
+// ================================================================================================
+// 	File Name: buttons.scss
+// 	Description: Buttons classes override from bootstrap provides different type of buttons like actions, submit, create with colors, sizes, etc..
+// 				 related customiztion.
+// ================================================================================================
+
+.btn {
+    &[class*="btn-"] {
+        margin-bottom: 1rem;
+    }
+}
+
+.btn-group-vertical {
+    .btn {
+        &[class*="btn-"] {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.input-group {
+    .btn {
+        &[class*="btn-"] {
+            margin-bottom: 0;
+        }
+    }
+
+    margin-bottom: 1rem;
+}
+
+*:focus {
+    outline: none !important;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.btn:focus,
+.btn.focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+/* ********************
+	Round buttons
+	********************* */
+.btn-round {
+    border-radius: $border-radius-extreme;
+}
+
+
+/* ********************
+	Create buttons
+	********************* */
+.btn-create {
+    // border-radius: 28px;
+    margin-right: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    height: 40px;
+    // width: 46px;
+    padding: 0 22px;
+    // box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .09), 0 8px 9px 0 rgba(0, 0, 0, .09) !important;
+    background-color: $btn-bg;
+    line-height: 42px;
+    color: $primary-main;
+    overflow: hidden;
+    position: relative;
+    // border: 1px solid $primary-main;
+
+    span {
+        padding-left: 30px;
+    }
+
+    i {
+        font-size: 19px;
+        color: #fff;
+        line-height: 42px;
+        transition: all 0.5s ease;
+        // border-radius: 50%;
+        // background: #ffffff !important;
+        color: $primary-main;
+        // border: 1px solid $primary-main;
+        width: 46px;
+        height: 46px;
+        position: absolute;
+        top: -1px;
+        left: -1px;
+    }
+
+    &:hover {
+        background: $primary-main !important;
+        color: #fff !important;
+    }
+
+    &:hover {
+        i {
+            background: $primary-main !important;
+            // border: 2px solid #ffffff;
+            background-image: none !important;
+            color: #ffffff;
+        }
+    }
+}
+
+/* *******************
+	Filter buttons
+	*****************/
+.btn-toggle {
+    padding: 7px 25px !important;
+}
+
+.tab-filter {
+    z-index: 0;
+}
+
+.btn-filters {
+    .btn {
+        padding: 0px;
+        border-radius: 5px;
+        position: relative;
+        display: flex;
+        margin: 0 10px 10px 0;
+        height: 40px;
+        float: left;
+
+        p {
+            margin: 0;
+            padding: 9px 25px;
+            font-size: 14px;
+        }
+
+        .badge {
+            position: relative;
+            top: 0;
+            padding: 12px 20px 11px 17px;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        &:hover {
+            box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.09), 0 8px 9px 0 rgba(0, 0, 0, 0.09);
+        }
+
+        &.open {
+            background: #1cbcd8;
+            color: #FFFFFF;
+        }
+
+        &.in_progress {
+            background: #ffb136;
+            color: #FFFFFF;
+        }
+
+        &.on_hold {
+            background: #9a9a9a;
+            color: #FFFFFF;
+        }
+
+        &.cancel {
+            background: #ff1053;
+            color: #FFFFFF;
+        }
+
+        &.assigned {
+            background: #deb511;
+            color: #FFFFFF;
+        }
+
+        &.deferred {
+            background: #DB5A44;
+            color: #FFFFFF;
+        }
+
+        &.reopen {
+            background: #585858;
+            color: #FFFFFF;
+        }
+
+        &.closed {
+            background: #998983;
+            color: #FFFFFF;
+        }
+
+        &.solved {
+            background: #78e316;
+            color: #FFFFFF;
+        }
+
+        &.completed {
+            background: #2ecc71;
+            color: #FFFFFF;
+        }
+
+
+    }
+
+    .badge {
+        &::after {
+            border-bottom: 38px solid #f8f9fa;
+            border-left: 14px solid transparent;
+            height: 0;
+            width: 30px;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -14px;
+        }
+    }
+
+    .btn.active {
+        box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.09), 0 8px 9px 0 rgba(0, 0, 0, 0.09);
+    }
+}
+
+/** *********************
+	Submit/Cancel buttons
+	***********************/
+.btn-submit {
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin: 0 10px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    padding: 14px 45px;
+    background-image: linear-gradient(to right, #31c69c 0%, #34a853 51%, #31c69c 100%);
+    box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+
+    &:hover {
+        background-position: right center;
+        -moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+        color: #FFFFFF;
+    }
+}
+
+.btn-cancel {
+    font-size: 16px;
+    font-weight: 500;
+    color: #485563;
+    cursor: pointer;
+    margin: 0 10px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    padding: 13px 40px;
+    background: #FFFFFF;
+    border: 1px solid #cabfbc;
+    box-shadow: 0 6px 0px 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+
+    &:hover {
+        background: #EEEEEE;
+        color: $secondary-main;
+    }
+}
+
+.action-btn {
+    background-color: $primary-main !important;
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, .42), 0 3px 20px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
+    color: #FFFFFF !important;
+    border-radius: 30px;
+    border-color: $primary-main;
+    padding: 6px 20px;
+
+    button {
+        border: 0px;
+        font-size: 15px;
+        padding: 0;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: transparent !important;
+            color: #FFFFFF !important;
+        }
+
+        &:focus {
+            background-color: transparent !important;
+            color: #FFFFFF !important;
+        }
+
+        &.dropdown-toggle {
+            background-color: transparent !important;
+            color: #FFFFFF !important;
+            border: 0px;
+        }
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        color: #FFFFFF !important;
+        background-color: $primary-main;
+    }
+
+    .dropdown-toggle {
+        margin: 3px 0 0 5px !important;
+    }
+
+    .dropdown-menu {
+        min-width: 100%;
+        box-shadow: 0 10px 20px -12px rgba(0, 0, 0, .42), 0 3px 20px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
+
+        .dropdown-item {
+            padding: 0.25rem 1rem;
+            font-size: 15px;
+
+            i {
+                margin-right: 3px;
+            }
+        }
+    }
+}

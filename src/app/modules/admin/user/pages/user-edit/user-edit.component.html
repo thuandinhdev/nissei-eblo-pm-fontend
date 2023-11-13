@@ -1,0 +1,132 @@
+<section *ngIf="isPageLoaded" id="basic-form-layouts">
+    <form (ngSubmit)="onSubmit()" [formGroup]="editUserForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">{{'users.title2' | translate}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user"></i> {{'users.headings.head1' | translate}}
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstname">{{'users.create.fields.first_name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.firstname.errors }" class="form-control" formControlName="firstname" id="firstname" placeholder="{{'users.create.placeholders.placeholder1' | translate}}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && userControl.firstname.errors" class="invalid-feedback">
+                                                <div *ngIf="userControl.firstname.errors.required">{{'users.create.error_messages.message1' | translate}}</div>
+                                                <div *ngIf="userControl.firstname.errors.maxlength">{{'users.create.error_messages.message2' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastname">{{'users.create.fields.last_name' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.lastname.errors }" class="form-control" formControlName="lastname" id="lastname" placeholder="{{'users.create.placeholders.placeholder2' | translate}}" type="text"/>
+                                            <div *ngIf="isFormSubmitted && userControl.lastname.errors" class="invalid-feedback">
+                                                <div *ngIf="userControl.lastname.errors.required">{{'users.create.error_messages.message3' | translate}}</div>
+                                                <div *ngIf="userControl.lastname.errors.maxlength">{{'users.create.error_messages.message4' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="user_generated_id">{{'users.create.fields.userid' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.user_generated_id.errors }" abindex="-1" class="form-control" formControlName="user_generated_id" id="user_generated_id" placeholder="USR000" readonly type="text"/>
+                                            <div *ngIf="isFormSubmitted && userControl.user_generated_id.errors" class="invalid-feedback">
+                                                <div *ngIf="userControl.user_generated_id.errors.required">{{'users.create.error_messages.message14' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="username">{{'users.create.fields.username' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend no-borders no-paddings">
+                                                    <span class="input-group-text font-12" id="usernamePrepend">@</span>
+                                                </div>
+                                                <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.username.errors }" aria-describedby="usernamePrepend" class="form-control" formControlName="username" id="username" placeholder="{{'users.create.placeholders.placeholder7' | translate}}" type="text"/>
+                                                <div *ngIf="isFormSubmitted && userControl.username.errors" class="invalid-feedback">
+                                                    <div *ngIf="userControl.username.errors.required">{{'users.create.error_messages.message16' | translate}}</div>
+                                                    <div *ngIf="userControl.username.errors.minlength || userControl.username.errors.maxlength || userControl.username.errors.pattern">{{'users.create.error_messages.message17' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="email">{{'users.create.fields.email' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.email.errors }" class="form-control" formControlName="email" id="email" placeholder="{{'users.create.placeholders.placeholder3' | translate}}" type="email"/>
+                                            <div *ngIf="isFormSubmitted && userControl.email.errors" class="invalid-feedback">
+                                                <div *ngIf="userControl.email.errors.required">{{'users.create.error_messages.message5' | translate}}</div>
+                                                <div *ngIf="userControl.email.errors.email">{{'users.create.error_messages.message6' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">&nbsp;</div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="form-body">
+
+                                <h4 class="form-section">
+                                    <i class="ft-file-text"></i> {{'users.headings.head2' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'users.create.fields.profile_photo' | translate}}</label>
+                                            <input formControlName="avatar" type="hidden">
+                                            <div #pdfDropzone class="dropzone dz-clickable">
+                                                <div *ngIf="isProfileLoaded && user.avatar" class="dz-preview dz-image-preview">
+                                                    <div class="dz-image">
+                                                        <img src="{{apiUrl}}/uploads/profile/{{user.avatar}}"/>
+                                                    </div>
+                                                    <a (click)="removeDropzoneImage()" class="btn btn-default btn-sm btn-block">{{'common.remove_file' | translate}}</a>
+                                                </div>
+                                                <div class="dz-default dz-message">
+                                                    <span><strong>{{'users.create.error_messages.message11' | translate}}</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="people-lists text-center">
+                                                <a (click)="setAvatar(avatar)" *ngFor="let avatar of avatars;" [ngClass]="{active: isActive(avatar)}" class="btn btn-profile-danger rounded-circle text-dark">
+                                                    <img alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{avatar}}"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div [ngClass]="{ 'is-invalid': isFormSubmitted && userControl.department_roles.errors }" class="form-group">
+                                            <label>{{'users.create.fields.departments_roles' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                            <ng-select (change)="departmentRolesChange($event)" [items]="departmentsRoles" [multiple]="true" [selectableGroup]="false" bindLabel="name" bindValue="id" formControlName="department_roles" groupBy="department_name" placeholder="{{'users.create.placeholders.placeholder6' | translate}}">
+                                                <ng-template let-item="item" ng-optgroup-tmp>
+                                                    {{item.department_name || 'Unnamed group'}}
+                                                </ng-template>
+                                            </ng-select>
+                                            <div *ngIf="isFormSubmitted && userControl.department_roles.errors" class="invalid-feedback">
+                                                <div *ngIf="userControl.department_roles.errors.required">{{'users.create.error_messages.message12' | translate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <a [routerLink]="['/users']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button class="btn btn-submit" type="submit">{{'common.update' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</section>

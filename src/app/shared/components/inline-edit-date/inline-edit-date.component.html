@@ -1,0 +1,18 @@
+<div #container class="editable-container editable-inline">
+    <div [hidden]="isEditView" class="editable-label">{{fieldValue | dateTimeFormatFilter: format}}&nbsp;&nbsp;&nbsp;
+        <span (click)="showEditable()"><i *ngxPermissionsOnly="permission" aria-hidden="true" class="fa fa-pencil"></i></span>
+    </div>
+    <form #form="ngForm" (ngSubmit)="save()" *ngIf="isEditView" class="form-inline editableForm" novalidate="">
+        <label class="sr-only" for="txtField">{{name}}</label>
+        <div class="input-group">
+            <input #dp="bsDatepicker" #txtField="ngModel" (bsValueChange)="startDateChange($event)" [(ngModel)]="fieldValue" [bsConfig]="datepickerConfigs" [minDate]="mindate" [ngClass]="{ 'is-invalid': txtField.hasError('required')}" [placeholder]="'shared.inline_edit.placeholders.placeholder3' | translate:{'elementFor':elementFor}" [required]="isRequired" autocomplete="off" bsDatepicker class="form-control input-sm" id="txtField" name="txtField" type="text"/>
+            <button [disabled]="!form.valid" class="btn btn-inline-submit" type="submit">
+                <i aria-hidden="true" class="fa fa-check"></i></button>
+            <button (click)="showDetail()" class="btn btn-inline-cancel" type="button">
+                <i aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="invalid-feedback">
+            <span *ngIf="txtField.hasError('required')">{{'shared.inline_edit.error_messages.message1' | translate:{'elementFor': elementFor | ucfirst} }}</span>
+        </div>
+    </form>
+</div>

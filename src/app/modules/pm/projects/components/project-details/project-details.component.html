@@ -1,0 +1,305 @@
+<div class="card-content">
+    <div class="card-body">
+        <div class="row mr-0 ml-0">
+            <div class="col-md-12 card-separator">
+                <div class="d-flex justify-content-between">
+                    <div class="task-name d-lg-flex">
+                        <h4 class="task-id">
+                            <span>#{{project.generated_id}}  </span>
+                        </h4>
+                        <p class="task-title ml-lg-2">
+                            {{project.project_name}}
+                        </p>
+                    </div>
+                    <div class="task-action d-flex">
+                        <a *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit" [routerLink]="['/projects/edit', project.id]" class="btn btn-create mb-2 mb-lg-0 float-right" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 pr-0 pl-0 ">
+                <form class="form-body overflow-hidden mt-3">
+                    <!-- Detail fields -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-4 pr-lg-3 pl-lg-2 pr-2 pl-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col card-separator mb-3">
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.version' | translate}}</label>
+                                                    <div class="detail-inline">{{project.project_version}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.status' | translate}}</label>
+                                                    <div class="status-dropdown">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock11">
+                                                            <div class="btn-group" dropdown>
+                                                                <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(project.status) | translate}}&nbsp;<span class="caret"></span>
+                                                                </button>
+                                                                <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                                                    <li *ngFor="let status of ('projects.status' | translate)" role="menuitem">
+                                                                        <a (click)="changeProjectStatus([project.id], status);project.status = status.id" [ngClass]="{'active': project.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock11>
+                                                            <ng-container *ngFor="let status of ('projects.status' | translate)">
+                                                                <div class="budges-status">
+                                                                    <span *ngIf="status.id == project.status" class="{{status.class}}">{{status.label}}</span>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.created_by' | translate}}</label>
+                                                    <div class="people-lists">
+                                                        <a [routerLink]="['/users/profile', project.created_user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{project.created_user.firstname}} {{project.created_user.lastname}}">
+                                                            <img *ngIf="project.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{project.created_user.avatar}}"/>
+                                                            <img *ngIf="!project.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                        </a>
+                                                        <span class="ml-1">{{project.created_user.firstname}} {{project.created_user.lastname}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.assigned_To' | translate}}</label>
+                                                    <div class="people-lists">
+                                                        <ng-container *ngIf="project.assign_members == 'Unassign' || project.assign_members == '' || project.assign_members == null; else elseBlock3">
+                                                            <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                                                <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                                            </a>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock3>
+                                                            <a *ngFor="let member of project.assign_members index as i; odd as isOdd; even as isEven" [ngClass]="{'btn-profile-info popover-item': isOdd, 'btn-profile-danger': isEven, 'popover-item': i!=0}" [routerLink]="['/users/profile', member.id]" class="btn rounded-circle text-dark" placement="top" tooltip="{{member.firstname}} {{member.lastname}}">
+                                                                <img *ngIf="member.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{member.avatar}}"/>
+                                                                <img *ngIf="!member.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                            </a>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.progress' | translate}}</label>
+                                                    <div>
+                                                        <progressbar [animate]="true" [value]="project.progress" max="100">
+                                                            <strong>{{project.progress}}%</strong></progressbar>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 card-separator">
+                                                <div *ngIf="!loginUser.is_client" class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.client_name' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock4">
+                                                            <inline-edit-select (updateValue)="saveProjectDetail('client_id', $event);" [elementFor]="'projects.inline_edit.client' | translate" [isRequired]="'true'" [name]="'firstname'" [options]="clients" [selectedValue]="project.client_id" [txtField]="'client_id'"></inline-edit-select>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock4>
+                                                            {{ project.clients.firstname}} {{project.clients.lastname}}
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.start_date' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock5">
+                                                            <inline-edit-date (updateValue)="saveProjectDetail('start_date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'projects.inline_edit.start_date' | translate" [fieldValue]="project.start_date" [format]="loginUser.settings.date_format" [isRequired]="'true'" [name]="'start_date'"></inline-edit-date>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock5>
+                                                            {{ project.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.end_date' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock6">
+                                                            <inline-edit-date (updateValue)="saveProjectDetail('end_date', $event);" [datepickerConfigs]="datepickerConfigs" [elementFor]="'projects.inline_edit.end_date' | translate" [fieldValue]="project.end_date" [format]="loginUser.settings.date_format" [isRequired]="'true'" [name]="'end_date'"></inline-edit-date>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock6>
+                                                            {{ project.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.estimate_hours' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock7">
+                                                            <inline-edit-hours (updateValue)="saveProjectDetail('estimated_hours', $event);" [elementFor]="'projects.inline_edit.estimate_hours' | translate" [fieldValue]="project.estimated_hours" [isRequired]="'false'" [name]="'estimated_hours'"></inline-edit-hours>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock7>{{ project.estimated_hours}}</ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.actual_hours' | translate}}</label>
+                                                    <div class="detail-inline">{{project.actual_hours}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.demo_URL' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock8">
+                                                            <inline-edit-input (updateValue)="saveProjectDetail('demo_url', $event);" [elementFor]="'projects.inline_edit.demo_url' | translate" [fieldValue]="project.demo_url" [isRequired]="'true'" [name]="'demo_url'" [pattern]="'(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'" [type]="'text'"></inline-edit-input>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock8>{{ project.demo_url }}</ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.billing_type' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock9">
+                                                            <inline-edit-select (updateValue)="saveProjectDetail('billing_type', $event);" [elementFor]="'projects.inline_edit.billing_type' | translate" [isRequired]="'true'" [name]="'label'" [options]="('projects.billing_types' | translate)" [selectedValue]="project.billing_type" [txtField]="'billing_type'"></inline-edit-select>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock9>
+                                                            <ng-container *ngFor="let type of ('projects.billing_types' | translate)">
+                                                                <span *ngIf="project.billing_type == type.id">{{type.label}}</span>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'projects.create.fields.budget' | translate}}</label>
+                                                    <div class="detail-inline">
+                                                        <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock10">
+                                                            <inline-edit-input (updateValue)="saveProjectDetail('price_rate', $event);" [elementFor]="'projects.inline_edit.budget' | translate" [fieldValue]="project.price_rate" [isRequired]="'false'" [name]="'price_rate'" [pattern]="'^[0-9]+(\.[0-9]{1,2})?$'" [type]="'text'"></inline-edit-input>
+                                                        </ng-container>
+                                                        <ng-template #elseBlock10>{{project.price_rate}}</ng-template>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'common.created' | translate}}</label>
+                                                    <div class="detail-inline">{{project.created_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <label>{{'common.updated' | translate}}</label>
+                                                    <div class="detail-inline">{{project.updated_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <!-- Description field -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 description-detail mb-3 card-separator">
+                                        <h4 class="sub-title"><span>{{'projects.details.title2' | translate}}</span>
+                                        </h4>
+                                        <div class="detail-inline">
+                                            <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock1">
+                                                <inline-edit-text-editor (updateValue)="saveProjectDetail('description', $event);" [elementFor]="'projects.inline_edit.description' | translate" [fieldValue]="project.description" [name]="'description'"></inline-edit-text-editor>
+                                            </ng-container>
+                                            <ng-template #elseBlock1>
+                                                <p [innerHtml]="project.description"></p>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                    <!-- Custom fields -->
+                                    <div *ngIf="project.custom_fields.length > 0" class="col-lg-12 col-md-12 col-xs-12 col-sm-12 card-separator mb-3">
+                                        <h4 class="sub-title"><span>{{'projects.details.title1' | translate}}</span>
+                                        </h4>
+                                        <div class="row">
+                                            <ng-container *ngFor="let customField of project.custom_fields">
+                                                <div *ngIf="customField.field_type != 'textarea'" class="col-lg-4 col-md-6 mt-2">
+                                                    <ng-container *ngIf="customField.field_type == 'text' || customField.field_type == 'numeric'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{project[customField.field_column]}}</div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'date'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{project[customField.field_column] | dateTimeFormatFilter: loginUser.settings.date_format}}</div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'dropdown'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">
+                                                            <ng-container *ngFor="let fieldValue of getParseArray(customField.default_value)">
+                                                                <ng-container *ngIf="fieldValue.value == project[customField.field_column]">
+                                                                    {{fieldValue.label}}
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customField.field_type == 'checkbox'">
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">
+                                                            <div *ngIf="project[customField.field_column] == 1; else checkboxElseBlock">{{'common.true' | translate}}</div>
+                                                            <ng-template #checkboxElseBlock>{{'common.false' | translate}}</ng-template>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngFor="let customField of project.custom_fields">
+                                                <div *ngIf="customField.field_type == 'textarea'" class="col-lg-4 col-md-6 mt-2">
+                                                    <ng-container>
+                                                        <label>{{customField.field_label}}</label>
+                                                        <div class="detail-inline">{{project[customField.field_column]}}</div>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <!-- Todos list -->
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 card-separator mb-3">
+                                        <app-todo-detail [module_id]="1" [module_related_id]="project.id"></app-todo-detail>
+                                    </div>
+                                    <!-- Tab Design -->
+                                    <tabset class="nav nav-tabs d-flex justify-content-left details-tabs col-md-12 p-0">
+                                        <tab class="card-separator mb-3" customClass="text-left" id="1">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-comments-o"></i><span class="m-1">{{'comments.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Task Comment -->
+                                            <div class="col-lg-12 pr-0 pl-0">
+                                                <app-project-comments [apiUrl]="apiUrl" [loginUser]="loginUser" [permissions]="permissions"></app-project-comments>
+                                            </div>
+                                        </tab>
+                                        <tab class="card-separator mb-3" customClass="text-left" id="2">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-paperclip"></i><span class="m-1">{{'attachments.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Task Attachment -->
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pr-0 pl-0">
+                                                <app-project-attachments [apiUrl]="apiUrl" [loginUser]="loginUser" [permissions]="permissions" [project]="project"></app-project-attachments>
+                                            </div>
+                                        </tab>
+                                        <tab class="card-separator mb-3 tab-width" customClass="text-left" id="3">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-sticky-note-o"></i><span class="m-1">{{'notes.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <!-- Notes -->
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pt-2">
+                                                <h4 class="sub-title"><!-- <span>{{'notes.title' | translate}}</span> --></h4>
+                                                <div class="detail-inline">
+                                                    <ng-container *ngIf="permissions.project_permission || permissions.edit_delete_permission.edit; else elseBlock2">
+                                                        <inline-edit-text-editor (updateValue)="saveProjectDetail('notes', $event);" [elementFor]="'projects.inline_edit.notes' | translate" [fieldValue]="project.notes" [name]="'notes'"></inline-edit-text-editor>
+                                                    </ng-container>
+                                                    <ng-template #elseBlock2></ng-template>
+                                                </div>
+                                            </div>
+                                        </tab>
+                                        <tab class="card-separator mb-3" customClass="text-left" id="4">
+                                            <ng-template tabHeading>
+                                                <div class="d-flex">
+                                                    <i class="fa fa-list"></i><span class="m-1">{{'activities.title' | translate}}</span>
+                                                </div>
+                                            </ng-template>
+                                            <app-project-activities [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-project-activities>
+                                        </tab>
+                                    </tabset>
+                                    <!-- Tab Design End -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

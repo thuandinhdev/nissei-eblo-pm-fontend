@@ -1,0 +1,33 @@
+.dropdown-menu-right {
+    right: 0 !important;
+    left: auto !important;
+}
+
+.navbar-form {
+    .position-relative {
+        width: 60%;
+        -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+        transition: width 1s;
+
+        &:focus {
+            width: 150%;
+        }
+    }
+}
+
+
+.navbar-form[_ngcontent-tdq-c4] .position-relative[_ngcontent-tdq-c4]:focus {
+    width: 150%;
+}
+
+.langimg {
+    width: 26px;
+    margin-top: -8px;
+    margin-right: 5px;
+}
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    z-index: 11;
+}

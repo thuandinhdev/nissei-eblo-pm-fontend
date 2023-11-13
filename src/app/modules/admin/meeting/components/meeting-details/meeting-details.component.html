@@ -1,0 +1,109 @@
+<div class="card-content">
+    <div class=" border-bottom">
+        <div class="d-flex justify-content-between">
+            <div class=" task-name d-lg-flex">
+                <h4 class="task-id"><span>#{{meeting.generated_id}}</span></h4>
+                <p class="task-title ml-lg-2">{{meeting.title}}</p>
+            </div>
+            <div class="task-action mr-3">
+                <div class="status-dropdown">
+                    <div *ngxPermissionsOnly="['admin', 'super_admin', 'meetings_edit']; else elseBlock1; then thenBlock1"></div>
+                    <ng-template #thenBlock1>
+                        <div class="btn-group" dropdown>
+                            <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(meeting.status) | translate}}&nbsp;<span class="caret"></span>
+                            </button>
+                            <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                <li *ngFor="let status of ('meetings.status' | translate)" role="menuitem">
+                                    <a (click)="changeMeetingStatus([meeting.id], status);meeting.status = status.id" [ngClass]="{'active': meeting.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-template>
+                    <ng-template #elseBlock1>
+                        <ng-container *ngFor="let status of ('meetings.status' | translate)">
+                            <div class="budges-status">
+                                <span *ngIf="status.id == meeting.status" class="{{status.class}}">{{status.label}}</span>
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form class="form-body overflow-hidden mt-3">
+            <!-- Detail fields -->
+            <div class="col-lg-12 ">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.columns.organizer' | translate }}</label>
+                        <div class="people-lists">
+                            <a [routerLink]="['/users/profile', meeting.organizer_id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{meeting.user.firstname}} {{meeting.user.lastname}}">
+                                <img *ngIf="meeting.user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{meeting.user.avatar}}"/>
+                                <img *ngIf="!meeting.user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.create.fields.peoples' | translate }}</label>
+                        <div class="people-lists">
+                            <ng-container *ngFor="let member of meeting.members index as i; odd as isOdd; even as isEven">
+                                <a *ngIf="member.id != meeting.organizer_id && member.id != meeting.client_id" [ngClass]="{'btn-profile-info popover-item': isOdd, 'btn-profile-danger': isEven, 'popover-item': i!=0}" [routerLink]="['/users/profile', member.id]" class="btn rounded-circle text-dark" placement="top" tooltip="{{member.firstname}} {{member.lastname}}">
+                                    <img *ngIf="member.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{member.avatar}}"/>
+                                    <img *ngIf="!member.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.create.fields.client_name' | translate }}</label>
+                        <div class="detail-inline">
+                            <ng-container *ngIf="meeting.client_id; else elseBlock4">
+                                {{meeting.client.firstname}} {{meeting.client.lastname}}
+                            </ng-container>
+                            <ng-template #elseBlock4>-</ng-template>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.create.fields.start_date' | translate }}</label>
+                        <div class="detail-inline">{{meeting.start_date | dateTimeFormatFilter: loginUser.settings.date_time_format}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.create.fields.end_date' | translate }}</label>
+                        <div class="detail-inline">{{meeting.end_date | dateTimeFormatFilter: loginUser.settings.date_time_format}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'common.hours' | translate }}</label>
+                        <div class="detail-inline">{{meeting.hour_time}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'meetings.create.fields.location' | translate }}</label>
+                        <div class="detail-inline">{{meeting.location}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'common.created' | translate}}</label>
+                        <div class="detail-inline">{{meeting.created_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label>{{'common.updated' | translate}}</label>
+                        <div class="detail-inline">{{meeting.updated_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-3"></div>
+                    <div class="border-bottom"></div>
+                    <!-- Description field -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3 mb-3 description-detail ">
+                        <h4 class="sub-title"><span>{{'meetings.details.title1' | translate}}</span></h4>
+                        <div class="detail-inline">
+                            <p [innerHtml]="meeting.description"></p>
+                        </div>
+                    </div>
+                    <div class="border-bottom"></div>
+                    <!-- Meeting timesheet -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <app-timesheet-list [apiUrl]="apiUrl" [loginUser]="loginUser" [module_id]="'5'" [module_related_id]="meeting.id" [project_id]="''"></app-timesheet-list>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 border-bottom">
+    <h4 class="card-title mt-3">{{'notes.title' | translate}}</h4>
+</div><!-- Card body -->
+<div class="card-body pt-3">
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            <form (ngSubmit)="onSubmit()" [formGroup]="editNoteForm" class="bs4-forms">
+                <div class="form-group">
+                    <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="notes" height="100px" id="notes" minHeight="50px"></app-ngx-editor>
+                </div>
+                <div *ngIf="permission" class="form-group text-right">
+                    <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

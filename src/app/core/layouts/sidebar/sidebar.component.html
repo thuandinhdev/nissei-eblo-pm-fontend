@@ -1,0 +1,78 @@
+<!-- Sidebar Header starts -->
+<div class="sidebar-header">
+    <div class="logo clearfix">
+        <a [routerLink]="['/']" >
+            <div class="logo-img mr-1">
+                <img alt="Profile Logo" src="assets/img/logos/vipspm-dark-logo.png" width="150"/>
+            </div>
+            <!-- <span class="text align-middle">{{settings.company_short_name}}</span> -->
+        </a>
+        <a class="nav-close d-block d-md-block d-lg-none d-xl-none" href="javascript:" id="sidebarClose">
+            <i class="ft-x"></i>
+        </a>
+    </div>
+</div>
+<div [perfectScrollbar]="scrollConfig" class="sidebar-content">
+    <div class="nav-container">
+        <!-- <div class="user-details pb-1 pt-1">
+            <div class="text-center mb-1">
+                <img src="assets/img/profile_large.jpg" alt="User" class="rounded-circle" *ngIf="!loginUser.avatar">
+                <img src="{{apiUrl}}/uploads/profile/{{loginUser.avatar}}" alt="User" class="rounded-circle" *ngIf="loginUser.avatar">
+            </div>
+            <div class="user-info text-center">
+                <a href="javascript:void(0);" class="text-white font-weight-normal capitalize">{{loginUser.firstname}}&nbsp;{{loginUser.lastname}}</a>
+                <p class="text-white m-0">
+                    <ng-container *ngIf="loginUser.online_status; else elseBlock">
+                        <i class="fa fa-circle text-success"></i>&nbsp;{{ 'common.online' | translate }}
+                    </ng-container>
+                    <ng-template #elseBlock>
+                        <i class="fa fa-circle text-danger"></i>&nbsp;{{ 'common.offline' | translate }}
+                    </ng-template>
+                </p>
+            </div>
+        </div> -->
+        <ul class="navigation">
+            <!-- First level menu -->
+            <li *ngFor="let menuItem of menuItems" [ngClass]="[menuItem.class]" [routerLinkActiveOptions]="{exact: true}" [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'">
+                <a *ngIf="!menuItem.isExternalLink; else externalLinkBlock" [routerLink]="menuItem.class === '' ? [menuItem.link] : null">
+                    <i [ngClass]="[menuItem.icon]"></i>
+                    <span class="menu-title">{{menuItem.text | translate}}</span>
+                    <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
+                </a>
+                <ng-template #externalLinkBlock>
+                    <a [href]="[menuItem.link]" target="_blank">
+                        <i [ngClass]="[menuItem.icon]"></i>
+                        <span class="menu-title">{{menuItem.text | translate}}</span>
+                        <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
+                    </a>
+                </ng-template>
+                <!-- Second level menu -->
+                <ul *ngIf="menuItem.submenu.length > 0" class="menu-content">
+                    <li *ngFor="let menuSubItem of menuItem.submenu" [ngClass]="[menuSubItem.class]" [routerLinkActive]="menuSubItem.submenu.length > 0 ? '' : 'active'">
+                        <a *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock" [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.link]">
+                            <span class="menu-title">{{menuSubItem.text | translate}}</span>
+                        </a>
+                        <ng-template #externalSubLinkBlock>
+                            <a [href]="[menuSubItem.link]">
+                                <span class="menu-title">{{menuSubItem.text | translate}}</span>
+                            </a>
+                        </ng-template>
+                        <!-- Third level menu -->
+                        <ul *ngIf="menuSubItem.submenu.length > 0" class="menu-content">
+                            <li *ngFor="let menuSubsubItem of menuSubItem.submenu" [ngClass]="[menuSubsubItem.class]" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                                <a *ngIf="!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock" [routerLink]="[menuSubsubItem.link]">
+                                    <span class="menu-title">{{menuSubsubItem.text | translate}}</span>
+                                </a>
+                                <ng-template #externalSubSubLinkBlock>
+                                    <a [href]="[menuSubsubItem.link]">
+                                        <span class="menu-title">{{menuSubsubItem.text | translate}}</span>
+                                    </a>
+                                </ng-template>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

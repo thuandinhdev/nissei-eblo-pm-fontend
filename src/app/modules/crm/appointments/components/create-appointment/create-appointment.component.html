@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-calendar-plus-o"></i>&nbsp;{{'appointments.title' | translate}}</h2>
+    <button (click)="bsCreateModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isPageLoad" [formGroup]="createAppointmentForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && appointmentControl.provider_id.errors }" class="form-group">
+                        <label for="provider_id">{{'appointments.create.fields.provider' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <ng-select [items]="providers" [multiple]="false" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="provider_id" labelForId="provider_id" placeholder="{{'common.unassigned' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>{{item.firstname}} {{item.lastname}}</ng-template>
+                        </ng-select>
+                        <div *ngIf="isFormSubmitted && appointmentControl.provider_id.errors" class="invalid-feedback">
+                            <div *ngIf="appointmentControl.provider_id.errors.required">{{'appointments.create.error_messages.message1' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && appointmentControl.start_date_time.errors }" class="form-group">
+                        <label for="start_date_time">{{'appointments.create.fields.start_date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #startDT></owl-date-time>
+                            <input (dateTimeChange)="startDateChange($event)" [min]="minDate" [owlDateTimeTrigger]="startDT" [owlDateTime]="startDT" aria-describedby="inputGroupPrepend2" class="form-control" formControlName="start_date_time" id="start_date_time" placeholder="{{'appointments.create.placeholders.placeholder1' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && appointmentControl.start_date_time.errors" class="invalid-feedback">
+                            <div *ngIf="appointmentControl.start_date_time.errors">{{'appointments.create.error_messages.message2' | translate}}</div>
+                        </div>
+                        <span *ngIf="availabileSlots && availabileSlots.length > 0" class="badge badge-secondary">{{'appointments.budges.title1' | translate}}:
+							<ng-container *ngFor="let slots of availabileSlots; let last = last">
+								{{slots.start_date_time | dateTimeFormatFilter: 'HH:mm'}} to {{slots.end_date_time | dateTimeFormatFilter: 'HH:mm'}}
+                                <ng-container *ngIf="!last"><br></ng-container>
+							</ng-container>
+						</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && appointmentControl.end_date_time.errors }" class="form-group">
+                        <label for="end_date_time">{{'appointments.create.fields.end_date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <owl-date-time #endDT></owl-date-time>
+                            <input [min]="createAppointmentForm.get('start_date_time').value" [owlDateTimeTrigger]="endDT" [owlDateTime]="endDT" aria-describedby="inputGroupPrepend3" class="form-control" formControlName="end_date_time" id="end_date_time" placeholder="{{'appointments.create.placeholders.placeholder2' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && appointmentControl.end_date_time.errors" class="invalid-feedback">
+                            <div *ngIf="appointmentControl.end_date_time.errors">{{'appointments.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="title">{{'appointments.create.fields.title' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input [ngClass]="{ 'is-invalid': isFormSubmitted && appointmentControl.title.errors }" class="form-control" formControlName="title" id="title" placeholder="{{'appointments.create.placeholders.placeholder3' | translate}}" type="text"/>
+                            <div class="form-control-position">
+                                <i aria-hidden="true" class="fa fa-lock"></i>
+                            </div>
+                            <div *ngIf="isFormSubmitted && appointmentControl.title.errors" class="invalid-feedback">
+                                <div *ngIf="appointmentControl.title.errors.required">{{'appointments.create.error_messages.message4' | translate}}</div>
+                                <div *ngIf="appointmentControl.title.errors.maxlength">{{'appointments.create.error_messages.message5' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="client_id">{{'appointments.create.fields.client' | translate}}</label>
+                        <ng-select [items]="clients" [searchable]="true" [selectOnTab]="true" bindLabel="firstname" bindValue="id" formControlName="client_id" labelForId="client_id" placeholder="{{'appointments.create.placeholders.placeholder4' | translate}}">
+                            <ng-template let-item="item" ng-option-tmp>{{item.firstname}} {{item.lastname}}</ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="location">{{'appointments.create.fields.location' | translate}}</label>
+                        <input class="form-control" formControlName="location" id="location" placeholder="{{'appointments.create.placeholders.placeholder5' | translate}}" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="location">{{'appointments.create.fields.attendees' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <input [ngClass]="{ 'is-invalid': isFormSubmitted && appointmentControl.attendees.errors }" class="form-control" formControlName="attendees" id="attendees" placeholder="{{'appointments.create.placeholders.placeholder6' | translate}}" type="text"/>
+                        <div *ngIf="isFormSubmitted && appointmentControl.attendees.errors" class="invalid-feedback">
+                            <div *ngIf="appointmentControl.attendees.errors.required">{{'appointments.create.error_messages.message7' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="note">{{'appointments.create.fields.notes' | translate}}</label>
+                        <app-ngx-editor [placeholder]="''" [spellcheck]="true" formControlName="note" height="100px" id="note" minHeight="50px"></app-ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+    </div>
+</form>

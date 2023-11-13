@@ -1,0 +1,76 @@
+<div class="modal-header">
+  <h2 class="modal-title font-weight-normal">
+    <i aria-hidden="true" class="fa fa-shopping-basket"></i>&nbsp;{{'menu.title3' | translate}}
+  </h2>
+  <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+    <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isFormLoaded" [formGroup]="editSubMenuForm" class="form">
+  <div class="modal-body">
+    <div class="form-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div [ngClass]="{ 'is-invalid': isFormSubmitted && subMenuControl.type.errors }" class="form-group">
+            <label for="type">{{'menu.create.fields.page_type' | translate}}&nbsp;<span class="text-danger">*</span>
+            </label>
+            <ng-select [items]="pages_type" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="type" (change)="pageTypeChange($event)"
+             placeholder="{{'menu.create.placeholders.placeholder3' | translate}}"></ng-select>
+            <div *ngIf="isFormSubmitted && subMenuControl.type.errors" class="invalid-feedback">
+              <div *ngIf="subMenuControl.type.errors.required">{{'menu.create.error_messages.message3' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12"  *ngIf="nameShow">
+          <div class="form-group">
+            <label for="name">{{'menu.create.fields.name' | translate}}
+              <span class="text-danger">&nbsp;*</span></label>
+            <input [ngClass]="{ 'is-invalid': isFormSubmitted && subMenuControl.name.errors }" class="form-control"
+              formControlName="name" id="name" placeholder="{{'menu.create.placeholders.placeholder1' | translate }}"
+              type="text" />
+            <div *ngIf="isFormSubmitted && subMenuControl.name.errors" class="invalid-feedback">
+              <div *ngIf="subMenuControl.name.errors.required">{{'menu.create.error_messages.message1' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" *ngIf="selectPage">
+          <div [ngClass]="{ 'is-invalid': isFormSubmitted && subMenuControl.page_id.errors }" class="form-group">
+            <label for="page_id">{{'menu.create.fields.page' | translate}}&nbsp;<span class="text-danger">*</span>
+            </label>
+            <ng-select [items]="pages" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="page_id"
+             placeholder="{{'menu.create.placeholders.placeholder4' | translate}}"></ng-select>
+            <div *ngIf="isFormSubmitted && subMenuControl.page_id.errors" class="invalid-feedback">
+              <div *ngIf="subMenuControl.page_id.errors.required">{{'menu.create.error_messages.message4' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-12" *ngIf="typeShow">
+          <div [ngClass]="{ 'is-invalid': isFormSubmitted && subMenuControl.type_show.errors }" class="form-group">
+            <label for="type_show">{{'menu.create.fields.type_show' | translate}}&nbsp;<span class="text-danger">*</span>
+            </label>
+            <ng-select [items]="type_shows" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="type_show"
+             placeholder="{{'menu.create.placeholders.placeholder6' | translate}}"></ng-select>
+            <div *ngIf="isFormSubmitted && subMenuControl.type_show.errors" class="invalid-feedback">
+              <div *ngIf="subMenuControl.type_show.errors.required">{{'menu.create.error_messages.message6' | translate}}</div>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="index">{{'menu.create.fields.index' | translate}}
+              <span class="text-danger">&nbsp;*</span></label>
+            <input [ngClass]="{ 'is-invalid': isFormSubmitted && subMenuControl.index.errors }" class="form-control"
+              formControlName="index" id="index" placeholder="{{'menu.create.placeholders.placeholder5' | translate }}"
+              type="number" />
+            <div *ngIf="isFormSubmitted && subMenuControl.index.errors" class="invalid-feedback">
+              <div *ngIf="subMenuControl.index.errors.required">{{'menu.create.error_messages.message5' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+    <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+  </div>
+</form>

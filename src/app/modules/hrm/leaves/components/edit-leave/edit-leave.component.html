@@ -1,0 +1,97 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-suitcase"></i>&nbsp;{{'leaves.title7' | translate}}</h2>
+    <button (click)="bsModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" *ngIf="isPageLoad" [formGroup]="editLeaveForm" class="form">
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && leaveControl.leave_type_id.errors }" class="form-group">
+                        <label for="leave_type_id">{{'leaves.create.fields.leave_type' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                        <div class="d-flex">
+                            <ng-select [items]="leavetypes" [searchable]="true" [selectOnTab]="true" bindLabel="leave_type" bindValue="id" formControlName="leave_type_id" labelForId="leave_type" placeholder="{{'leaves.create.placeholders.placeholder2' | translate}}"></ng-select>
+                            <button (click)="openLeaveTypeModal();" *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_create']" class="btn btn-secondary" placement="left" tooltip="{{'leave_types.title3' | translate }}" type="button">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                        <div *ngIf="isFormSubmitted && leaveControl.leave_type_id.errors" class="invalid-feedback">
+                            <div *ngIf="leaveControl.leave_type_id.errors.required">{{'leaves.create.error_messages.message2' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>{{'leaves.create.fields.duration' | translate}}</label><br>
+                        <div class="form-check radio-container d-block">
+                            <input (change)="changeDuration($event)" class="form-check-input" formControlName="duration" id="checkbox1" type="radio" value="full">
+                            <label class="form-check-label" for="checkbox1">&nbsp;{{'leaves.labels.single' | translate}}&nbsp;</label>
+                            <span class="radio-checkmark"></span>
+                        </div>
+                        <div class="form-check radio-container d-block">
+                            <input (change)="changeDuration($event)" class="form-check-input" formControlName="duration" id="checkbox3" type="radio" value="half">
+                            <label class="form-check-label" for="checkbox3">&nbsp;{{'leaves.labels.half_day' | translate}}</label>
+                            <span class="radio-checkmark"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && leaveControl.leave_date.errors }" class="form-group">
+                        <label for="leave_date">{{'leaves.create.fields.leave_date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp="bsDatepicker" [bsConfig]="datepickerConfig" [ngClass]="{ 'is-invalid': isFormSubmitted && leaveControl.leave_date.errors }" aria-describedby="inputGroupPrepend1" bsDatepicker class="form-control" formControlName="leave_date" id="leave_date" placeholder="{{'leaves.create.placeholders.placeholder3' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && leaveControl.leave_date.errors" class="invalid-feedback">
+                            <div *ngIf="leaveControl.leave_date.errors.required">{{'leaves.create.error_messages.message3' | translate}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="editLeaveForm.get('duration').value == 'half'" class="form-group">
+                        <ng-select [items]="('leaves.half_leaves_status' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="duration_type" labelForId="label"></ng-select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && leaveControl.reason.errors }" class="form-group">
+                        <label for="reason">{{'leaves.create.fields.reason' | translate}}&nbsp;<span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control" formControlName="reason" id="reason" placeholder="{{'leaves.create.placeholders.placeholder5' | translate}}"></textarea>
+                        <div *ngIf="isFormSubmitted && leaveControl.reason.errors" class="invalid-feedback">
+                            <div *ngIf="leaveControl.reason.errors.required">{{'leaves.create.error_messages.message5' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{'leaves.create.fields.attachments' | translate}}</label>
+                        <div #leaveDropzone class="dropzone dz-clickable">
+                            <ng-container *ngFor="let attachment of leave.attachments; index as i">
+                                <div class="dz-preview dz-file-preview">
+                                    <div class="dz-image"><img data-dz-thumbnail=""></div>
+                                    <div class="dz-details">
+                                        <div class="dz-size">
+                                            <span data-dz-size="">
+                                                <a download="{{attachment.file_name}}" href="{{apiUrl}}/uploads/leave_attachment/{{attachment.file_hash}}" target="_blank">{{'common.download' | translate}}</a>
+                                            </span>
+                                        </div>
+                                        <div class="dz-filename"><span data-dz-name="">{{attachment.file_name}}</span>
+                                        </div>
+                                    </div>
+                                    <button (click)="removeattachments(attachment.id)" class="btn btn-sm btn-block" type="button">{{'common.remove_file' | translate}}</button>
+                                </div>
+                            </ng-container>
+                            <div class="dz-default dz-message">
+                                <span><strong>{{'leaves.create.error_messages.message6' | translate}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit">{{'common.update' | translate}}</button>
+    </div>
+</form>

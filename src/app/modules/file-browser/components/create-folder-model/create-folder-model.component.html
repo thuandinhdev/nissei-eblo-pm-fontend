@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h2 class="modal-title font-weight-normal">
+        <i aria-hidden="true" class="fa fa-folder"></i>&nbsp;{{'file_browser.title1' | translate}}</h2>
+    <button (click)="bsCreateFolderModalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="createFolderForm" class="bs4-forms">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="folder_name">{{'file_browser.create.fields.folder_name' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isSubmitted && folderControl.folder_name.errors }" class="form-control" formControlName="folder_name" id="folder_name" placeholder="{{'file_browser.create.placeholders.placeholder1' | translate}}" type="text"/>
+                    <div *ngIf="isSubmitted && folderControl.folder_name.errors" class="invalid-feedback">
+                        <div *ngIf="folderControl.folder_name.errors.required">{{'file_browser.create.error_messages.message1' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="folder_desc">{{'file_browser.create.fields.description' | translate}}</label>
+                    <app-ngx-editor [placeholder]="'file_browser.create.placeholders.placeholder2' | translate" [spellcheck]="true" formControlName="folder_desc" height="100px" id="folder_desc" minHeight="50px"></app-ngx-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onCancel()" class="btn btn-cancel mb-0" data-dismiss="modal" type="button">{{'common.close' | translate}}</button>
+        <button class="btn btn-submit mb-0" type="submit"><span>{{'common.create' | translate}}</span></button>
+    </div>
+</form>

@@ -1,0 +1,61 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 border-bottom">
+    <h4 class="main-title"><span>{{'defects.title' | translate}}</span></h4>
+    <div class="card-buttons">
+        <a *ngxPermissionsOnly="['defects_create']" [routerLink]="['/defects/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+    </div>
+</div><!-- Card body -->
+<div class="card-body pt-3">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                <table [dtOptions]="dtOptions" class="table table-bordered table-hover b4-datatable" datatable id="defects_table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{'defects.columns.id' | translate}}</th>
+                        <th>{{'defects.columns.defect_name' | translate}}</th>
+                        <th>{{'defects.columns.start_date' | translate}}</th>
+                        <th>{{'defects.columns.end_date' | translate}}</th>
+                        <th>{{'defects.columns.assigned' | translate}}</th>
+                        <th>{{'defects.columns.severity' | translate}}</th>
+                        <th>{{'defects.columns.status' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let defect of project.defects">
+                        <td>
+                            <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
+                        </td>
+                        <td>{{defect.defect_name}}</td>
+                        <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="defect.assign_user == null; else elseBlock;">
+                                <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
+                                    <img alt="Profile" class="img-sm rounded-circle" src="../assets/img/unassign.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock>
+                                <a [routerLink]="['/users/profile', defect.assign_user.id]" class="btn btn-profile-danger rounded-circle text-dark" placement="top" tooltip="{{defect.assign_user.firstname}} {{defect.assign_user.lastname}}">
+                                    <img *ngIf="defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.assign_user.avatar}}"/>
+                                    <img *ngIf="!defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-template>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let status of ('defects.severities' | translate)">
+                                <span *ngIf="status.id == defect.severity" class="{{status.class}}">{{status.label}}</span>
+                            </ng-container>
+                        </td>
+                        <td class="budges-status">
+                            <ng-container *ngFor="let status of ('defects.status' | translate)">
+                                <span *ngIf="status.id == defect.status" class="{{status.class}}">{{status.label}}</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

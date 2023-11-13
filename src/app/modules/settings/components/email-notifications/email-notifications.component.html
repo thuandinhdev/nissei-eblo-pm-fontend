@@ -1,0 +1,38 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.email_notification.title' | translate}}</span></h4>
+</div>
+<form class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{'settings.email_notification.columns.notification' | translate}}</th>
+                            <th class="width-100"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{'settings.email_notification.title1' | translate}}</td>
+                            <td>
+                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'emailnotifications_create', 'emailnotifications_edit']">
+                                    <div class="onoffswitch">
+                                        <input (change)="saveNotification()" [(ngModel)]="settings.is_announcement_notification" class="onoffswitch-checkbox" id="is_announcement_notification" name="is_announcement_notification" type="checkbox"/>
+                                        <label class="onoffswitch-label m-b-none" for="is_announcement_notification">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </ng-container>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

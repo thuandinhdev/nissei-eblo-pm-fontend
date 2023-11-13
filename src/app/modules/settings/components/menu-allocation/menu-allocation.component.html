@@ -1,0 +1,83 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.menu_allocation.title' | translate}}</span></h4>
+</div>
+<form class="form">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="nestable-menu">
+                    <button (click)="expandAll()" class="btn btn-outline-info mr-1 btn-round" type="button">{{'settings.menu_allocation.title1' | translate}}</button>
+                    <button (click)="collapseAll()" class="btn btn-outline-info mr-1 btn-round" type="button">{{'settings.menu_allocation.title2' | translate}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>{{'common.status.active' | translate}}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="dd" id="nestable">
+                            <div *ngIf="activeInactiveMenu.active_menu?.length == 0" class="dd-empty"></div>
+                            <ol *ngIf="activeInactiveMenu.active_menu?.length > 0" class="dd-list">
+                                <li *ngFor="let active_menu of activeInactiveMenu.active_menu" [attr.data-id]="active_menu.id" class="dd-item dd-nochildren">
+                                    <ng-container *ngIf="!active_menu.children">
+                                        <div class="dd-handle">
+                                            <i class="fa fa-folder"></i>&nbsp;{{active_menu.text | translate}}</div>
+                                    </ng-container>
+                                    <ng-container *ngIf="active_menu.children?.length > 0">
+                                        <div class="dd-handle">
+                                            <i class="fa fa-folder"></i>&nbsp;{{active_menu.text | translate}}</div>
+                                        <ol class="dd-list">
+                                            <li *ngFor="let children of active_menu.children" [attr.data-id]="children.id" class="dd-item">
+                                                <div class="dd-handle">&nbsp;{{children.text | translate}}</div>
+                                            </li>
+                                        </ol>
+                                    </ng-container>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>{{'common.status.inactive' | translate}}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="dd" id="nestable2">
+                            <div *ngIf="activeInactiveMenu.inactive_menu?.length == 0" class="dd-empty"></div>
+                            <ol *ngIf="activeInactiveMenu.inactive_menu?.length > 0" class="dd-list">
+                                <li *ngFor="let inactive_menu of activeInactiveMenu.inactive_menu" [attr.data-id]="inactive_menu.id" class="dd-item dd-nochildren">
+                                    <ng-container *ngIf="!inactive_menu.children">
+                                        <div class="dd-handle">
+                                            <i class="fa fa-folder"></i>&nbsp;{{inactive_menu.text | translate}}</div>
+                                    </ng-container>
+                                    <ng-container *ngIf="inactive_menu.children?.length > 0">
+                                        <div class="dd-handle">
+                                            <i class="fa fa-folder"></i>&nbsp;{{inactive_menu.text | translate}}</div>
+                                        <ol class="dd-list">
+                                            <li *ngFor="let children of inactive_menu.children" [attr.data-id]="children.id" class="dd-item">
+                                                <div class="dd-handle">&nbsp;{{children.text | translate}}</div>
+                                            </li>
+                                        </ol>
+                                    </ng-container>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none" id="nestable-output"></div>
+            <div class="d-none" id="nestable2-output"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <button (click)="saveMenu()" *ngxPermissionsOnly="['admin', 'super_admin', 'menuallocation_create', 'menuallocation_edit']" class="btn btn-submit" type="submit">{{'common.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

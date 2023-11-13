@@ -1,0 +1,79 @@
+<div *ngIf="isPageloaded" class="card card-height overflow-y">
+    <div class="card-header border-bottom mb-3">
+        <h4 class="card-title mt-2">{{'todos.title' | translate}}</h4>
+        <div class="card-buttons">
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'todos_view']" [routerLink]="['/todos']" class="btn btn-rounded mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>
+        </div>
+    </div>
+    <div [perfectScrollbar]="scrollConfig" class="card-body sidebar-content">
+        <div class="card-block pt-0">
+            <div *ngIf="todos.open?.length > 0 || todos.completed?.length > 0" class="drag-container">
+                <div #pendingList="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[doneList]" [cdkDropListData]="todos.open" cdkDropList class="item-list">
+                    <div *ngFor="let item of todos.open" cdkDrag class="item-box">
+                        <div class="col-md-12">
+                            <div class="justify-content-center justify-content-lg-between">
+                                <label class="checkbox-container">
+                                    <input (change)="changeStatus(item, 2)" class="form-control" id="status{{item.id}}" name="status" type="checkbox"/>
+                                    <span class="checkbox-checkmark"></span>
+                                    {{item.description}}</label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <ng-container *ngIf="item.module_id == 1">
+                                        <a [routerLink]="['/projects/detail', item.module_related_id]" class="text-info">{{item.project_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 2">
+                                        <a [routerLink]="['/tasks/detail', item.module_related_id]" class="text-info">{{item.task_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 3">
+                                        <a [routerLink]="['/defects/detail', item.module_related_id]" class="text-info">{{item.defect_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 4">
+                                        <a [routerLink]="['/incidents/detail', item.module_related_id]" class="text-info">{{item.incident_generated_id}} </a>
+                                    </ng-container>
+                                </div>
+                                <div>{{item.due_date | dateTimeFormatFilter: loginUser.settings.date_format}}</div>
+                            </div>
+                        </div>
+                        <!-- <inline-edit-textarea [name]="'description'" [fieldValue]="item.description" [elementFor]="'todos.inline_edit.description' | translate" [isRequired]="'true'" (updateValue)="saveTodosDetail(item, 'description', $event);"></inline-edit-textarea>
+						<inline-edit-date [name]="'due_date'" [fieldValue]="item.due_date" [elementFor]="'todos.inline_edit.due_date' | translate" [isRequired]="'true'" [datepickerConfigs]="datepickerConfigs" [format]="loginUser.settings.date_format" (updateValue)="saveTodosDetail(item, 'due_date', $event);"></inline-edit-date> -->
+                    </div>
+                </div>
+                <div #doneList="cdkDropList" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[pendingList]" [cdkDropListData]="todos.completed" cdkDropList class="item-list">
+                    <div *ngFor="let item of todos.completed" cdkDrag class="item-box">
+                        <div class="col-md-12">
+                            <div class="justify-content-center justify-com  justify-content-lg-between">
+                                <label class="checkbox-container">
+                                    <input (change)="changeStatus(item, 1)" [checked]="true" class="form-control" id="status{{item.id}}" name="status" type="checkbox"/>
+                                    <span class="checkbox-checkmark"></span>
+                                    {{item.description}}
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <ng-container *ngIf="item.module_id == 1">
+                                        <a [routerLink]="['/projects/detail', item.module_related_id]" class="text-info">{{item.project_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 2">
+                                        <a [routerLink]="['/tasks/detail', item.module_related_id]" class="text-info">{{item.task_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 3">
+                                        <a [routerLink]="['/defects/detail', item.module_related_id]" class="text-info">{{item.defect_generated_id}} </a>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.module_id == 4">
+                                        <a [routerLink]="['/incidents/detail', item.module_related_id]" class="text-info">{{item.incident_generated_id}} </a>
+                                    </ng-container>
+                                </div>
+                                <div>{{item.due_date | dateTimeFormatFilter: loginUser.settings.date_format}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="todos.open?.length == 0 && todos.completed?.length == 0" class="text-center">
+                <img src="assets/img/norecord-img.png" width="50">
+                <p class="mt-1">{{ 'common.empty_message.todos' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<section class="detail-page">
+    <div *ngIf="isPageLoaded" class="card">
+        <div class="card-content">
+            <div class=" border-bottom">
+                <div class="d-flex justify-content-between">
+                    <div class=" task-name d-lg-flex">
+                        <h4 class="task-id"><span>#{{appointment.generated_id}}</span></h4>
+                        <p class="task-title ml-lg-2">
+                            {{appointment.title}}
+                        </p>
+                    </div>
+                    <div class="task-action mr-3">
+                        <div class="status-dropdown">
+                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'appointment_edit']; else elseBlock1; then thenBlock1"></div>
+                            <ng-template #thenBlock1>
+                                <div class="btn-group" dropdown>
+                                    <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(appointment.status) | translate}}&nbsp;<span class="caret"></span>
+                                    </button>
+                                    <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
+                                        <li *ngFor="let status of ('appointments.status' | translate)" role="menuitem">
+                                            <a (click)="changeAppointmentStatus([appointment.id], status);appointment.status = status.id" [ngClass]="{'active': appointment.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ng-template>
+                            <ng-template #elseBlock1>
+                                <ng-container *ngFor="let status of ('appointments.status' | translate)">
+                                    <div class="budges-status">
+                                        <span *ngIf="status.id == appointment.status" class="{{status.class}}">{{status.label}}</span>
+                                    </div>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form class="form-body overflow-hidden mt-3">
+                    <!-- Detail fields -->
+                    <div class="col-lg-12 ">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.columns.requester' | translate }}</label>
+                                <div class="people-lists">
+                                    <a [routerLink]="['/users/profile', appointment.user_id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{appointment.requesters.firstname}} {{appointment.requesters.lastname}}">
+                                        <img *ngIf="appointment.requesters.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{appointment.requesters.avatar}}"/>
+                                        <img *ngIf="!appointment.requesters.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.provider' | translate }}</label>
+                                <div class="detail-inline">
+                                    {{appointment.providers.firstname}} {{appointment.providers.lastname}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.client' | translate }}</label>
+                                <div class="detail-inline">
+                                    <ng-container *ngIf="appointment.client_id; else elseBlock4">
+                                        {{appointment.clients.firstname}} {{appointment.clients.lastname}}
+                                    </ng-container>
+                                    <ng-template #elseBlock4>-</ng-template>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.attendees' | translate }}</label>
+                                <div class="detail-inline">
+                                    {{appointment.attendees}}
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.start_date' | translate }}</label>
+                                <div class="detail-inline">{{appointment.start_date_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.end_date' | translate }}</label>
+                                <div class="detail-inline">{{appointment.end_date_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'appointments.create.fields.location' | translate }}</label>
+                                <div class="detail-inline">{{appointment.location}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'common.created' | translate}}</label>
+                                <div class="detail-inline">{{appointment.created_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <label>{{'common.updated' | translate}}</label>
+                                <div class="detail-inline">{{appointment.updated_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
+                            </div>
+                            <div class="border-bottom"></div>
+                            <!-- Description field -->
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3 mb-3 description-detail ">
+                                <h4 class="sub-title"><span>{{'appointments.create.fields.notes' | translate}}</span>
+                                </h4>
+                                <div class="detail-inline">
+                                    <p [innerHtml]="appointment.note"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

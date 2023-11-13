@@ -1,0 +1,77 @@
+<section class="hide_empty_message">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card pl-2 pr-2">
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-12 form-group">
+                                <label for="daterangepicker">{{'leave_report.filter.fields.date_range' | translate}}</label>
+                                <input [(ngModel)]="period_from_to" bsDaterangepicker class="form-control" placeholder="{{'leave_report.filter.placeholders.placeholder1' | translate}}" type="text"/>
+                            </div>
+                            <div class="col-xs-12 col-12 form-group">
+                                <label for="user_id">{{'leave_report.filter.fields.employee_name' | translate}}</label>
+                                <ng-select [(ngModel)]="user_id" [items]="users" [multiple]="false" [searchable]="true" bindLabel="firstname" bindValue="id" placeholder="{{'leave_report.filter.placeholders.placeholder2' | translate}}">
+                                    <ng-template let-item="item" ng-option-tmp>
+                                        {{item.firstname}} {{item.lastname}}
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                            <div class="col-xs-12 col-12 form-group">
+                                <button (click)="submitFilter()" class="btn btn-submit mb-0" type="button">{{'common.apply' | translate}}</button>
+                                <button (click)="resetForm()" class="btn btn-cancel mb-0" type="button">{{'common.reset' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mt-2"><span>{{'leave_report.title' | translate}}</span></h4>
+                    <div class="card-buttons">
+                        <a [routerLink]="['/leaves']" class="btn btn-create mb-0" tooltip="{{'leaves.title3' | translate}}"><i class="fa fa-suitcase"></i></a>
+                        <a [routerLink]="['/leaves/request']" class="btn btn-create mb-0" tooltip="{{'leaves.title2' | translate}}"><i class="fa fa-trello"></i></a>
+                        <a [routerLink]="['/leaves/calendar']" class="btn btn-create mb-0" tooltip="{{'common.calendar_view' | translate}}"><i class="fa fa-calendar"></i></a>
+                    </div>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="leaves_table" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{{'leave_report.columns.user' | translate}}</th>
+                                    <th>{{'leave_report.columns.approved_leave' | translate}}</th>
+                                    <th>{{'leave_report.columns.pending_leave' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="leaves?.length != 0">
+                                <tr *ngFor="let leave of leaves; index as i">
+                                    <td class="text-center">{{ i + 1 }}</td>
+                                    <td>{{leave.firstname}} {{leave.lastname}}</td>
+                                    <td class="budges-status">
+                                        <span class="open">{{leave.approved_leaves}}</span>
+                                        <a (click)="openLeaveDetail(2, leave.id)">&nbsp;{{'common.view' | translate}}</a>
+                                    </td>
+                                    <td class="budges-status">
+                                        <span class="in_progress">{{leave.pending_leaves}}</span>
+                                        <a (click)="openLeaveDetail(1, leave.id)">&nbsp;{{'common.view' | translate}}</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="leaves?.length == 0" class="tfoot_dt">
+                                <tr>
+                                    <td class="no-data-available text-center" colspan="4">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

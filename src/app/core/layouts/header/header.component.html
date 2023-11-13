@@ -1,0 +1,148 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-faded sticky">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle d-lg-none float-left" data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-container">
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a appToggleFullscreen class="nav-link" href="javascript:void(0);" id="navbar-fullscreen" tooltip="{{'common.fullscreen' | translate }}"><i class="ft-maximize font-m-3 blue-grey darker-4"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="'/todos'" class="nav-link" tooltip="{{'todos.title' | translate }}"><i class="ft-check-square font-m-3 blue-grey darker-4"></i></a>
+                    </li>
+                    <li *ngxPermissionsOnly="['admin', 'super_admin', 'calendar_view']" class="nav-item">
+                        <a [routerLink]="'/calendar'" class="nav-link" tooltip="{{'calendar.title' | translate }}"><i class="ft-calendar font-m-3 blue-grey darker-4"></i></a>
+                    </li>
+                    <!-- <li role="menuitem" dropdown #dropdown1="bs-dropdown" [autoClose]="true" *ngxPermissionsOnly="['mailbox_view']">
+                        <a dropdownToggle class="nav-link" (click)="false" tooltip="{{'mailbox.title' | translate }}">
+                            <i class="ft-mail font-m-3 blue-grey darker-4"></i>
+                            <div class="notify"> <span class="heartbit"></span><span class="point"></span> </div>
+                        </a>
+                        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right notification-dropdown animated bounceInDown" role="menu">
+                            <li><div class="drop-title">{{ 'header.heading.head1' | translate}} <span class="badge badge-pill badge-success">{{mails.length}}</span> {{ 'header.heading.head2' | translate }}</div></li>
+                            <li>
+                                <div class="message-center" [perfectScrollbar]="scrollConfig">
+                                    <ng-container *ngIf="mails?.length != 0; else elseBlock">
+                                        <a href="javascript:void(0)" *ngFor="let mail of mails">
+                                            <div class="user-img">
+                                                <img *ngIf="mail.user.avatar" src="{{apiUrl}}/uploads/profile/{{mail.user.avatar}}" class="img-sm rounded-circle" alt="Profile" />
+                                                <img *ngIf="!mail.user.avatar" src="../assets/img/profile_small.jpg" class="img-sm rounded-circle" alt="Profile" />
+                                                <span class="profile-status pull-right" [ngClass]="{'bg-succes': mail.user.is_active, 'bg-danger': !mail.user.is_active}"></span>
+                                            </div>
+                                            <div class="mail-content">
+                                                <h6>{{ mail.user.firstname | titlecase }} {{ mail.user.lastname | titlecase }}</h6>
+                                                <span class="mail-desc">{{mail.subject}}</span>
+                                                <span class="time">{{ mail.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format }}</span>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                    <ng-template #elseBlock>
+                                        <div class="text-center">
+                                            <img src="assets/img/norecord-img.png" width="50">
+                                            <p class="mt-1">{{ 'common.empty_message.mails' | translate }}</p>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </li>
+                            <li><a class="nav-link text-center link" [routerLink]="'/mailbox'">{{'header.heading.head3' | translate}}&nbsp;<i class="fa fa-angle-right"></i></a></li>
+                        </ul>
+                    </li> -->
+                    <!-- <li role="menuitem" dropdown #dropdown2="bs-dropdown" [autoClose]="true">
+                        <a dropdownToggle class="nav-link" (click)="false" tooltip="{{'header.notifications' | translate }}" placement="bottom">
+                            <i class="ft-bell font-m-3 blue-grey darker-4"></i>
+                            <div class="notify"> <span class="heartbit"></span><span class="point"></span> </div>
+                        </a>
+                        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right notification-dropdown animated bounceInDown" role="menu">
+                            <li><div class="drop-title">{{ 'header.notifications' | translate }}<span class="badge badge-pill badge-info ml-1">{{todaysActivities.length}}</span></div></li>
+                            <li>
+                                <div class="message-center" [perfectScrollbar]="scrollConfig">
+                                    <ng-container *ngIf="todaysActivities?.length != 0; else elseBlock">
+                                        <a href="javascript:void(0);" *ngFor="let activity of todaysActivities">
+                                            <div class="btn btn-danger rounded-circle"><i class="fa fa-users text-white"></i></div>
+                                            <div class="mail-content">
+                                                <h6>{{activity.user.firstname}} {{activity.user.lastname}}</h6>
+                                                <p class="mail-desc" [innerHTML]="activity.description"></p>
+                                                <span class="time">{{activity.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format }}</span>
+                                            </div>
+                                        </a>
+                                    </ng-container>
+                                    <ng-template #elseBlock>
+                                        <div class="text-center">
+                                            <img src="assets/img/norecord-img.png" width="50">
+                                            <p class="mt-1">{{ 'common.empty_message.notifications' | translate }}</p>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </li>
+                        </ul>
+                    </li> -->
+                    <li #dropdown3="bs-dropdown" *ngxPermissionsOnly="['admin', 'super_admin', 'translations_create', 'translations_edit']" [autoClose]="true" dropdown role="menuitem">
+                        <a (click)="false" class="nav-link" dropdownToggle tooltip="{{'header.languages' | translate }}">
+                            <ng-container *ngFor="let translation of translations;">
+                                <ng-container *ngIf="selectedLanguage == translation.language">
+                                    <img alt="{{selectedLanguage}}" class="langimg" src="{{apiUrl}}/uploads/translation/{{translation.icon}}">
+                                </ng-container>
+                            </ng-container>
+                        </a>
+                        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right animated bounceInDown" role="menu">
+                            <li>
+                                <div [perfectScrollbar]="scrollConfig" class="message-center">
+                                    <a (click)="changeLanguage(translation.language);" *ngFor="let translation of translations;" class="dropdown-item py-1 lang">
+                                        <img alt="{{translation.name}}" class="langimg" src="{{apiUrl}}/uploads/translation/{{translation.icon}}"><span>{{translation.name}}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li *ngxPermissionsOnly="['admin', 'super_admin', 'themesettings_create', 'themesettings_edit']" class="nav-item">
+                        <a (click)="openThemeSettings()" class="theme-settings-toggle nav-link" id="theme-settings-toggle-icon" tooltip="{{'theme_setting.header.head11' | translate}}">
+                            <i class="ft-settings font-m-3 blue-grey darker-4"></i>
+                        </a>
+                    </li>
+                    <li #dropdown4="bs-dropdown" [autoClose]="true" dropdown role="menuitem">
+                        <a (click)="false" class="nav-link" dropdownToggle>
+                            <img *ngIf="!loginUser.avatar" alt="User" class="rounded-circle profile-img" src="assets/img/profile_large.jpg">
+                            <img *ngIf="loginUser.avatar" alt="User" class="rounded-circle profile-img" src="{{apiUrl}}/uploads/profile/{{loginUser.avatar}}">
+                        </a>
+                        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right profile-dropdown animated flipInY" role="menu">
+                            <div class="user-details text-center">
+                                <img *ngIf="!loginUser.avatar" alt="User" class="rounded-circle" src="assets/img/profile_large.jpg">
+                                <img *ngIf="loginUser.avatar" alt="User" class="rounded-circle" src="{{apiUrl}}/uploads/profile/{{loginUser.avatar}}">
+                                <h5 class="mt-1 m-0 capitalize">{{loginUser.firstname}}&nbsp;{{loginUser.lastname}}</h5>
+                                <p class="m-0">
+                                    <ng-container *ngIf="loginUser.online_status; else elseBlock">
+                                        <i class="fa fa-circle text-success"></i>&nbsp;{{ 'common.online' | translate }}
+                                    </ng-container>
+                                    <ng-template #elseBlock>
+                                        <i class="fa fa-circle text-danger"></i>&nbsp;{{ 'common.offline' | translate }}
+                                    </ng-template>
+                                </p>
+                            </div>
+                            <a *ngxPermissionsOnly="['admin', 'super_admin', 'settings_view']" [routerLink]="'/settings'" class="dropdown-item py-1">
+                                <i class="ft-settings mr-2"></i>
+                                <span>{{ 'settings.title' | translate }}</span>
+                            </a>
+                            <a [routerLink]="['/users/profile', loginUser.id]" class="dropdown-item py-1">
+                                <i class="ft-edit mr-2"></i>
+                                <span>{{ 'header.profile' | translate }}</span>
+                            </a>
+                            <a [routerLink]="'/mailbox'" class="dropdown-item py-1">
+                                <i class="ft-mail mr-2"></i>
+                                <span>{{ 'header.inbox' | translate }}</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a (click)="logout()" class="dropdown-item">
+                                <i class="ft-power mr-2"></i>
+                                <span>{{ 'header.logout' | translate }}</span>
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

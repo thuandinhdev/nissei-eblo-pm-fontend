@@ -1,0 +1,33 @@
+<!-- Card header -->
+<div class="card-header pl-0 pb-0 pr-0 border-bottom">
+    <h4 class="main-title mt-2"><span>{{'activities.title' | translate}}</span></h4>
+</div><!-- Card body -->
+<div class="card-body pt-3 hide_empty_message">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="role_table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{ 'activities.columns.date' | translate }}</th>
+                        <th>{{ 'activities.columns.module' | translate }}</th>
+                        <th>{{ 'activities.columns.activity' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="activities?.length != 0">
+                    <tr *ngFor="let activity of activities; index as i">
+                        <td>{{activity.created_at | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                        <td class="budges-status"><span class="open">{{activity.module}}</span></td>
+                        <td [innerHTML]="activity.description"></td>
+                    </tr>
+                    </tbody>
+                    <tfoot *ngIf="activities?.length == 0" class="tfoot_dt">
+                    <tr>
+                        <td class="no-data-available" class="text-center" colspan="3">{{'common.datatable.sEmptyTable' | translate}}</td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

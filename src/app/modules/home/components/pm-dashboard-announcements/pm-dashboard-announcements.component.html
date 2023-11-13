@@ -1,0 +1,32 @@
+<div class="card card-height overflow-y">
+    <div class="card-header border-bottom mb-3 d-lg-flex d-block">
+        <h4 class="card-title mt-2">{{'announcements.title' | translate}}</h4>
+        <div class="card-buttons">
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'announcements_view']" [routerLink]="['/announcements']" class="btn btn-rounded  mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>&nbsp;&nbsp;
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'announcements_create']" [routerLink]="['/announcements/create']" class="btn btn-rounded  mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <div [perfectScrollbar]="scrollConfig" class="card-body sidebar-content mb-3">
+        <div class="card-block pt-0">
+            <div *ngIf="announcements.length != 0" class="annoucement-lists">
+                <div class="annoucement-items">
+                    <div *ngFor="let announcement of announcements" class="annoucement-item">
+                        <span class="annoucement-item-time">{{announcement.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</span>
+                        <div class="annoucement-item-circle">
+                            <i class="fa fa-genderless"></i>
+                        </div>
+                        <div class="annoucement-item-text">
+                            <h6>{{announcement.title}}</h6>
+                            <p [innerHTML]="announcement.description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="announcements?.length == 0" class="text-center">
+                <img src="assets/img/norecord-img.png" width="50">
+                <p class="mt-1">{{ 'common.empty_message.announcements' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+

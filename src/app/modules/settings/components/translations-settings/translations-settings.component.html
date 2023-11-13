@@ -1,0 +1,60 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.translations.title' | translate}}</span></h4>
+    <!-- <a class="btn btn-create mb-0" *ngxPermissionsOnly="['admin', 'super_admin', 'translations_create']" (click)="openTranslationCreateModal()" placement="top" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a> -->
+</div>
+<div class="card-content hide_empty_message">
+    <div class="card-body">
+        <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+            <table [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover b4-datatable" datatable id="translation_table" width="100%">
+                <thead>
+                <tr>
+                    <th>{{'settings.translations.columns.icon' | translate}}</th>
+                    <th>{{'settings.translations.columns.language' | translate}}</th>
+                    <th>{{'settings.translations.columns.status' | translate}}</th>
+                    <th>{{'settings.translations.columns.actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="translations?.length != 0">
+                <tr *ngFor="let translation of translations; index as i">
+                    <td class="text-center">
+                        <img height="30" src="{{apiUrl}}/uploads/translation/{{translation.icon}}" width="30">
+                    </td>
+                    <td>{{translation.name}}</td>
+                    <td>
+                        <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'translations_edit']; else elseBlock1; then thenBlock1"></ng-container>
+                        <ng-template #elseBlock1>
+                            <div class="budges-status">
+                                <span *ngIf="translation.status == '1'" class="completed">{{'common.status.active' | translate}}</span>
+                                <span *ngIf="translation.status == '0'" class="cancel">{{'common.status.deactive' | translate}}</span>
+                            </div>
+                        </ng-template>
+                        <ng-template #thenBlock1>
+                            <ui-switch (valueChange)="setActiveInactiveTranslation($event, translation)" [checked]="translation.status == '1' ? true : false"></ui-switch>
+                        </ng-template>
+                    </td>
+                    <td class="actions-dropdown">
+                        <div class="btn-group" dropdown>
+                            <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                <i class="fa fa-ellipsis-v"></i></button>
+                            <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                <li role="menuitem">
+                                    <a (click)="openTranslationEditModal(translation)" *ngxPermissionsOnly="['admin', 'super_admin', 'translations_edit']" class="dropdown-item btn btn-edit btn-raised" placement="top" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                </li>
+                                <li role="menuitem">
+                                    <a (click)="translationDelete(translation.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'translations_delete']" class="dropdown-item btn btn-delete btn-raised" placement="top" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot *ngIf="translations?.length == 0" class="tfoot_dt">
+                <tr>
+                    <td class="no-data-available text-center" colspan="4">{{'common.datatable.sEmptyTable' | translate}}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

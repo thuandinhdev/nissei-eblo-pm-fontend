@@ -1,0 +1,117 @@
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0 border-bottom">
+                    <h4 class="main-title mb-0 mt-2"><span>{{'leave_types.title' | translate}}</span></h4>
+                </div>
+                <div class="card-content pt-3 pb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_create']" class="col-md-3">
+                                <form (ngSubmit)="onSubmit()" [formGroup]="createLeaveTypeForm" class="form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="leave_type">{{'leave_types.create.fields.leave_type' | translate}}
+                                                    <span class="text-danger">&nbsp;*</span></label>
+                                                <input [ngClass]="{ 'is-invalid': isSubmitted && leavetypeControl.leave_type.errors }" class="form-control" formControlName="leave_type" id="leave_type" placeholder="{{'leave_types.create.placeholders.placeholder1' | translate }}" type="text"/>
+                                                <div *ngIf="isSubmitted && leavetypeControl.leave_type.errors" class="invalid-feedback">
+                                                    <div *ngIf="leavetypeControl.leave_type.errors.required">{{'leave_types.create.error_messages.message1' | translate}}</div>
+                                                    <div *ngIf="leavetypeControl.leave_type.errors.maxlength">{{'leave_types.create.error_messages.message2' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="no_of_leaves">{{'leave_types.create.fields.no_of_leaves' | translate}}
+                                                    <span class="text-danger">&nbsp;*</span></label>
+                                                <input [ngClass]="{ 'is-invalid': isSubmitted && leavetypeControl.no_of_leaves.errors }" class="form-control" formControlName="no_of_leaves" id="no_of_leaves" placeholder="{{'leave_types.create.placeholders.placeholder2' | translate }}" type="text"/>
+                                                <div *ngIf="isSubmitted && leavetypeControl.no_of_leaves.errors" class="invalid-feedback">
+                                                    <div *ngIf="leavetypeControl.no_of_leaves.errors.required">{{'leave_types.create.error_messages.message3' | translate}}</div>
+                                                    <div *ngIf="leavetypeControl.no_of_leaves.errors.pattern">{{'leave_types.create.error_messages.message4' | translate}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="color">{{'leave_types.create.fields.color' | translate}}
+                                                    <span class="text-danger">&nbsp;*</span></label>
+                                                <div class="position-relative has-icon-left">
+                                                    <input (colorPickerChange)="createLeaveTypeForm.get('color').setValue($event)" [colorPicker]="createLeaveTypeForm.get('color').value" [cpCancelButton]="true" [ngClass]="{ 'is-invalid': isSubmitted && leavetypeControl.color.errors }" [style.background]="createLeaveTypeForm.get('color').value" [value]="createLeaveTypeForm.get('color').value" class="form-control" formControlName="color" id="color">
+                                                    <div class="form-control-position"><i class="ft-droplet"></i></div>
+                                                    <div *ngIf="isSubmitted && leavetypeControl.color.errors" class="invalid-feedback">
+                                                        <div *ngIf="leavetypeControl.color.errors.required">{{'leave_types.create.error_messages.message5' | translate}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group text-center">
+                                                <button class="btn btn-submit mb-0" type="submit">{{'common.create' | translate}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                    <table class="table table-bordered table-hover b4-datatable" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{'leave_types.columns.leave_type' | translate}}</th>
+                                            <th>{{'leave_types.columns.no_of_leaves' | translate}}</th>
+                                            <th>{{'leave_types.columns.color' | translate}}</th>
+                                            <th class="text-center">{{'common.actions' | translate}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let leave of leaveTypes; index as i">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>
+                                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_edit'] else elseBlock1;">
+                                                    <inline-edit-input (updateValue)="saveLeaveTypeDetail(i, 'leave_type', $event);" [elementFor]="'leave_types.inline_edit.leave_type' | translate" [fieldValue]="leave.leave_type" [isRequired]="'true'" [maxLength]="50" [name]="'leave_type'" [type]="'text'"></inline-edit-input>
+                                                </ng-container>
+                                                <ng-template #elseBlock1>{{leave.leave_type}}</ng-template>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_edit'] else elseBlock2;">
+                                                    <inline-edit-input (updateValue)="saveLeaveTypeDetail(i, 'no_of_leaves', $event);" [elementFor]="'leave_types.inline_edit.no_of_leaves' | translate" [fieldValue]="leave.no_of_leaves" [isRequired]="'true'" [maxLength]="50" [name]="'no_of_leaves'" [type]="'text'" pattern="^-?(0|[1-9]\d*)?$"></inline-edit-input>
+                                                </ng-container>
+                                                <ng-template #elseBlock2>{{leave.no_of_leaves}}</ng-template>
+                                            </td>
+                                            <td>
+                                                <div [ngStyle]="{'background-color': leave.color}" class="width-30 height-30"></div>
+                                            </td>
+                                            <td class="actions-dropdown">
+                                                <div class="btn-group" dropdown>
+                                                    <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
+                                                        <i class="fa fa-ellipsis-v"></i></button>
+                                                    <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
+                                                        <li role="menuitem">
+                                                            <a (click)="deleteLeaveType(leave.id)" *ngxPermissionsOnly="['admin', 'super_admin', 'leavetypes_delete']" class="dropdown-item btn btn-delete btn-raised"><i class="fa fa-trash-o" tooltip="{{'common.delete' | translate}}"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot *ngIf="leaveTypes?.length == 0" class="tfoot_dt">
+                                        <tr>
+                                            <td class="text-center" colspan="4">
+                                                <img src="assets/img/norecord-img.png" width="50">
+                                                <p class="mt-1">{{'common.datatable.sEmptyTable' | translate}}</p>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

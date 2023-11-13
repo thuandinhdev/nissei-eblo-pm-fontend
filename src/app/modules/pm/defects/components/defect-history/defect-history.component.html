@@ -1,0 +1,75 @@
+<!-- Card body -->
+<div class="card-body">
+    <div class="row pl-2 pr-2">
+        <div class="col-lg-12 mb-1 tab-table">
+            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl overflow-x-auto">
+                <table [dtOptions]="dtOptions" class="table table-bordered table-hover b4-datatable" datatable id="history_table" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{'histories.columns.date' | translate }}</th>
+                        <th>{{'histories.columns.activity' | translate }}</th>
+                        <th>{{'histories.columns.creator' | translate }}</th>
+                        <th>{{'histories.columns.updated_by' | translate }}</th>
+                        <th>{{'histories.columns.commentor' | translate }}</th>
+                        <th>{{'histories.columns.solved_by' | translate }}</th>
+                        <th>{{'histories.columns.closed_by' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let history of defect.history">
+                        <td>{{ history.created_at | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <td>
+                            <p [innerHtml]="history.description"></p>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="userLists[history.created_by_id]; else elseBlock">
+                                <a [routerLink]="['/users/profile', history.created_by_id]" class="btn rounded-circle btn-profile-info text-dark" placement="top" tooltip="{{userLists[history.created_by_id].name}}">
+                                    <img *ngIf="userLists[history.created_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[history.created_by_id].avatar}}"/>
+                                    <img *ngIf="!userLists[history.created_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock>-</ng-template>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="userLists[history.updated_by_id]; else elseBlock1">
+                                <a [routerLink]="['/users/profile', history.updated_by_id]" class="btn rounded-circle btn-profile-danger text-dark" placement="top" tooltip="{{userLists[history.updated_by_id].name}}">
+                                    <img *ngIf="userLists[history.updated_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[history.updated_by_id].avatar}}"/>
+                                    <img *ngIf="!userLists[history.updated_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock1>-</ng-template>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="userLists[history.commented_by_id]; else elseBlock4">
+                                <a [routerLink]="['/users/profile', history.commented_by_id]" class="btn rounded-circle btn-profile-info text-dark" placement="top" tooltip="{{userLists[history.commented_by_id].name}}">
+                                    <img *ngIf="userLists[history.commented_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[history.commented_by_id].avatar}}"/>
+                                    <img *ngIf="!userLists[history.commented_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock4>-</ng-template>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="userLists[history.solved_by_id]; else elseBlock2">
+                                <a [routerLink]="['/users/profile', history.solved_by_id]" class="btn rounded-circle btn-profile-info text-dark" placement="top" tooltip="{{userLists[history.solved_by_id].name}}">
+                                    <img *ngIf="userLists[history.solved_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[history.solved_by_id].avatar}}"/>
+                                    <img *ngIf="!userLists[history.solved_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock2>-</ng-template>
+                        </td>
+                        <td class="people-lists">
+                            <ng-container *ngIf="userLists[history.closed_by_id]; else elseBlock3">
+                                <a [routerLink]="['/users/profile', history.closed_by_id]" class="btn rounded-circle btn-profile-danger text-dark" placement="top" tooltip="{{userLists[history.closed_by_id].name}}">
+                                    <img *ngIf="userLists[history.closed_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{userLists[history.closed_by_id].avatar}}"/>
+                                    <img *ngIf="!userLists[history.closed_by_id].avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                </a>
+                            </ng-container>
+                            <ng-template #elseBlock3>-</ng-template>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

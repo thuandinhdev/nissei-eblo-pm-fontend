@@ -1,0 +1,243 @@
+<section *ngIf="isDepartmentLoaded">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card pl-2 pr-2">
+                <div class="card-header pl-0 pr-0">
+                    <!-- <h4 class="card-title d-inline-block mb-0 mt-1">{{'departments.title1' | translate}}</h4> -->
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="px-3 pb-3">
+                            <form class="form" id="departmentForm">
+                                <div class="form-body">
+                                    <div class="row border-bottom">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="department_id">{{'departments.create.fields.department' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                                <input [(ngModel)]="departmentInfo.department.name" class="form-control" id="department_id" name="department_id" readonly="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="role_id">{{'departments.create.fields.designation' | translate}}&nbsp;<span class="text-danger">*</span></label>
+                                                <input [(ngModel)]="departmentInfo.department.roles[0].name" class="form-control" id="role_id" name="role_id" readonly="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group mt-3">
+                                                <a [routerLink]="['/departments']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                                                <button (click)="saveDepartment()" *ngxPermissionsOnly="['admin', 'super_admin', 'departments_edit']" class="btn btn-submit" type="button">{{'common.update' | translate}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg">
+                                                <table class="table table-bordered department_detail mb-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>
+                                                            <label class="checkbox-container" tooltip="{{'departments.tooltip.tooltip1' | translate}}">
+                                                                <input (change)="selectAllPermissions($event)" class="form-control" id="select_all" name="select_all" type="checkbox"/>
+                                                                <b>{{'departments.create.fields.permission' | translate}}</b>
+                                                                <span class="checkbox-checkmark"></span>
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="checkbox-container" tooltip="{{'departments.tooltip.tooltip2' | translate}}">
+                                                                <input (change)="selectAllViewPermissions($event)" class="form-control" id="select_all_view" name="select_all_view" type="checkbox"/>
+                                                                <b>{{'common.view' | translate}}</b>
+                                                                <span class="checkbox-checkmark"></span>
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="checkbox-container" tooltip="{{'departments.tooltip.tooltip3' | translate}}">
+                                                                <input (change)="selectAllCreatePermissions($event)" class="form-control" id="select_all_create" name="select_all_create" type="checkbox"/>
+                                                                <b>{{'common.create' | translate}}</b>
+                                                                <span class="checkbox-checkmark"></span>
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="checkbox-container" tooltip="{{'departments.tooltip.tooltip4' | translate}}">
+                                                                <input (change)="selectAllEditPermissions($event)" class="form-control" id="select_all_edit" name="select_all_edit" type="checkbox"/>
+                                                                <b>{{'common.edit' | translate}}</b>
+                                                                <span class="checkbox-checkmark"></span>
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="checkbox-container" tooltip="{{'departments.tooltip.tooltip5' | translate}}">
+                                                                <input (change)="selectAllDeletePermissions($event)" class="form-control" id="select_all_delete" name="select_all_delete" type="checkbox"/>
+                                                                <b>{{'common.delete' | translate}}</b>
+                                                                <span class="checkbox-checkmark"></span>
+                                                            </label>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let menu of departmentInfo.menus | keyvalue; let $index=index;">
+                                                    <tr *ngIf="isObjectEmpty(menu.value)">
+                                                        <td></td>
+                                                        <td>
+																<span class="checkbox-container menus_selected parent">
+																	<label tooltip="{{'departments.tooltip.tooltip6' | translate}}">
+																		<input [checked]="getPermissionChecked(menu.value, 'id')" class="form-control" id="{{menu.value}}" type="checkbox" value="{{menu.value}}">
+																		<span class="checkbox-checkmark"></span>
+																		<strong>{{menu.key | translate}}</strong>
+																	</label>
+																</span>
+                                                        </td>
+                                                        <td>
+																<span class="checkbox-container view">
+																	<label class="view" tooltip="{{'departments.tooltip.tooltip2' | translate}}">
+																		<input [checked]="getPermissionChecked(menu.value, 'view')" class="form-control {{menu.value}}" id="{{menu.value}}" name="view_{{menu.value}}_{{menu.value}}" type="checkbox" value="{{menu.value}}">
+																		<span class="checkbox-checkmark"></span>
+																	</label>
+																</span>
+                                                        </td>
+                                                        <td>
+																<span class="checkbox-container create">
+																	<label class="create" tooltip="{{'departments.tooltip.tooltip7' | translate}}">
+																		<input [checked]="getPermissionChecked(menu.value, 'created')" class="form-control {{menu.value}}" id="{{menu.value}}" name="create_{{menu.value}}_{{menu.value}}" type="checkbox" value="{{menu.value}}">
+																		<span class="checkbox-checkmark"></span>
+																	</label>
+																</span>
+                                                        </td>
+                                                        <td>
+																<span class="checkbox-container edit">
+																	<label class="edit" tooltip="{{'departments.tooltip.tooltip8' | translate}}">
+																		<input [checked]="getPermissionChecked(menu.value, 'edited')" class="form-control {{menu.value}}" id="{{menu.value}}" name="edit_{{menu.value}}_{{menu.value}}" type="checkbox" value="{{menu.value}}">
+																		<span class="checkbox-checkmark"></span>
+																	</label>
+																</span>
+                                                        </td>
+                                                        <td>
+																<span class="checkbox-container delete">
+																	<label class="delete" tooltip="{{'departments.tooltip.tooltip9' | translate}}">
+																		<input [checked]="getPermissionChecked(menu.value, 'deleted')" class="form-control {{menu.value}}" id="{{menu.value}}" name="delete_{{menu.value}}_{{menu.value}}" type="checkbox" value="{{menu.value}}">
+																		<span class="checkbox-checkmark"></span>
+																	</label>
+																</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="!isObjectEmpty(menu.value)">
+                                                        <td class="p-0" colspan="6">
+                                                            <table *ngFor="let childMenu of menu.value | keyvalue" class="table table-bordered mb-0">
+                                                                <tr ng-if="isObjectEmpty(nestedChildMenu.value)">
+                                                                    <td class="text-center">
+                                                                        <a (click)="expandRow($index)">
+                                                                            <i *ngIf="$index === expandedIndex" aria-hidden="true" class="fa fa-caret-square-o-right"></i>
+                                                                            <i *ngIf="$index !== expandedIndex" aria-hidden="true" class="fa fa-caret-square-o-down"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+																			<span class="checkbox-container menus_selected nested_parent">
+																				<label tooltip="{{'departments.tooltip.tooltip10' | translate}}">
+																					<input [checked]="getPermissionChecked(childMenu.key, 'id')" class="form-control" id="{{childMenu.key}}" type="checkbox" value="{{childMenu.key}}">
+																					<span class="checkbox-checkmark"></span>
+																					<strong>{{menu.key | translate}}</strong>
+																				</label>
+																			</span>
+                                                                    </td>
+                                                                    <td>
+																			<span class="checkbox-container">
+																				<label class="view" tooltip="{{'departments.tooltip.tooltip10' | translate}}">
+																					<input [checked]="getPermissionChecked(childMenu.key, 'view')" class="form-control {{childMenu.key}} all_view" id="all_view_{{childMenu.key}}" name="view_{{childMenu.key}}_{{childMenu.key}}" type="checkbox" value="{{childMenu.key}}">
+																					<span class="checkbox-checkmark"></span>
+																				</label>
+																			</span>
+                                                                    </td>
+                                                                    <td>
+																			<span class="checkbox-container">
+																				<label class="create" tooltip="{{'departments.tooltip.tooltip10' | translate}}">
+																					<input [checked]="getPermissionChecked(childMenu.key, 'created')" class="form-control {{childMenu.key}} all_create" id="all_create_{{childMenu.key}}" name="create_{{childMenu.key}}_{{childMenu.key}}" type="checkbox" value="{{childMenu.key}}">
+																					<span class="checkbox-checkmark"></span>
+																				</label>
+																			</span>
+                                                                    </td>
+                                                                    <td>
+																			<span class="checkbox-container">
+																				<label class="edit" tooltip="{{'departments.tooltip.tooltip10' | translate}}">
+																					<input [checked]="getPermissionChecked(childMenu.key, 'edited')" class="form-control {{childMenu.key}} all_edit" id="all_edit_{{childMenu.key}}" name="edit_{{childMenu.key}}_{{childMenu.key}}" type="checkbox" value="{{childMenu.key}}">
+																					<span class="checkbox-checkmark"></span>
+																				</label>
+																			</span>
+                                                                    </td>
+                                                                    <td>
+																			<span class="checkbox-container">
+																				<label class="delete" tooltip="{{'departments.tooltip.tooltip10' | translate}}">
+																					<input [checked]="getPermissionChecked(childMenu.key, 'edited')" class="form-control {{childMenu.key}} all_delete" id="all_delete_{{childMenu.key}}" name="delete_{{childMenu.key}}_{{childMenu.key}}" type="checkbox">
+																					<span class="checkbox-checkmark"></span>
+																				</label>
+																			</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr *ngFor="let nestedChildMenu of childMenu.value | keyvalue" [hidden]="$index === expandedIndex">
+                                                                    <td class="p-0" colspan="6">
+                                                                        <table class="table table-hover mb-0 table-bordered">
+                                                                            <tbody>
+                                                                            <tr class="child c_{{childMenu.key}}" ng-if="isObjectEmpty(nestedChildMenu.value)">
+                                                                                <td></td>
+                                                                                <td>
+																							<span class="checkbox-container nested_parent_child">
+																								<label tooltip="{{'departments.tooltip.tooltip6' | translate}}">
+																									<input [checked]="getPermissionChecked(nestedChildMenu.value, 'id')" class="form-control {{childMenu.key}}" id="{{nestedChildMenu.value}}" type="checkbox" value="{{nestedChildMenu.value}}">
+																									<span class="checkbox-checkmark"></span>
+																									<strong>{{nestedChildMenu.key | translate}}</strong>
+																								</label>
+																							</span>
+                                                                                </td>
+                                                                                <td>
+																							<span class="checkbox-container">
+																								<label class="view" tooltip="{{'departments.tooltip.tooltip2' | translate}}">
+																									<input [checked]="getPermissionChecked(nestedChildMenu.value, 'view')" class="form-control {{childMenu.key}} {{nestedChildMenu.value}}" name="view_{{childMenu.key}}_{{nestedChildMenu.value}}" type="checkbox" value="{{nestedChildMenu.value}}">
+																									<span class="checkbox-checkmark"></span>
+																								</label>
+																							</span>
+                                                                                </td>
+                                                                                <td>
+																							<span class="checkbox-container">
+																								<label class="create" tooltip="{{'departments.tooltip.tooltip7' | translate}}">
+																									<input [checked]="getPermissionChecked(nestedChildMenu.value, 'created')" class="form-control {{childMenu.key}} {{nestedChildMenu.value}}" name="create_{{childMenu.key}}_{{nestedChildMenu.value}}" type="checkbox" value="{{nestedChildMenu.value}}">
+																									<span class="checkbox-checkmark"></span>
+																								</label>
+																							</span>
+                                                                                </td>
+                                                                                <td>
+																							<span class="checkbox-container">
+																								<label class="edit" tooltip="{{'departments.tooltip.tooltip8' | translate}}">
+																									<input [checked]="getPermissionChecked(nestedChildMenu.value, 'edited')" class="form-control {{childMenu.key}} {{nestedChildMenu.value}}" name="edit_{{childMenu.key}}_{{nestedChildMenu.value}}" type="checkbox" value="{{nestedChildMenu.value}}">
+																									<span class="checkbox-checkmark"></span>
+																								</label>
+																							</span>
+                                                                                </td>
+                                                                                <td>
+																							<span class="checkbox-container">
+																								<label class="delete" tooltip="{{'departments.tooltip.tooltip9' | translate}}">
+																									<input [checked]="getPermissionChecked(nestedChildMenu.value, 'deleted')" class="form-control {{childMenu.key}} {{nestedChildMenu.value}}" name="delete_{{childMenu.key}}_{{nestedChildMenu.value}}" type="checkbox" value="{{nestedChildMenu.value}}">
+																									<span class="checkbox-checkmark"></span>
+																								</label>
+																							</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr ng-if="!isObjectEmpty(nestedChildMenu.value)"></tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

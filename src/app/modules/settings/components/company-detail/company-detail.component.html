@@ -1,0 +1,119 @@
+<!-- Card header -->
+<div class="card-header pl-0 pr-0 mb-3 border-bottom">
+    <h4 class="sub-title mt-2"><span>{{'settings.company_details.title' | translate}}</span></h4>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="settingsForm">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_name">{{'settings.company_details.create.fields.company_name' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_name.errors }" class="form-control" formControlName="company_name" id="company_name" placeholder="{{'settings.company_details.create.placeholders.placeholder1' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_name.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_name.errors.required">{{'settings.company_details.create.error_messages.message1' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_legal_name">{{'settings.company_details.create.fields.legal_name' | translate}}</label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_legal_name.errors }" class="form-control" formControlName="company_legal_name" id="company_legal_name" placeholder="{{'settings.company_details.create.placeholders.placeholder2' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_legal_name.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_legal_name.errors.required">{{'settings.company_details.create.error_messages.message2' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_short_name">{{'settings.company_details.create.fields.short_name' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_short_name.errors }" class="form-control" formControlName="company_short_name" id="company_short_name" placeholder="{{'settings.company_details.create.placeholders.placeholder3' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_short_name.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_short_name.errors.required">{{'settings.company_details.create.error_messages.message3' | translate}}</div>
+                        <div *ngIf="companyDetail.company_short_name.errors.maxlength">{{'settings.company_details.create.error_messages.message4' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_email">{{'settings.company_details.create.fields.company_email' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_email.errors }" class="form-control" formControlName="company_email" id="company_email" placeholder="{{'settings.company_details.create.placeholders.placeholder4' | translate}}" type="email"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_email.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_email.errors.required">{{'settings.company_details.create.error_messages.message5' | translate}}</div>
+                        <div *ngIf="companyDetail.company_email.errors.email">{{'settings.company_details.create.error_messages.message6' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_phone">{{'settings.company_details.create.fields.company_phone' | translate}}</label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_phone.errors }" class="form-control" formControlName="company_phone" id="company_phone" placeholder="{{'settings.company_details.create.placeholders.placeholder5' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_phone.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_phone.errors.pattern">{{'settings.company_details.create.error_messages.message7' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_website">{{'settings.company_details.create.fields.company_website' | translate}}</label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_website.errors }" class="form-control" formControlName="company_website" id="company_website" placeholder="{{'settings.company_details.create.placeholders.placeholder6' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_website.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_website.errors.pattern">{{'settings.company_details.create.error_messages.message8' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_country">{{'settings.company_details.create.fields.company_country' | translate}}</label>
+                    <ng-select [items]="countries" [searchable]="true" [selectOnTab]="true" bindLabel="name" bindValue="id" formControlName="company_country" labelForId="country" placeholder="{{'settings.company_details.create.placeholders.placeholder7' | translate}}"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_city">{{'settings.company_details.create.fields.city' | translate}}</label>
+                    <input class="form-control" formControlName="company_city" id="company_city" placeholder="{{'settings.company_details.create.placeholders.placeholder8' | translate}}" type="text"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_zipcode">{{'settings.company_details.create.fields.company_zipcode' | translate}}</label>
+                    <input [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_zipcode.errors }" class="form-control" formControlName="company_zipcode" id="company_zipcode" placeholder="{{'settings.company_details.create.placeholders.placeholder9' | translate}}" type="text"/>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_zipcode.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_zipcode.errors.required">{{'settings.company_details.create.error_messages.message9' | translate}}</div>
+                        <div *ngIf="companyDetail.company_zipcode.errors.pattern">{{'settings.company_details.create.error_messages.message10' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="contact_person">{{'settings.company_details.create.fields.contact_person' | translate}}</label>
+                    <input class="form-control" formControlName="contact_person" id="contact_person" placeholder="{{'settings.company_details.create.placeholders.placeholder10' | translate}}" type="text"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company_address">{{'settings.company_details.create.fields.company_address' | translate}}
+                        <span class="text-danger">&nbsp;*</span></label>
+                    <textarea [ngClass]="{ 'is-invalid': isFormSubmitted && companyDetail.company_address.errors }" class="form-control" formControlName="company_address" id="company_address" placeholder="{{'settings.company_details.create.placeholders.placeholder11' | translate}}"></textarea>
+                    <div *ngIf="isFormSubmitted && companyDetail.company_address.errors" class="invalid-feedback">
+                        <div *ngIf="companyDetail.company_address.errors.required">{{'settings.company_details.create.error_messages.message11' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a [routerLink]="['/']" class="btn btn-cancel">{{'common.cancel' | translate}}</a>
+                <button *ngxPermissionsOnly="['admin', 'super_admin', 'companydetail_create', 'companydetail_edit']" class="btn btn-submit" type="submit">{{'common.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

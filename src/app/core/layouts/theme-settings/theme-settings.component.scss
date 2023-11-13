@@ -1,0 +1,278 @@
+.theme-settings {
+    width: 272px !important;
+    right: -400px;
+    padding: 0;
+    background-color: #FFF;
+    z-index: 1051;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    transition: right 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    backface-visibility: hidden;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+    &.open {
+        right: 0;
+
+        .theme-settings-toggle {
+            left: -50px;
+            width: 50px;
+
+            span {
+                display: none;
+            }
+
+            &:hover {
+                left: -50px;
+            }
+        }
+    }
+
+    .theme-settings-content {
+        position: relative;
+        height: 100%;
+
+        .checkbox-checkmark {
+            top: -7px;
+        }
+    }
+
+    a.theme-settings-toggle {
+        color: theme-color('primary');
+        display: block;
+        box-shadow: -3px 0px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 50px 0 0 50px;
+        background: #f42d4c;
+        -webkit-transition: 0.5s cubic-bezier(0.05, 0.74, 0.2, 0.99); /* For Safari 3.1 to 6.0 */
+        transition: 0.5s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+        font-size: 14px;
+
+        &:hover {
+            left: -170px;
+        }
+    }
+
+    a.theme-settings-close {
+        color: #454545;
+        margin-top: 20px;
+    }
+
+    .theme-settings-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 7px;
+        width: auto;
+        z-index: 10;
+    }
+
+    .theme-settings-toggle {
+        position: absolute;
+        top: 45%;
+        width: 170px;
+        height: 50px;
+        left: -50px;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        color: #FFF;
+    }
+
+    .header {
+        color: #454545;
+    }
+}
+
+.color-palettes {
+    width: 400px;
+    right: -400px;
+    padding: 0;
+    background-color: #FFF;
+    z-index: 1051;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    transition: right 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+    backface-visibility: hidden;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+    &.open {
+        right: 0;
+
+        .color-palettes-toggle {
+            left: -50px;
+            width: 50px;
+
+            span {
+                display: none;
+            }
+
+            &:hover {
+                left: -50px;
+            }
+        }
+    }
+
+    .color-palettes-content {
+        position: relative;
+        height: 100%;
+        overflow: scroll;
+    }
+
+    a.color-palettes-toggle {
+        color: theme-color('primary');
+        display: block;
+        box-shadow: -3px 0px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 50px 0 0 50px;
+        background: #6769f4;
+        -webkit-transition: 0.5s cubic-bezier(0.05, 0.74, 0.2, 0.99); /* For Safari 3.1 to 6.0 */
+        transition: 0.5s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+        font-size: 14px;
+
+        &:hover {
+            left: -170px;
+        }
+    }
+
+    a.color-palettes-close {
+        color: #454545;
+        margin-top: 20px;
+    }
+
+    .color-palettes-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 7px;
+        width: auto;
+        z-index: 10;
+    }
+
+    .color-palettes-toggle {
+        position: absolute;
+        top: 35%;
+        width: 170px;
+        height: 50px;
+        left: -50px;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        color: #FFF;
+    }
+
+    .color-options {
+        a {
+            white-space: pre;
+        }
+    }
+
+    .sidebar-bg-color {
+        margin: 0 auto;
+
+        span {
+            display: inline-block;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.white {
+                color: #ddd !important;
+            }
+
+            &.rounded {
+                // border-radius: 1rem 0 1rem 0 !important;
+                border: 2px solid #e6e6e6;
+            }
+
+            &.box-shadow-2 {
+                box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+            }
+        }
+
+        .selected {
+            border: 3px solid #314fe5;
+        }
+    }
+
+    .sidebar-bg-image {
+        &:hover {
+            cursor: pointer;
+        }
+
+        img.rounded {
+            border-radius: 1rem !important;
+            border: 2px solid #e6e6e6;
+
+            &.selected {
+                border: 2px solid #FF586B;
+            }
+        }
+    }
+
+    .header {
+        color: #454545;
+    }
+
+    .bg-hibiscus {
+        background-image: linear-gradient(to right bottom, #f05f57, #c83d5c, #99245a, #671351, #360940);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s
+    }
+
+    .bg-purple-pizzazz {
+        background-image: linear-gradient(to right bottom, #662d86, #8b2a8a, #ae2389, #cf1d83, #ed1e79);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s;
+    }
+
+    .bg-blue-lagoon {
+        background-image: linear-gradient(to right bottom, #144e68, #006d83, #008d92, #00ad91, #57ca85);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s;
+    }
+
+    .bg-electric-violet {
+        background-image: linear-gradient(to left top, #4a00e0, #600de0, #7119e1, #8023e1, #8e2de2);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s;
+    }
+
+    .bg-portage {
+        background-image: linear-gradient(to left top, #97abff, #798ce5, #5b6ecb, #3b51b1, #123597);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s;
+    }
+
+    .bg-tundora {
+        background-image: linear-gradient(to left top, #474747, #4a4a4a, #4c4d4d, #4f5050, #525352);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background .3s;
+    }
+}
+
+.carousel-item {
+    margin-right: 0;
+}
