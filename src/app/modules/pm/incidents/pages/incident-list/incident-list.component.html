@@ -5,6 +5,52 @@
                 <!-- Card header -->
                 <div class="card-header pl-0 pr-0 border-bottom">
                     <h4 class="main-title mt-2"><span>{{'incidents.title' | translate}}</span></h4>
+                    <!-- Filter buttons -->
+                    <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex btn-filters">
+                        <div class="pr-0">
+                            <div class="btn-group mr-2 mb-2">
+                                <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
+                                <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="selected" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="pl-lg-0">
+                            <button (click)="filterByStatus(1, incidentFilterKey)" [ngClass]="{'active': statusfilterId==1}" class="btn btn-raised open" type="button">
+                                <p>{{'common.status.open' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.open || countStatus.re_open; else elseCondition2;">{{countStatus.open + countStatus.re_open}}</ng-container>
+                                    <ng-template #elseCondition2>0</ng-template>
+                                </span>
+                            </button>
+                            <button (click)="filterByStatus(2, incidentFilterKey)" [ngClass]="{'active': statusfilterId ==2}" class="btn btn-raised assigned" type="button">
+                                <p>{{'common.status.assigned' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.assigned; else elseCondition3;">{{countStatus.assigned}}</ng-container>
+                                    <ng-template #elseCondition3>0</ng-template>
+                                </span>
+                            </button>
+                            <button (click)="filterByStatus(3, incidentFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised in_progress" type="button">
+                                <p>{{'common.status.in_progress' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.in_progress; else elseCondition4;">{{countStatus.in_progress}}</ng-container>
+                                    <ng-template #elseCondition4>0</ng-template>
+                                </span>
+                            </button>
+                            <button (click)="filterByStatus(4, incidentFilterKey)" [ngClass]="{'active': statusfilterId==4}" class="btn btn-raised solved" type="button">
+                                <p>{{'common.status.solved' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.solved || countStatus.deferred || countStatus.closed; else elseCondition5;">{{countStatus.solved + countStatus.deferred + countStatus.closed}}</ng-container>
+                                    <ng-template #elseCondition5>0</ng-template>
+                                </span>
+                            </button>
+                            <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/incidents', 0, incidentFilterKey]" class="btn btn-raised  btn-secondary" type="button">
+                                <p>{{'common.status.total' | translate}}</p>
+                                <span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.all; else elseCondition1;">{{countStatus.all}}</ng-container>
+                                    <ng-template #elseCondition1>0</ng-template>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-buttons">
                         <a [routerLink]="['/incidents/kanban']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
                         <a *ngxPermissionsOnly="['admin', 'super_admin', 'incidents_create']" [routerLink]="['/incidents/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
@@ -14,52 +60,6 @@
                 <div class="card-content pt-3">
                     <!-- Card body -->
                     <div class="card-body">
-                        <!-- Filter buttons -->
-                        <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex btn-filters mb-3">
-                            <div class="pr-0">
-                                <div class="btn-group mr-2 mb-2">
-                                    <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
-                                    <label (click)="filterByStatus(statusfilterId, incidentFilterKey)" [(ngModel)]="incidentFilterKey" btnRadio="selected" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.my' | translate}}</label>
-                                </div>
-                            </div>
-                            <div class="pl-lg-0">
-                                <button (click)="filterByStatus(1, incidentFilterKey)" [ngClass]="{'active': statusfilterId==1}" class="btn btn-raised open" type="button">
-                                    <p>{{'common.status.open' | translate}}</p>
-                                    <span class="badge badge-light">
-                                        <ng-container *ngIf="countStatus.open || countStatus.re_open; else elseCondition2;">{{countStatus.open + countStatus.re_open}}</ng-container>
-                                        <ng-template #elseCondition2>0</ng-template>
-                                    </span>
-                                </button>
-                                <button (click)="filterByStatus(2, incidentFilterKey)" [ngClass]="{'active': statusfilterId ==2}" class="btn btn-raised assigned" type="button">
-                                    <p>{{'common.status.assigned' | translate}}</p>
-                                    <span class="badge badge-light">
-                                        <ng-container *ngIf="countStatus.assigned; else elseCondition3;">{{countStatus.assigned}}</ng-container>
-                                        <ng-template #elseCondition3>0</ng-template>
-                                    </span>
-                                </button>
-                                <button (click)="filterByStatus(3, incidentFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised in_progress" type="button">
-                                    <p>{{'common.status.in_progress' | translate}}</p>
-                                    <span class="badge badge-light">
-                                        <ng-container *ngIf="countStatus.in_progress; else elseCondition4;">{{countStatus.in_progress}}</ng-container>
-                                        <ng-template #elseCondition4>0</ng-template>
-                                    </span>
-                                </button>
-                                <button (click)="filterByStatus(4, incidentFilterKey)" [ngClass]="{'active': statusfilterId==4}" class="btn btn-raised solved" type="button">
-                                    <p>{{'common.status.solved' | translate}}</p>
-                                    <span class="badge badge-light">
-                                        <ng-container *ngIf="countStatus.solved || countStatus.deferred || countStatus.closed; else elseCondition5;">{{countStatus.solved + countStatus.deferred + countStatus.closed}}</ng-container>
-                                        <ng-template #elseCondition5>0</ng-template>
-                                    </span>
-                                </button>
-                                <button [ngClass]="{'active': statusfilterId ==0}" [routerLink]="['/incidents', 0, incidentFilterKey]" class="btn btn-raised  btn-secondary" type="button">
-                                    <p>{{'common.status.total' | translate}}</p>
-                                    <span class="badge badge-light">
-                                        <ng-container *ngIf="countStatus.all; else elseCondition1;">{{countStatus.all}}</ng-container>
-                                        <ng-template #elseCondition1>0</ng-template>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
                         <!-- Incident list datatable -->
                         <div class="row">
                             <div class="col-sm-12">

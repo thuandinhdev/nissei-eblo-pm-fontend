@@ -53,11 +53,11 @@
                                     <app-theme-settings *ngIf="getActiveSettingTab('9')" [settings]="settings"></app-theme-settings>
                                 </tab>
                             </ng-container>
-                            <!-- <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_view']">
+                            <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'dashboardsettings_view']">
                                 <tab heading="{{'settings.dashboard_settings.title' | translate}}" id="10" (selectTab)="setSettingTab($event)">
                                     <app-dashboard-settings [settings]="settings" *ngIf="getActiveSettingTab('10')"></app-dashboard-settings>
                                 </tab>
-                            </ng-container> -->
+                            </ng-container>
                             <ng-container *ngxPermissionsOnly="['admin', 'super_admin', 'backupdatabase_view']">
                                 <tab (selectTab)="setSettingTab($event)" heading="{{'settings.database_backups.title' | translate}}" id="11">
                                     <app-database-backup *ngIf="getActiveSettingTab('11')"></app-database-backup>

@@ -3795,6 +3795,8 @@
 			"last_name": "họ",
 			"photo": "hình chụp",
 			"status": "Trạng thái",
+            "email": "E-mail",
+            "login_status": "Trạng thái đăng nhập",
 			"username": "Tên đăng nhập"
 		},
 		"create": {

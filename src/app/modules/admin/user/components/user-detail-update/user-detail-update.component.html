@@ -50,7 +50,7 @@
                                 <ng-template #elseBlock3>{{user.username}}</ng-template>
                             </div>
                         </div>
-                        <div *ngIf="user.is_client == 0" class="col-lg-4 col-md-6 mb-3">
+                        <!-- <div *ngIf="user.is_client == 0" class="col-lg-4 col-md-6 mb-3">
                             <label>{{'users.create.fields.primary_manager' | translate}}</label>
                             <div class="detail-inline">
                                 <ng-container *ngIf="permission; else elseBlock15">
@@ -86,9 +86,27 @@
                                     {{user.joining_date | dateTimeFormatFilter: loginUser.settings.date_format}}
                                 </ng-template>
                             </div>
+                        </div> -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <label>{{'users.create.fields.language' | translate}}</label>
+                            <div class="detail-inline">
+                                <ng-container *ngIf="permission; else elseBlock11">
+                                    <inline-edit-select (updateValue)="saveUserDetail('language', $event);" [elementFor]="'users.inline_edit.language' | translate" [isRequired]="'false'" [name]="'language'" [options]="languages" [selectedValue]="user.language" [txtField]="'language'"></inline-edit-select>
+                                </ng-container>
+                                <ng-template #elseBlock11>
+                                    <ng-container *ngFor="let language of languages">
+                                        <span *ngIf="user.language == language.value">{{language.label}}</span>
+                                    </ng-container>
+                                </ng-template>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <label>{{'users.create.fields.email' | translate}}</label>
+                            <div class="detail-inline">{{user.email}}</div>
                         </div>
                     </div>
-                    <h4 class="main-title mt-2"><span>{{'users.headings.head1' | translate}}</span></h4>
+                    <!-- <h4 class="main-title mt-2"><span>{{'users.headings.head1' | translate}}</span></h4>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-3">
                             <label>{{'users.create.fields.father_name' | translate}}</label>
@@ -158,8 +176,8 @@
                                 </ng-template>
                             </div>
                         </div>
-                    </div>
-                    <h4 class="main-title mt-2"><span>{{'users.headings.head4' | translate}}</span></h4>
+                    </div> -->
+                    <!-- <h4 class="main-title mt-2"><span>{{'users.headings.head4' | translate}}</span></h4>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-3">
                             <label>{{'users.create.fields.email' | translate}}</label>
@@ -241,7 +259,7 @@
                                 <ng-template #elseBlock12>{{user.postal_code}}</ng-template>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>

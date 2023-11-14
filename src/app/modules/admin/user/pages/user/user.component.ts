@@ -80,42 +80,42 @@ export class UserComponent implements OnInit {
             pageLength: that.loginUser.settings.tables_pagination_limit,
             serverSide: true,
             processing: true,
-            order: [1, 'asc'],
+            // order: [1, 'asc'],
             dom: '<"html5buttons"B>ltfrtip',
-            columns: [
-                {
-                    'sortable': false,
-                    'width': '1%',
-                    'target': [0]
-                },
-                {
-                    'sortable': true,
-                    'target': [1]
-                },
-                {
-                    'sortable': true,
-                    'target': [2]
-                },
-                {
-                    'sortable': true,
-                    'target': [3]
-                },
-                {
-                    'sortable': true,
-                    'width': '8%',
-                    'target': [4]
-                },
-                {
-                    'sortable': false,
-                    'width': '30%',
-                    'target': [5]
-                },
-                {
-                    'sortable': false,
-                    'width': '5%',
-                    'target': [6]
-                }
-            ],
+            // columns: [
+            //     {
+            //         'sortable': false,
+            //         'width': '1%',
+            //         'target': [0]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [1]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [2]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [3]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '8%',
+            //         'target': [4]
+            //     },
+            //     {
+            //         'sortable': false,
+            //         'width': '30%',
+            //         'target': [5]
+            //     },
+            //     {
+            //         'sortable': false,
+            //         'width': '5%',
+            //         'target': [6]
+            //     }
+            // ],
             buttons: [
                 // {
                 //     extend: 'csv',

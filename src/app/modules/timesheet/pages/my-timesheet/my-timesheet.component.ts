@@ -146,62 +146,62 @@ export class MyTimesheetComponent implements OnInit {
             pagingType: 'full_numbers',
             pageLength: that.loginUser.settings.tables_pagination_limit,
             serverSide: true,
-            order: [0],
+            // order: [0],
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            columns: [
-                {
-                    'sortable': true,
-                    'target': [0]
-                },
-                {
-                    'sortable': false,
-                    'target': [1]
-                },
-                {
-                    'sortable': true,
-                    'target': [2]
-                },
-                {
-                    'sortable': true,
-                    'target': [3]
-                },
-                {
-                    'sortable': true,
-                    'target': [4]
-                },
-                {
-                    'sortable': true,
-                    'target': [5]
-                },
-                {
-                    'sortable': false,
-                    'target': [6]
-                }
-            ],
+            // columns: [
+            //     {
+            //         'sortable': true,
+            //         'target': [0]
+            //     },
+            //     {
+            //         'sortable': false,
+            //         'target': [1]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [2]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [3]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [4]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [5]
+            //     },
+            //     {
+            //         'sortable': false,
+            //         'target': [6]
+            //     }
+            // ],
             buttons: [
-                {
-                    extend: 'csv',
-                    title: this.translate.instant('timesheet.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    }
-                }, {
-                    extend: 'excel',
-                    title: this.translate.instant('timesheet.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('xlsx');
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: this.translate.instant('timesheet.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('pdf');
-                    }
-                }
+                // {
+                //     extend: 'csv',
+                //     title: this.translate.instant('timesheet.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('csv');
+                //     }
+                // }, {
+                //     extend: 'excel',
+                //     title: this.translate.instant('timesheet.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('xlsx');
+                //     }
+                // }, {
+                //     extend: 'pdf',
+                //     title: this.translate.instant('timesheet.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('pdf');
+                //     }
+                // }
             ],
             language: {
                 'sEmptyTable': this.translate.instant('common.datatable.sEmptyTable'),

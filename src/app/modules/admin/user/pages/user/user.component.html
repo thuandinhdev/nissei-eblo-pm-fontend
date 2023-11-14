@@ -21,6 +21,8 @@
                                     <th>{{'users.columns.first_name' | translate}}</th>
                                     <th>{{'users.columns.last_name' | translate}}</th>
                                     <th>{{'users.columns.username' | translate}}</th>
+                                    <th>{{'users.columns.email' | translate}}</th>
+                                    <th>{{'users.columns.login_status' | translate}}</th>
                                     <th>{{'users.columns.status' | translate}}</th>
                                     <th>{{'users.columns.departments_roles' | translate}}</th>
                                     <th>{{'users.columns.actions' | translate}}</th>
@@ -48,6 +50,17 @@
                                     </td>
                                     <td>
                                         <a [routerLink]="['profile', user.id]" tooltip="{{'common.view' | translate}}">{{user.username}}</a>
+                                    </td>
+                                    <td>
+                                        <span>{{user.email}}</span>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="user.online_status; else elseBlock">
+                                            <i class="fa fa-circle text-success"></i>&nbsp;{{ 'common.online' | translate }}
+                                        </ng-container>
+                                        <ng-template #elseBlock>
+                                            <i class="fa fa-circle text-danger"></i>&nbsp;{{ 'common.offline' | translate }}
+                                        </ng-template>
                                     </td>
                                     <td class="text-center">
                                         <ng-container *ngIf="user.department_role_perm.isEditable && user.id != 1; else elseBlock3">
@@ -87,7 +100,7 @@
                                 </tbody>
                                 <tfoot *ngIf="users?.length == 0" class="tfoot_dt">
                                 <tr>
-                                    <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                    <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
                                 </tr>
                                 </tfoot>
                             </table>

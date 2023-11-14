@@ -93,7 +93,7 @@ export class DefectListComponent implements OnInit {
             serverSide: true,
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [0],
+            // order: [0],
             columns: [
                 {
                     'sortable': true,
@@ -141,28 +141,28 @@ export class DefectListComponent implements OnInit {
                 }
             ],
             buttons: [
-                {
-                    extend: 'csv',
-                    title: this.translate.instant('defects.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    }
-                }, {
-                    extend: 'excel',
-                    title: this.translate.instant('defects.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('xlsx');
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: this.translate.instant('defects.title'),
-                    className: 'btn btn-datatable-gredient',
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('pdf');
-                    }
-                }
+                // {
+                //     extend: 'csv',
+                //     title: this.translate.instant('defects.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('csv');
+                //     }
+                // }, {
+                //     extend: 'excel',
+                //     title: this.translate.instant('defects.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('xlsx');
+                //     }
+                // }, {
+                //     extend: 'pdf',
+                //     title: this.translate.instant('defects.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('pdf');
+                //     }
+                // }
             ],
             language: {
                 'sEmptyTable': this.translate.instant('common.datatable.sEmptyTable'),

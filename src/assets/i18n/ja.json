@@ -3795,6 +3795,8 @@
 			"last_name": "苗字",
 			"photo": "写真",
 			"status": "状態",
+            "email": "Eメール",
+            "login_status": "ログイン状態",
 			"username": "ユーザー名"
 		},
 		"create": {

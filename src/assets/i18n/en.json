@@ -3854,6 +3854,8 @@
 			"last_name": "Last Name",
 			"photo": "Photo",
 			"status": "Status",
+            "email": "Email",
+            "login_status": "Login status",
 			"username": "Username"
 		},
 		"create": {

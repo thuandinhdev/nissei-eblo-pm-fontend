@@ -52,7 +52,7 @@ export class UserActivitiesComponent implements OnInit {
             serverSide: true,
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [0],
+            // order: [0],
             columns: [{
                 'sortable': true,
                 'width': '18%',
@@ -67,28 +67,30 @@ export class UserActivitiesComponent implements OnInit {
                 'target': [3]
             }
             ],
-            buttons: [{
-                extend: 'csv',
-                title: this.translate.instant('activities.title'),
-                className: 'btn btn-datatable-gredient',
-                action: function (e, dt, node, config) {
-                    that.exportFiles('csv');
-                }
-            }, {
-                extend: 'excel',
-                title: this.translate.instant('activities.title'),
-                className: 'btn btn-datatable-gredient',
-                action: function (e, dt, node, config) {
-                    that.exportFiles('xlsx');
-                }
-            }, {
-                extend: 'pdf',
-                title: this.translate.instant('activities.title'),
-                className: 'btn btn-datatable-gredient',
-                action: function (e, dt, node, config) {
-                    that.exportFiles('pdf');
-                }
-            }],
+            buttons: [
+                // {
+                //     extend: 'csv',
+                //     title: this.translate.instant('activities.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('csv');
+                //     }
+                // }, {
+                //     extend: 'excel',
+                //     title: this.translate.instant('activities.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('xlsx');
+                //     }
+                // }, {
+                //     extend: 'pdf',
+                //     title: this.translate.instant('activities.title'),
+                //     className: 'btn btn-datatable-gredient',
+                //     action: function (e, dt, node, config) {
+                //         that.exportFiles('pdf');
+                //     }
+                // }
+            ],
             language: {
                 'sEmptyTable': this.translate.instant('common.datatable.sEmptyTable'),
                 'sInfo': this.translate.instant('common.datatable.sInfo'),
