@@ -266,11 +266,11 @@ export class ProjectEditComponent implements OnInit {
     getProjectById(projectId) {
         this.projectService.getById(projectId).subscribe(data => {
             this.project = data;
-            let projectAllVersion = this.project.project_version;
-            let lastIndex = projectAllVersion.lastIndexOf(',');
-            this.oldVersion = projectAllVersion.substring(0, lastIndex);
-            this.currentVersion = projectAllVersion.substring(lastIndex + 1);
-            this.project.project_version = this.currentVersion;
+            // let projectAllVersion = this.project.project_version;
+            // let lastIndex = projectAllVersion.lastIndexOf(',');
+            // this.oldVersion = projectAllVersion.substring(0, lastIndex);
+            // this.currentVersion = projectAllVersion.substring(lastIndex + 1);
+            // this.project.project_version = this.currentVersion;
             this.loadProjectForms();
 
             setTimeout(() => {

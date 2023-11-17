@@ -96,52 +96,52 @@ export class TaskListComponent implements OnInit {
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
             // order: [0],
-            columns: [
-                {
-                    'sortable': true,
-                    'width': '7%',
-                    'target': [0]
-                },
-                {
-                    'sortable': true,
-                    'target': [1]
-                },
-                {
-                    'sortable': true,
-                    'width': '8%',
-                    'target': [2]
-                },
-                {
-                    'sortable': true,
-                    'width': '8%',
-                    'target': [3]
-                },
-                {
-                    'sortable': true,
-                    'width': '8%',
-                    'target': [4]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [5]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [6]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [7]
-                },
-                {
-                    'sortable': false,
-                    'width': '5%',
-                    'target': [8]
-                }
-            ],
+            // columns: [
+            //     {
+            //         'sortable': true,
+            //         'width': '7%',
+            //         'target': [0]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'target': [1]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '8%',
+            //         'target': [2]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '8%',
+            //         'target': [3]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '8%',
+            //         'target': [4]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '10%',
+            //         'target': [5]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '10%',
+            //         'target': [6]
+            //     },
+            //     {
+            //         'sortable': true,
+            //         'width': '10%',
+            //         'target': [7]
+            //     },
+            //     {
+            //         'sortable': false,
+            //         'width': '5%',
+            //         'target': [8]
+            //     }
+            // ],
             buttons: [
                 // {
                 //     extend: 'csv',
@@ -263,19 +263,44 @@ export class TaskListComponent implements OnInit {
             return false;
         }
     }
+    changeTaskStatus(taskID: any, status: any, index: any) {
+        Swal.fire({
+            title: this.translate.instant('common.swal.title'),
+            // text: this.translate.instant('common.swal.text'),
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: this.translate.instant('common.swal.confirmText'),
+            cancelButtonText: this.translate.instant('common.swal.cancel')
+        }).then((result) => {
+            if (result.value) {
+                // this.tasks[index].status = status.id;
+                let changeTask = {
+                    id: taskID,
+                    status: status.id
+                };
+                this.taskService.changeStatus(changeTask)
+                    .subscribe(
+                        data => {
+                            this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
+                            this.rerender();
+                        });
+            } else {
 
-    changeTaskStatus(taskID: any, status: any) {
-        let changeTask = {
-            id: taskID,
-            status: status.id
-        };
-        this.taskService.changeStatus(changeTask)
-            .subscribe(
-                data => {
-                    this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
-                    this.rerender();
-                });
+            }
+        });
     }
+    // changeTaskStatus(taskID: any, status: any) {
+    //     let changeTask = {
+    //         id: taskID,
+    //         status: status.id
+    //     };
+    //     this.taskService.changeStatus(changeTask)
+    //         .subscribe(
+    //             data => {
+    //                 this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
+    //                 this.rerender();
+    //             });
+    // }
 
     filterByStatus(statusID, taskFilterKey) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;

@@ -28,8 +28,8 @@
                                 </span>
                             </button>
                             <button (click)="filterByStatus(6, taskFilterKey)" [ngClass]="{'active': statusfilterId==3}" class="btn btn-raised completed" type="button">
-                                <p>{{'common.status.completed' | translate}}</p><span class="badge badge-light">
-                                    <ng-container *ngIf="countStatus.completed; else elseCondition4;">{{countStatus.completed}}</ng-container>
+                                <p>{{'common.status.finish' | translate}}</p><span class="badge badge-light">
+                                    <ng-container *ngIf="countStatus.finish; else elseCondition4;">{{countStatus.finish}}</ng-container>
                                     <ng-template #elseCondition4>0</ng-template>
                                 </span>
                             </button>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="card-buttons">
-                        <a [routerLink]="['/taskboard']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
+                        <!-- <a [routerLink]="['/taskboard']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a> -->
 <!--
                         <a *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" class="btn btn-create mb-0" download="import_tasks.csv" href="{{ apiUrl }}/csv/import_tasks.csv" placement="top" tooltip="{{'common.tooltip.task_csv_sample' | translate}}"><i class="fa fa-files-o"></i></a>
                         <button (click)="openTaskImportModal()" *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" class="btn btn-create mb-0" tooltip="{{'common.import' | translate}}">
@@ -68,7 +68,7 @@
                                             <th>{{'tasks.columns.end_date' | translate}}</th>
                                             <th>{{'tasks.columns.hours' | translate}}</th>
                                             <th>{{'tasks.columns.assigned' | translate}}</th>
-                                            <th>{{'tasks.columns.priority' | translate}}</th>
+                                            <!-- <th>{{'tasks.columns.priority' | translate}}</th> -->
                                             <th>{{'tasks.columns.status' | translate}}</th>
                                             <th>{{'tasks.columns.actions' | translate}}</th>
                                         </tr>
@@ -100,13 +100,13 @@
                                                     </a>
                                                 </ng-template>
                                             </td>
-                                            <td class="budges-status">
+                                            <!-- <td class="budges-status">
                                                 <ng-container *ngFor="let priority of ('tasks.priorities' | translate)">
                                                     <div class="budges-status">
                                                         <span *ngIf="priority.id == task.priority" class="{{priority.class}}">{{priority.label}}</span>
                                                     </div>
                                                 </ng-container>
-                                            </td>
+                                            </td> -->
                                             <td class="status-dropdown">
                                                 <div class="overdue-td">
                                                     <ng-container *ngIf="getCheckPermission(task); else elseBlock2">
@@ -115,7 +115,7 @@
                                                             </button>
                                                             <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
                                                                 <li *ngFor="let status of (getTaskStatus(task.status) | translate)" role="menuitem">
-                                                                    <a (click)="changeTaskStatus([task.id], status);task.status = status.id" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                    <a (click)="changeTaskStatus([task.id], status, i);" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -153,7 +153,7 @@
                                         </tbody>
                                         <tfoot *ngIf="tasks?.length == 0" class="tfoot_dt">
                                         <tr>
-                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            <td class="no-data-available text-center" colspan="8">{{'common.datatable.sEmptyTable' | translate}}</td>
                                         </tr>
                                         </tfoot>
                                     </table>

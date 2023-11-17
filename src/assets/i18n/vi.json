@@ -707,7 +707,11 @@
 			"total": "toàn bộ",
 			"unpaid": "Chưa thanh toán",
 			"unpublished": "Chưa được công bố",
-			"waiting": "Đang chờ đợi"
+			"waiting": "Đang chờ đợi",
+            "done": "Done",
+			"fixes": "Fixes",
+			"request-to-japan": "Request to japan",
+			"finish": "Finish"
 		},
 		"submit": "Gửi đi",
 		"swal": {
@@ -718,7 +722,9 @@
 			"text2": "Bạn sẽ không thể khôi phục người dùng này !. Trước khi xóa, hãy đảm bảo rằng bạn đã xóa người dùng khỏi nhóm, dự án, nhiệm vụ, lỗi và sự cố, v.v.",
 			"text3": "Bạn sẽ không thể khôi phục ứng dụng khách này !. Trước khi xóa, hãy đảm bảo rằng bạn đã xóa khách hàng khỏi nhóm, dự án, nhiệm vụ, lỗi và sự cố, v.v.",
 			"text4": "Bạn sẽ không thể khôi phục dự án này !. Trước khi xóa, hãy đảm bảo rằng bạn đã xóa tất cả các nhiệm vụ, lỗi và sự cố liên quan đến dự án này.",
-			"title": "Bạn có chắc không?"
+			"cancel": "Cancel",
+			"confirmText": "Yes",
+            "title": "Bạn có chắc không?"
 		},
 		"switch_to_calendar": "Chuyển sang Lịch",
 		"switch_to_kanban": "Chuyển sang Kanban",
@@ -3407,19 +3413,34 @@
 				"label": "Đang chờ"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "Đang chờ đợi"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "Hủy bỏ"
 			},
 			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
 				"class": "completed",
 				"id": 6,
 				"label": "Đã hoàn thành"
+			},
+            {
+				"class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"status1": [
@@ -3451,19 +3472,14 @@
 				"label": "Đang chờ"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "Đang chờ đợi"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "Hủy bỏ"
 			},
 			{
-				"class": "completed",
-				"id": 6,
-				"label": "Đã hoàn thành"
+				"class": "done",
+				"id": 9,
+				"label": "Done"
 			}
 		],
 		"status3": [
@@ -3513,25 +3529,73 @@
 			}
 		],
 		"status6": [
-			{
-				"class": "open",
-				"id": 1,
-				"label": "Mở"
-			},
-			{
-				"class": "in_progress",
-				"id": 2,
-				"label": "Trong tiến trình"
-			},
-			{
-				"class": "cancel",
-				"id": 5,
-				"label": "Hủy bỏ"
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
 			},
 			{
 				"class": "completed",
 				"id": 6,
-				"label": "Đã hoàn thành"
+				"label": "Completed"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			}
+		],
+        "status8": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			}
+		],
+        "status9": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
+				"class": "completed",
+				"id": 6,
+				"label": "Completed"
+			}
+		],
+        "status10": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
+			}
+		],
+        "status11": [
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"title": "Nhiệm vụ",

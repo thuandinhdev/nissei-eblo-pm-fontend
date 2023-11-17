@@ -293,14 +293,14 @@ export class UserComponent implements OnInit {
             };
         } else {
             if (userPermissions == 'all') {
-                for (let iRow in this.assignUserPermissions) {
-                    if (this.assignUserPermissions[iRow].id == this.loginUser.id) {
-                        allowedPermission = {
-                            isEditable: true,
-                            isDeletable: true
-                        };
-                    }
-                }
+                // for (let iRow in this.assignUserPermissions) {
+                //     if (this.assignUserPermissions[iRow].id == this.loginUser.id) {
+                //         allowedPermission = {
+                //             isEditable: true,
+                //             isDeletable: true
+                //         };
+                //     }
+                // }
             } else {
                 let loginUserPermissions = JSON.parse(userPermissions);
 

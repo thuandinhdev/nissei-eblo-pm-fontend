@@ -724,6 +724,28 @@ figure.effect-marley {
                 }
             }
 
+            &.done {
+                &::before {
+                    background: #497d04;
+                }
+            }
+
+            &.fixes {
+                &::before {
+                    background: #ff6347;
+                }
+            }
+
+            &.request-to-japan {
+                &::before {
+                    background: #0095be;
+                }
+            }
+            &.finish {
+                &::before {
+                    background: #998983;
+                }
+            }
         }
     }
 }

@@ -754,7 +754,11 @@
 			"total": "Total",
 			"unpaid": "Unpaid",
 			"unpublished": "Unpublished",
-			"waiting": "Waiting"
+			"waiting": "Waiting",
+			"done": "Done",
+			"fixes": "Fixes",
+			"request-to-japan": "Request to japan",
+			"finish": "Finish"
 		},
 		"submit": "Submit",
 		"swal": {
@@ -3466,19 +3470,34 @@
 				"label": "On Hold"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "Waiting"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "Cancel"
 			},
 			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
 				"class": "completed",
 				"id": 6,
 				"label": "Completed"
+			},
+			{
+				"class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"status1": [
@@ -3510,19 +3529,14 @@
 				"label": "On Hold"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "Waiting"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "Cancel"
 			},
 			{
-				"class": "completed",
-				"id": 6,
-				"label": "Completed"
+				"class": "done",
+				"id": 9,
+				"label": "Done"
 			}
 		],
 		"status3": [
@@ -3572,25 +3586,73 @@
 			}
 		],
 		"status6": [
-			{
-				"class": "open",
-				"id": 1,
-				"label": "Open"
-			},
-			{
-				"class": "in_progress",
-				"id": 2,
-				"label": "In Progress"
-			},
-			{
-				"class": "cancel",
-				"id": 5,
-				"label": "Cancel"
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
 			},
 			{
 				"class": "completed",
 				"id": 6,
 				"label": "Completed"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			}
+		],
+        "status8": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			}
+		],
+        "status9": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
+				"class": "completed",
+				"id": 6,
+				"label": "Completed"
+			}
+		],
+        "status10": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
+			}
+		],
+        "status11": [
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"title": "Tasks",

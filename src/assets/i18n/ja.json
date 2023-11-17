@@ -707,7 +707,11 @@
 			"total": "合計",
 			"unpaid": "未払い",
 			"unpublished": "未公開",
-			"waiting": "待っている"
+			"waiting": "待っている",
+            "done": "Done",
+			"fixes": "Fixes",
+			"request-to-japan": "Request to japan",
+			"finish": "Finish"
 		},
 		"submit": "提出する",
 		"swal": {
@@ -718,7 +722,9 @@
 			"text2": "このユーザーを回復することはできません！。削除する前に、チーム、プロジェクト、タスク、障害、インシデントなどからユーザーを削除していることを確認してください。",
 			"text3": "このクライアントを回復することはできません！。削除する前に、チーム、プロジェクト、タスク、不具合、インシデントなどからクライアントを削除していることを確認してください。",
 			"text4": "このプロジェクトを復元することはできません！。削除する前に、このプロジェクトに関連するすべてのタスク、障害、およびインシデントが削除されていることを確認してください。",
-			"title": "本気ですか？"
+			"title": "本気ですか？",
+            "cancel": "Cancel",
+			"confirmText": "Yes"
 		},
 		"switch_to_calendar": "カレンダーに切り替え",
 		"switch_to_kanban": "かんばんに切り替え",
@@ -3407,19 +3413,34 @@
 				"label": "保留"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "待っている"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "キャンセル"
 			},
 			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
 				"class": "completed",
 				"id": 6,
 				"label": "完了しました"
+			},
+            {
+				"class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"status1": [
@@ -3451,19 +3472,14 @@
 				"label": "保留"
 			},
 			{
-				"class": "waiting",
-				"id": 4,
-				"label": "待っている"
-			},
-			{
 				"class": "cancel",
 				"id": 5,
 				"label": "キャンセル"
 			},
 			{
-				"class": "completed",
-				"id": 6,
-				"label": "完了しました"
+				"class": "done",
+				"id": 9,
+				"label": "Done"
 			}
 		],
 		"status3": [
@@ -3514,24 +3530,72 @@
 		],
 		"status6": [
 			{
-				"class": "open",
-				"id": 1,
-				"label": "開いた"
-			},
-			{
-				"class": "in_progress",
-				"id": 2,
-				"label": "進行中"
-			},
-			{
-				"class": "cancel",
-				"id": 5,
-				"label": "キャンセル"
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
 			},
 			{
 				"class": "completed",
 				"id": 6,
 				"label": "完了しました"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			}
+		],
+        "status8": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+			{
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			}
+		],
+        "status9": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "done",
+				"id": 9,
+				"label": "Done"
+			},
+			{
+				"class": "completed",
+				"id": 6,
+				"label": "Completed"
+			}
+		],
+        "status10": [
+            {
+                "class": "fixes",
+				"id": 8,
+				"label": "Fixes"
+			},
+            {
+				"class": "request-to-japan",
+				"id": 10,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
+			}
+		],
+        "status11": [
+			{
+				"class": "finish",
+				"id": 11,
+				"label": "Finish"
 			}
 		],
 		"title": "タスク",

@@ -28,6 +28,10 @@ task_status_key_value[3] = 'common.status.on_hold';
 task_status_key_value[4] = 'common.status.waiting';
 task_status_key_value[5] = 'common.status.cancel';
 task_status_key_value[6] = 'common.status.completed';
+task_status_key_value[8] = 'common.status.fixes';
+task_status_key_value[9] = 'common.status.done';
+task_status_key_value[10] = 'common.status.request-to-japan';
+task_status_key_value[11] = 'common.status.finish';
 
 export const task_status_key_class = [];
 task_status_key_class[1] = 'open';
