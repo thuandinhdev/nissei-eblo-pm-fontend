@@ -37,7 +37,7 @@
 		background: #1cbcd8;
 		border: 1px solid #1cbcd8;
 	}
-	.not_started {
+	.not_started, .request-to-japan {
 		background: #00bbd9;
 		border: 1px solid #00bbd9;
 	}
@@ -49,11 +49,11 @@
 		background: #9a9a9a;
 		border: 1px solid #9a9a9a;
 	}
-	.completed, .paid, .successful, .approved, .accepted {
+	.finish, .completed, .paid, .successful, .approved, .accepted {
 		background: #2ecc71;
 		border: 1px solid #2ecc71;
 	}
-	.cancel, .unpaid, .failed, .rejected, .declined {
+	.cancel, .unpaid, .failed, .rejected, .declined, .fixes {
 		background: #e74a25;
 		border: 1px solid #e74a25;
 	}
@@ -61,7 +61,7 @@
 		background: #e46a76;
 		border: 1px solid #e46a76;
 	}
-	.solved, .proposition {
+	.done, .solved, .proposition {
 		background: #78e316;
 		border: 1px solid #78e316;
 	}

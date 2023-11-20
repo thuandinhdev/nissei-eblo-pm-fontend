@@ -252,18 +252,105 @@ export class TaskListComponent implements OnInit {
         this.exportAsService.save(this.exportAsConfig, this.translate.instant('tasks.title')).subscribe(() => {
         });
     }
+    checkPermissionTaskStatusDropdown(statusValue){
+        let resp = true;
+        switch (statusValue) {
+            case 6:
+                switch (this.loginUser.roles[0]) {
+                    case "staff":
+                        resp = false
+                        break;
+                    case "leader":
+                    case "itcomtor":
+                        resp = true;
+                        break;
+                }
+                break;
+            case 10:
+            case 11:
+                switch (this.loginUser.roles[0]) {
+                    case "staff":
+                    case "leader":
+                        resp = false
+                        break;
+                    case "itcomtor":
+                        resp = true;
+                        break;
+                }
+                break;
+        }
+        return resp;
+    }
+    checkPermissionTaskStatus(task){
+        let resp = false;
+        switch (task.status) {
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 8:
+            case 9:
+                switch (this.loginUser.roles[0]) {
+                    case "staff":
+                    case "leader":
+                        if(task.assign_to == this.loginUser.id || task.created_by == this.loginUser.id){
+                            resp = true;
+                        }
+                        break;
+                    case "itcomtor":
+                        resp = false;
+                        break;
+                }
+                break;
+            case 6:
+                switch (this.loginUser.roles[0]) {
+                    case "staff":
+                        resp = false;
+                        break;
+                    case "leader":
+                        if(task.assign_to == this.loginUser.id || task.created_by == this.loginUser.id){
+                            resp = true;
+                        }
+                        break;
+                    case "itcomtor":
+                        resp = true;
+                        break;
+                }
+                break;
+            case 10:
+            case 11:
+                switch (this.loginUser.roles[0]) {
+                    case "staff":
+                        resp = false;
+                        break;
+                    case "leader":
+                        resp = false;
+                        break;
+                    case "itcomtor":
+                        resp = true;
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        if(this.loginUser.is_super_admin || this.loginUser.roles[0] == 'admin') {
+            resp = true;
+        }
+        return resp;
+    }
 
     getCheckPermission(task) {
         let role = this.ngxRolesService.getRole('admin');
         if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
             return true;
-        } else if (task.assign_to == this.loginUser.id || task.created_by == this.loginUser.id) {
+        } else if (task.created_by == this.loginUser.id) {
             return true;
         } else {
             return false;
         }
     }
-    changeTaskStatus(taskID: any, status: any, index: any) {
+    changeTaskStatus(taskID: any, status: any) {
         Swal.fire({
             title: this.translate.instant('common.swal.title'),
             // text: this.translate.instant('common.swal.text'),
@@ -284,8 +371,6 @@ export class TaskListComponent implements OnInit {
                             this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
                             this.rerender();
                         });
-            } else {
-
             }
         });
     }

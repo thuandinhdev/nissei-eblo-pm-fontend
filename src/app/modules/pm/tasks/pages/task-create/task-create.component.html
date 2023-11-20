@@ -88,16 +88,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h4 class="form-section">
-                                    <i class="ft-trending-up"></i> {{'tasks.headings.head3' | translate}}</h4>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>{{'tasks.create.fields.progress' | translate }}</label>
-                                            <ng5-slider [options]="progressOptions" formControlName="progress"></ng5-slider>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -152,7 +142,7 @@
                                             </ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.status.errors }" class="form-group">
                                             <label for="status">{{'tasks.create.fields.status' | translate }}&nbsp;<span class="text-danger">*</span>
                                             </label>
@@ -161,8 +151,8 @@
                                                 <div *ngIf="taskControl.status.errors.required">{{'tasks.create.error_messages.message11' | translate }}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    </div> -->
+                                    <!-- <div class="col-md-6">
                                         <div [ngClass]="{ 'is-invalid': isFormSubmitted && taskControl.priority.errors }" class="form-group">
                                             <label for="priority">{{'tasks.create.fields.priority' | translate }}&nbsp;<span class="text-danger">*</span></label>
                                             <ng-select [items]="('tasks.priorities' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="priority" labelForId="priority" placeholder="{{'tasks.create.placeholders.placeholder10' | translate }}"></ng-select>
@@ -170,7 +160,7 @@
                                                 <div *ngIf="taskControl.priority.errors.required">{{'tasks.create.error_messages.message12' | translate }}</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="estimated_hours">{{'tasks.create.fields.estimate_hours' | translate }}</label>
@@ -181,6 +171,17 @@
                                             <div *ngIf="isHoursValid" class="invalid-feedback">
                                                 <div *ngIf="isHoursValid">{{'tasks.create.error_messages.message14' | translate }} {{this.project.estimated_hours}}.</div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="form-section">
+                                    <i class="ft-trending-up"></i> {{'tasks.headings.head3' | translate}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>{{'tasks.create.fields.progress' | translate }}</label>
+                                            <ng5-slider [options]="progressOptions" formControlName="progress"></ng5-slider>
                                         </div>
                                     </div>
                                 </div>

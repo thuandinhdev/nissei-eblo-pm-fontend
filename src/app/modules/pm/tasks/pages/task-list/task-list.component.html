@@ -76,7 +76,7 @@
                                         <tbody *ngIf="tasks?.length != 0">
                                         <tr *ngFor="let task of tasks; index as i">
                                             <td>
-                                                <a [routerLink]="['/tasks/detail', task.id]" tooltip="{{'common.view' | translate}}">{{task.generated_id}}</a>
+                                                <a [routerLink]="['/tasks/detail', task.id]" tooltip="{{'common.view' | translate}}"><i class="fa fa-eye"></i>{{task.generated_id}}</a>
                                             </td>
                                             <td>
                                                 <ng-container *ngIf="getCheckPermission(task); else elseBlock1">
@@ -109,16 +109,17 @@
                                             </td> -->
                                             <td class="status-dropdown">
                                                 <div class="overdue-td">
-                                                    <ng-container *ngIf="getCheckPermission(task); else elseBlock2">
+                                                    <ng-container *ngIf="checkPermissionTaskStatus(task); else elseBlock2">
                                                         <div class="btn-group" dropdown>
                                                             <button aria-controls="dropdown-basic" class="btn dropdown-toggle select-btn-lg" dropdownToggle id="button-basic" type="button">{{getTranslateStatus(task.status) | translate}}&nbsp;<span class="caret"></span>
                                                             </button>
                                                             <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
-                                                                <li *ngFor="let status of (getTaskStatus(task.status) | translate)" role="menuitem">
-                                                                    <a (click)="changeTaskStatus([task.id], status, i);" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                <li *ngFor="let status of (getTaskStatus(task.status) | translate)" role="menuitem" >
+                                                                    <a *ngIf="checkPermissionTaskStatusDropdown(status.id)" (click)="changeTaskStatus([task.id], status, i);" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
+
                                                     </ng-container>
                                                     <ng-template #elseBlock2>
                                                         <ng-container *ngFor="let status of (getTaskStatus(task.status) | translate)">
@@ -133,16 +134,16 @@
                                                 </div>
                                             </td>
                                             <td class="actions-dropdown">
-                                                <div class="btn-group" dropdown>
+                                                <div class="btn-group" dropdown *ngIf="getCheckPermission(task)">
                                                     <button aria-controls="dropdown-basic-1" class="dropdown-toggle btn-action" dropdownToggle id="button-basic-1" type="button">
                                                         <i class="fa fa-ellipsis-v"></i></button>
                                                     <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
                                                         <li *ngIf="getCheckPermission(task)" role="menuitem">
                                                             <a [routerLink]="['/tasks/edit', task.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
                                                         </li>
-                                                        <li *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" role="menuitem">
+                                                        <!-- <li *ngxPermissionsOnly="['admin', 'super_admin', 'tasks_create']" role="menuitem">
                                                             <a [routerLink]="['/tasks/copy', task.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.copy' | translate}}"><i class="fa fa-clone"></i></a>
-                                                        </li>
+                                                        </li> -->
                                                         <li *ngIf="getCheckPermission(task)" role="menuitem">
                                                             <a (click)="deleteTask(task.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
                                                         </li>

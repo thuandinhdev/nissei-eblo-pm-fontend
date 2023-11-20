@@ -76,7 +76,7 @@
                                     <td class="budges-status">
                                         <ng-template *ngIf="user.roles?.length == 0;else elseBlock4">-</ng-template>
                                         <ng-template #elseBlock4>
-                                            <span *ngFor="let role of departments[user.id]" [ngClass]="{'cancel': role.role_id == 1, 'completed': role.role_id != 1}">{{role.role_name}} ({{role.department_name}})</span>
+                                            <span *ngFor="let role of departments[user.id]" [ngClass]="{'very_high': role.role_id == 1, 'high': role.role_id == 2, 'medium': role.role_id == 3, 'assigned': role.role_id == 4}">{{role.role_name}}</span>
                                         </ng-template>
                                     </td>
                                     <td class="actions-dropdown">

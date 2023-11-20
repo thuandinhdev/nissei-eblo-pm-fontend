@@ -9,9 +9,9 @@
                             {{task.name}}
                         </p>
                     </div>
-                    <div class=" task-action">
+                    <!-- <div class=" task-action">
                         <a *ngIf="permission" [routerLink]="['/tasks/edit', task.id]" class="btn btn-create mb-2 mb-lg-0 float-right" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-md-12 pr-0 pl-0 ">
@@ -29,10 +29,10 @@
                                                     <label>{{'tasks.create.fields.project_name' | translate}}</label>
                                                     <div class="detail-inline">{{task.project1.project_name}}</div>
                                                 </div>
-                                                <div class="col-lg-12 mb-3">
+                                                <!-- <div class="col-lg-12 mb-3">
                                                     <label>{{'tasks.create.fields.project_version' | translate}}</label>
                                                     <div class="detail-inline">{{task.project_version}}</div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-12 mb-3 d-flex justify-content-between">
                                                     <div>
                                                         <label>{{'tasks.create.fields.status' | translate}}</label>
@@ -43,7 +43,7 @@
                                                                     </button>
                                                                     <ul *dropdownMenu aria-labelledby="button-basic" class="dropdown-menu animated fadeIn" id="dropdown-basic" role="menu">
                                                                         <li *ngFor="let status of (getTaskStatus(task.status) | translate)" role="menuitem">
-                                                                            <a (click)="changeTaskStatus([task.id], status);task.status = status.id" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
+                                                                            <a (click)="changeTaskStatus([task.id], status);" [ngClass]="{'active': task.status == status.id}" class="dropdown-item btn btn-sm {{status.class}}">{{status.label}}</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -57,7 +57,7 @@
                                                             </ng-template>
                                                         </div>
                                                     </div>
-                                                    <div>
+                                                    <!-- <div>
                                                         <label>{{'tasks.create.fields.priority' | translate }}</label>
                                                         <ng-container *ngIf="permission; else elseBlock8">
                                                             <div class="status-dropdown">
@@ -79,7 +79,7 @@
                                                                 </div>
                                                             </ng-container>
                                                         </ng-template>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="col-lg-12 mb-3 d-flex justify-content-between">
                                                     <div class="text-center">

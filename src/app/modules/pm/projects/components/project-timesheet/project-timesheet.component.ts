@@ -59,7 +59,7 @@ export class ProjectTimesheetComponent implements OnInit {
             serverSide: true,
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [3],
+            // order: [3],
             columns: [
                 {
                     'sortable': true,

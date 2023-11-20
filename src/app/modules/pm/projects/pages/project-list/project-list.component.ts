@@ -189,6 +189,9 @@ export class ProjectListComponent implements OnInit {
         }
         // if(project.pivot[action] && !this.loginUser.is_client) {
         if (project.pivot[action]) {
+            if (action == 'edit') {
+                console.log(project);
+            }
             return true;
         } else {
             return false;

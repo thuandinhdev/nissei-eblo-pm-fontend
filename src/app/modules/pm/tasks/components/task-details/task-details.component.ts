@@ -75,15 +75,36 @@ export class TaskDetailsComponent implements OnInit {
     }
 
     changeTaskStatus(taskID: any, status: any) {
-        let changeTask = {
-            id: taskID,
-            status: status.id
-        };
-        this.taskService.changeStatus(changeTask).subscribe(data => {
-            this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
-            this.getTaskById(this.task.id);
+        Swal.fire({
+            title: this.translate.instant('common.swal.title'),
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: this.translate.instant('common.swal.confirmText'),
+            cancelButtonText: this.translate.instant('common.swal.cancel')
+        }).then((result) => {
+            if (result.value) {
+                this.task.status = status.id
+                let changeTask = {
+                    id: taskID,
+                    status: status.id
+                };
+                this.taskService.changeStatus(changeTask).subscribe(data => {
+                    this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
+                    this.getTaskById(this.task.id);
+                });
+            }
         });
     }
+    // changeTaskStatus(taskID: any, status: any) {
+    //     let changeTask = {
+    //         id: taskID,
+    //         status: status.id
+    //     };
+    //     this.taskService.changeStatus(changeTask).subscribe(data => {
+    //         this.toastr.success(this.translate.instant('tasks.messages.status'), this.translate.instant('tasks.title'));
+    //         this.getTaskById(this.task.id);
+    //     });
+    // }
 
     getParseArray(string) {
         return JSON.parse(string);
