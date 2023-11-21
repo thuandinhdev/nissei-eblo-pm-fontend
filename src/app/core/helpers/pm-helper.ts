@@ -51,8 +51,8 @@ task_priority_key_value[5] = 'common.priorities.low';
 // --
 // Defects
 export const defect_status_key_value = [];
-defect_status_key_value[1] = 'common.status.assigned';
-defect_status_key_value[2] = 'common.status.closed';
+defect_status_key_value[1] = 'common.status.open';
+// defect_status_key_value[2] = 'common.status.closed';
 defect_status_key_value[3] = 'common.status.in_progress';
 defect_status_key_value[4] = 'common.status.open';
 defect_status_key_value[5] = 'common.status.solved';

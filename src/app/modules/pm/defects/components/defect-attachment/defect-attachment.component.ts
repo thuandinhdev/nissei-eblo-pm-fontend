@@ -120,3 +120,4 @@ export class DefectAttachmentComponent implements OnInit {
         });
     }
 }
+

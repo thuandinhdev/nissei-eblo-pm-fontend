@@ -16,11 +16,11 @@
 	"Custom Fields": "Custom Fields",
 	"Dashboard": "Dashboard",
 	"Dashboard Settings": "Dashboard Settings",
-	"Defect Assigned": "Defect Assigned",
-	"Defect Attachment": "Defect Attachment",
-	"Defect Comments": "Defect Comments",
-	"Defect Updated": "Defect Updated",
-	"Defects": "Defects",
+	"Defect Assigned": "Requirement Assigned",
+	"Defect Attachment": "Requirement Attachment",
+	"Defect Comments": "Requirement Comments",
+	"Defect Updated": "Requirement Updated",
+	"Defects": "Requirements",
 	"Departments": "Departments",
 	"Email Notifications": "Email Notifications",
 	"Email Settings": "Email Settings",
@@ -262,8 +262,8 @@
 			"title": "Dashboard"
 		},
 		"defects": {
-			"text": "Defects",
-			"title": "Defects"
+			"text": "Requirements",
+			"title": "Requirements"
 		},
 		"departments": {
 			"text": "Departments",
@@ -593,6 +593,7 @@
 		"close": "Close",
 		"comment": "Comment",
 		"copy": "Copy",
+		"copy_to_task": "Copy to Task",
 		"create": "Create",
 		"create_comment": "Create Comment",
 		"created": "Created",
@@ -635,7 +636,7 @@
 			"clients": "There are no any clients.",
 			"custom_fields": "There are no any custom fields.",
 			"database_backups": "There are no any database backups.",
-			"defects": "There are no any defects.",
+			"defects": "There are no any Requirements.",
 			"departments": "There are no any departments.",
 			"estimates": "There are no any estimates.",
 			"file_browser": "There are no any folders / files.",
@@ -766,9 +767,9 @@
 			"confirmButtonText": "Yes, delete it !",
 			"text": "You will not be able to recover this ",
 			"text1": "You will not be able to recover this department!. Before delete, make sure that you have deleted all users related to this department.",
-			"text2": "You will not be able to recover this user!. Before delete, make sure that you have remove user from teams, projects, tasks, defects and incidents etc..",
-			"text3": "You will not be able to recover this client!. Before delete, make sure that you have remove client from teams, projects, tasks, defects and incidents etc..",
-			"text4": "You will not be able to recover this project!. Before delete, make sure that you have deleted all tasks, defects and incidents related to this project.",
+			"text2": "You will not be able to recover this user!. Before delete, make sure that you have remove user from teams, projects, tasks, Requirements and incidents etc..",
+			"text3": "You will not be able to recover this client!. Before delete, make sure that you have remove client from teams, projects, tasks, Requirements and incidents etc..",
+			"text4": "You will not be able to recover this project!. Before delete, make sure that you have deleted all tasks, Requirements and incidents related to this project.",
 			"text5": "Do you want to copy this page?",
 			"cancel": "Cancel",
 			"confirmText": "Yes",
@@ -847,7 +848,7 @@
 			"assigned": "Assigned",
 			"assigned_group": "Assigned Group",
 			"creator": "Creator",
-			"defect_name": "Defect Name",
+			"defect_name": "Requirement Name",
 			"end_date": "End Date",
 			"id": "ID",
 			"project": "Project",
@@ -855,20 +856,21 @@
 			"severity": "Severity",
 			"start_date": "Start Date",
 			"status": "Status",
+            "description": "Description",
 			"type": "Type"
 		},
 		"create": {
 			"error_messages": {
-				"message1": "Please enter an unique and valid defect name.",
+				"message1": "Please enter an unique and valid Requirement name.",
 				"message10": "Drop files here or click to upload.",
 				"message11": "Please select a valid start date.",
 				"message12": "Please select a valid end date.",
 				"message13": "Estimate hours allow only digits, 2 digits after colon(less than 60) without any special characters.",
-				"message2": "Defect name can be max 255 characters long.",
-				"message3": "Please enter an unique and valid defect generated ID.",
-				"message4": "Please select a valid defect type.",
-				"message5": "Please select a valid defect status.",
-				"message6": "Please select a valid defect severity.",
+				"message2": "Requirement name can be max 255 characters long.",
+				"message3": "Please enter an unique and valid Requirement generated ID.",
+				"message4": "Please select a valid Requirement type.",
+				"message5": "Please select a valid Requirement status.",
+				"message6": "Please select a valid Requirement severity.",
 				"message8": "Please select a valid project."
 			},
 			"fields": {
@@ -878,9 +880,9 @@
 				"choose_file": "Select File",
 				"completed": "Completed",
 				"created_by": "Created By",
-				"defect_ID": "Defect ID",
-				"defect_name": "Defect Name",
-				"defect_type": "Defect Type",
+				"defect_ID": "Requirement ID",
+				"defect_name": "Requirement Name",
+				"defect_type": "Requirement Type",
 				"description": "Description",
 				"end_date": "End Date",
 				"estimate_hours": "Estimate Hours",
@@ -891,10 +893,10 @@
 				"status": "Status"
 			},
 			"placeholders": {
-				"placeholder1": "Enter Defect Name",
-				"placeholder2": "-- Select Defect Type --",
-				"placeholder3": "-- Select Defect Status --",
-				"placeholder4": "-- Select Defect Severity --",
+				"placeholder1": "Enter Requirement Name",
+				"placeholder2": "-- Select Requirement Type --",
+				"placeholder3": "-- Select Requirement Status --",
+				"placeholder4": "-- Select Requirement Severity --",
 				"placeholder5": "-- Select Assigned Group --",
 				"placeholder6": "-- Select Project --",
 				"placeholder7": "-- Select Project Version --",
@@ -905,7 +907,7 @@
 		"defect_types": [
 			{
 				"id": 1,
-				"label": "Defects",
+				"label": "Requirements",
 				"value": "1"
 			},
 			{
@@ -919,25 +921,25 @@
 			"title2": "Description"
 		},
 		"headings": {
-			"head1": "Defect Info",
+			"head1": "Requirement Info",
 			"head2": "Project Info",
 			"head3": "Upload Files",
 			"head4": "Custom Fields",
 			"head5": "Description"
 		},
 		"inline_edit": {
-			"defect_name": "Defect Name",
-			"defect_type": "Defect Type",
+			"defect_name": "Requirement Name",
+			"defect_type": "Requirement Type",
 			"description": "Description",
 			"estimate_hours": "Estimate Hours",
 			"notes": "Notes"
 		},
 		"messages": {
-			"create": "Defect created successfully.",
-			"delete": "Defect deleted successfully.",
+			"create": "Requirement created successfully.",
+			"delete": "Requirement deleted successfully.",
 			"severity": "Severity updated successfully.",
 			"status": "Status changed successfully.",
-			"update": "Defect updated successfully."
+			"update": "Requirement updated successfully."
 		},
 		"severities": [
 			{
@@ -968,14 +970,9 @@
 		],
 		"status": [
 			{
-				"class": "assigned",
+				"class": "open",
 				"id": 1,
-				"label": "Assigned"
-			},
-			{
-				"class": "closed",
-				"id": 2,
-				"label": "Closed"
+				"label": "Open"
 			},
 			{
 				"class": "in_progress",
@@ -983,29 +980,14 @@
 				"label": "In Progress"
 			},
 			{
-				"class": "open",
-				"id": 4,
-				"label": "Open"
-			},
-			{
 				"class": "solved",
 				"id": 5,
 				"label": "Solved"
-			},
-			{
-				"class": "reopen",
-				"id": 6,
-				"label": "Re-open"
-			},
-			{
-				"class": "deferred",
-				"id": 7,
-				"label": "Deferred"
 			}
 		],
-		"title": "Defects",
-		"title1": "Create Defect",
-		"title2": "Update Defect",
+		"title": "Requirement",
+		"title1": "Create Requirement",
+		"title2": "Update Requirement",
 		"tooltips": {
 			"attachment": "Attachment"
 		}
@@ -1667,7 +1649,7 @@
 		"budges": {
 			"budges1": "Drag task between list"
 		},
-		"title1": "Defect Kanban",
+		"title1": "Requirement Kanban",
 		"title2": "Incident Kanban"
 	},
 	"knowledge_base": {
@@ -2591,7 +2573,7 @@
 	},
 	"reports": {
 		"headings": {
-			"defect_report": "Defect",
+			"defect_report": "Requirement",
 			"incident_report": "Incident",
 			"project_report": "Project",
 			"task_report": "Task"
@@ -2785,7 +2767,7 @@
 			"title4": "Meetings",
 			"title5": "Projects",
 			"title6": "Tasks",
-			"title7": "Defects",
+			"title7": "Requirements",
 			"title8": "Incidents",
 			"title9": "Due Invoices"
 		},
@@ -4067,8 +4049,8 @@
 			"activities": "Activities",
 			"articles": "Articles",
 			"comments": "Comments",
-			"defect_hours": "Defect Hours",
-			"defects": "Defects",
+			"defect_hours": "Requirement Hours",
+			"defects": "Requirements",
 			"incident_hours": "Incident Hours",
 			"incidents": "Incidents",
 			"leave_hours": "Leave Hours",

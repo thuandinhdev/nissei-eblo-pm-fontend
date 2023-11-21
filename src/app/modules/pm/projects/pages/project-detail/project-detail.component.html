@@ -27,7 +27,7 @@
             <tab (selectTab)="setActiveProjectTab($event)" class="card-separator" customClass="text-left" id="4">
                 <ng-template tabHeading>
                     <div class="d-flex">
-                        <i class="fa fa-bug"></i><span class="mt-1 ml-1">{{'defects.title' | translate}}</span></div>
+                        <i class="fa fa-paper-plane"></i><span class="mt-1 ml-1">{{'defects.title' | translate}}</span></div>
                 </ng-template>
                 <app-project-defects *ngIf="getActiveProjectTab('4')" [apiUrl]="apiUrl" [loginUser]="loginUser" [project]="project"></app-project-defects>
             </tab>

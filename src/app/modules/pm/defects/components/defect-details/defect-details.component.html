@@ -12,8 +12,8 @@
                         </p>
                     </div>
                     <div class="task-action d-flex">
-                        <a *ngIf="permission" [routerLink]="['/defects/edit', defect.id]" class="btn btn-create mb-2 mb-lg-0 float-right" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
-                        <a *ngIf="defect.attachment_hash" class="btn btn-create mb-2 mb-lg-0 float-right" download="{{defect.attachment}}" href="{{ apiUrl }}/uploads/defect/{{defect.attachment_hash}}" placement="top" target="_blank" tooltip="{{'defects.tooltips.attachment' | translate }}"><i class="fa fa-files-o"></i></a>
+                        <a *ngIf="permission" [routerLink]="['/requirements/edit', defect.id]" class="btn btn-create mb-2 mb-lg-0 float-right" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                        <!-- <a *ngIf="defect.attachment_hash" class="btn btn-create mb-2 mb-lg-0 float-right" download="{{defect.attachment}}" href="{{ apiUrl }}/uploads/defect/{{defect.attachment_hash}}" placement="top" target="_blank" tooltip="{{'defects.tooltips.attachment' | translate }}"><i class="fa fa-files-o"></i></a> -->
                     </div>
                 </div>
             </div>
@@ -31,10 +31,10 @@
                                                     <label>{{'defects.create.fields.project_name' | translate}}</label>
                                                     <div class="detail-inline">{{defect.project.project_name}}</div>
                                                 </div>
-                                                <div class="col-lg-12 mb-3">
+                                                <!-- <div class="col-lg-12 mb-3">
                                                     <label>{{'defects.create.fields.project_version' | translate}}</label>
                                                     <div class="detail-inline">{{defect.project_version}}</div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-lg-12 mb-3 d-flex justify-content-between">
                                                     <!-- <div class="row"> -->
                                                     <div class="">
@@ -60,7 +60,7 @@
                                                             </ng-template>
                                                         </div>
                                                     </div>
-                                                    <div class="">
+                                                    <!-- <div class="">
                                                         <label>{{'defects.create.fields.severity' | translate}}</label>
                                                         <div class="status-dropdown">
                                                             <ng-container *ngIf="permission; else elseBlock5">
@@ -82,10 +82,20 @@
                                                                 </ng-container>
                                                             </ng-template>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!--  </div> -->
+                                                    <div class="text-center">
+                                                        <label>{{'defects.create.fields.created_by' | translate}}</label>
+                                                        <div class="people-lists">
+                                                            <a [routerLink]="['/users/profile', defect.created_user.id]" class="btn btn-profile-info rounded-circle text-dark" placement="top" tooltip="{{defect.created_user.firstname}} {{defect.created_user.lastname}}">
+                                                                <img *ngIf="defect.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{defect.created_user.avatar}}"/>
+                                                                <img *ngIf="!defect.created_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
+                                                            </a><br>
+                                                            <span class="mt-2">{{defect.created_user.firstname}} {{defect.created_user.lastname}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-12 mb-3 d-flex justify-content-between">
+                                                <!-- <div class="col-lg-12 mb-3 d-flex justify-content-between">
                                                     <div class="text-center">
                                                         <label>{{'defects.create.fields.created_by' | translate}}</label>
                                                         <div class="people-lists">
@@ -113,10 +123,10 @@
                                                             </ng-template>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col-md-12 card-separator">
-                                                <div class="col-lg-12 mb-3">
+                                                <!-- <div class="col-lg-12 mb-3">
                                                     <label>{{'defects.create.fields.start_date' | translate}}</label>
                                                     <div class="detail-inline">{{defect.start_date | dateTimeFormatFilter : loginUser.settings.date_format}}</div>
                                                 </div>
@@ -149,7 +159,7 @@
                                                             </ng-container>
                                                         </ng-template>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-lg-12 mb-3">
                                                     <label>{{'common.created' | translate}}</label>
                                                     <div class="detail-inline">{{defect.created_at | dateTimeFormatFilter : loginUser.settings.date_time_format}}</div>
@@ -221,9 +231,9 @@
                                         </div>
                                     </div>
                                     <!-- Todos list -->
-                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
+                                    <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
                                         <app-todo-detail [module_id]="3" [module_related_id]="defect.id"></app-todo-detail>
-                                    </div>
+                                    </div> -->
                                     <!-- Defect Timesheet -->
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3 card-separator">
                                         <app-timesheet-list [apiUrl]="apiUrl" [loginUser]="loginUser" [module_id]="'3'" [module_related_id]="defect.id" [project_id]="defect.project_id"></app-timesheet-list>

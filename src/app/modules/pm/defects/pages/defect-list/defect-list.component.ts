@@ -106,37 +106,35 @@ export class DefectListComponent implements OnInit {
                 },
                 {
                     'sortable': true,
-                    'width': '8%',
                     'target': [2]
                 },
                 {
                     'sortable': true,
-                    'width': '8%',
                     'target': [3]
                 },
-                {
-                    'sortable': true,
-                    'width': '8%',
-                    'target': [4]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [5]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [6]
-                },
-                {
-                    'sortable': true,
-                    'width': '10%',
-                    'target': [7]
-                },
+                // {
+                //     'sortable': true,
+                //     'width': '8%',
+                //     'target': [4]
+                // },
+                // {
+                //     'sortable': true,
+                //     'width': '10%',
+                //     'target': [5]
+                // },
+                // {
+                //     'sortable': true,
+                //     'width': '10%',
+                //     'target': [6]
+                // },
+                // {
+                //     'sortable': true,
+                //     'width': '10%',
+                //     'target': [7]
+                // },
                 {
                     'sortable': false,
-                    'target': [8],
+                    'target': [4],
                     'width': '5%'
                 }
             ],
@@ -261,10 +259,13 @@ export class DefectListComponent implements OnInit {
 
     getCheckPermission(defect) {
         let role = this.ngxRolesService.getRole('admin');
+        let role2 = this.ngxRolesService.getRole('leader');
         if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
             return true;
-        } else if (defect.assign_member == this.loginUser.id || defect.create_user_id == this.loginUser.id) {
-            return true;
+        } else if (defect.assign_member == this.loginUser.id  || defect.create_user_id == this.loginUser.id || (role2 && role2.name == 'leader')) {
+            if(defect.status != 5){
+                return true;
+            }
         } else {
             return false;
         }

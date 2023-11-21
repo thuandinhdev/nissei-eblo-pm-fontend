@@ -18,6 +18,9 @@ export class TaskService {
     create(task: Task) {
         return this.http.post(`${this.apiUrl}/api/tasks`, task);
     }
+    copyDefectToTask(task: Task) {
+        return this.http.post(`${this.apiUrl}/api/tasks/copy`, task);
+    }
 
     getAll() {
         return this.http.get<Task[]>(`${this.apiUrl}/api/tasks`);

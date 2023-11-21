@@ -64,7 +64,7 @@ export class DefectCreateComponent implements OnInit {
     loadForms() {
         let that = this;
         this.createDefectForm = this.formBuilder.group({
-            generated_id: ['DEF0001', Validators.required],
+            generated_id: ['RQ0001', Validators.required],
             project_id: [null, Validators.required],
             project_version: [null],
             defect_name: ['', [Validators.required, Validators.maxLength(255)]],
@@ -87,9 +87,9 @@ export class DefectCreateComponent implements OnInit {
         this.isPageLoaded = true;
         this.getDefectGeneratedId();
 
-        setTimeout(() => {
-            that.loadDropzone();
-        });
+        // setTimeout(() => {
+        //     that.loadDropzone();
+        // });
     }
 
     loadDropzone() {
@@ -232,7 +232,7 @@ export class DefectCreateComponent implements OnInit {
 
         this.defectService.create(this.createDefectForm.value).subscribe(data => {
             this.toastr.success(this.translate.instant('defects.messages.create'), this.translate.instant('defects.title'));
-            this.router.navigate(['defects']);
+            this.router.navigate(['requirements']);
         });
     }
 }

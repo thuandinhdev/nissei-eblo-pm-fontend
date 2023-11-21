@@ -316,7 +316,7 @@ const routes: Routes = [
                 loadChildren: () => import('./modules/pm/tasks/tasks.module').then(m => m.TasksModule)
             },
             {
-                path: 'defects',
+                path: 'requirements',
                 canLoad: [NgxPermissionsGuard],
                 data: {
                     title: 'breadcrumbs.defects.title',

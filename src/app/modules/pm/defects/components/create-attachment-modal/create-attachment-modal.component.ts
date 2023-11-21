@@ -68,6 +68,8 @@ export class CreateAttachmentModalComponent implements OnInit {
         new Dropzone(this.pdfdropzone.nativeElement, {
             url: 'https://httpbin.org/post',
             maxFiles: 1,
+            timeout: 180000,
+            maxFilesize: 500,
             clickable: true,
             createImageThumbnails: true,
             init: function () {

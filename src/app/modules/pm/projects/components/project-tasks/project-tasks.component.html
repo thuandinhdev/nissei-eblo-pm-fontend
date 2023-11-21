@@ -17,7 +17,7 @@
                         <th>{{'tasks.columns.start_date' | translate }}</th>
                         <th>{{'tasks.columns.end_date' | translate }}</th>
                         <th>{{'tasks.columns.assigned' | translate }}</th>
-                        <th>{{'tasks.columns.priority' | translate }}</th>
+                        <!-- <th>{{'tasks.columns.priority' | translate }}</th> -->
                         <th>{{'tasks.columns.status' | translate }}</th>
                     </tr>
                     </thead>
@@ -42,13 +42,13 @@
                                 </a>
                             </ng-template>
                         </td>
-                        <td class="budges-status">
+                        <!-- <td class="budges-status">
                             <ng-container *ngFor="let priority of ('tasks.priorities' | translate)">
                                 <div class="budges-status">
                                     <span *ngIf="priority.id == task.priority" class="{{priority.class}}">{{priority.label}}</span>
                                 </div>
                             </ng-container>
-                        </td>
+                        </td> -->
                         <td class="budges-status">
                             <ng-container *ngFor="let status of ('tasks.status' | translate)">
                                 <span *ngIf="status.id == task.status" class="{{status.class}}">{{status.label}}</span>

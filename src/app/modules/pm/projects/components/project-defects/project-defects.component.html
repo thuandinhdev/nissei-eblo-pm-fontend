@@ -14,10 +14,10 @@
                     <tr>
                         <th>{{'defects.columns.id' | translate}}</th>
                         <th>{{'defects.columns.defect_name' | translate}}</th>
-                        <th>{{'defects.columns.start_date' | translate}}</th>
-                        <th>{{'defects.columns.end_date' | translate}}</th>
-                        <th>{{'defects.columns.assigned' | translate}}</th>
-                        <th>{{'defects.columns.severity' | translate}}</th>
+                        <!-- <th>{{'defects.columns.start_date' | translate}}</th>
+                        <th>{{'defects.columns.end_date' | translate}}</th> -->
+                        <!-- <th>{{'defects.columns.assigned' | translate}}</th> -->
+                        <!-- <th>{{'defects.columns.description' | translate}}</th> -->
                         <th>{{'defects.columns.status' | translate}}</th>
                     </tr>
                     </thead>
@@ -27,8 +27,8 @@
                             <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
                         </td>
                         <td>{{defect.defect_name}}</td>
-                        <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
-                        <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
+                        <!-- <td>{{defect.description}}</td> -->
+                        <!-- <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>
                         <td class="people-lists">
                             <ng-container *ngIf="defect.assign_user == null; else elseBlock;">
                                 <a class="btn btn-profile-danger rounded-circle text-dark" href="javascript:void(0);" placement="top" tooltip="{{'common.unassigned' | translate}}">
@@ -41,12 +41,12 @@
                                     <img *ngIf="!defect.assign_user.avatar" alt="Profile" class="img-sm rounded-circle" src="../assets/img/profile_small.jpg"/>
                                 </a>
                             </ng-template>
-                        </td>
-                        <td class="budges-status">
+                        </td> -->
+                        <!-- <td class="budges-status">
                             <ng-container *ngFor="let status of ('defects.severities' | translate)">
                                 <span *ngIf="status.id == defect.severity" class="{{status.class}}">{{status.label}}</span>
                             </ng-container>
-                        </td>
+                        </td> -->
                         <td class="budges-status">
                             <ng-container *ngFor="let status of ('defects.status' | translate)">
                                 <span *ngIf="status.id == defect.status" class="{{status.class}}">{{status.label}}</span>

@@ -45,7 +45,7 @@
                             <inline-edit-textarea (updateValue)="saveComments(comment, 'comment', $event);" [elementFor]="'common.comment' | translate" [fieldValue]="comment.comment" [isRequired]="'true'" [name]="'comment'"></inline-edit-textarea>
                             <ul *ngIf="comment.attachments" class="attachment_box">
                                 <li *ngFor="let item of comment.attachments;let i = index; trackBy: i">
-                                    <a download="{{item.name}}" href="{{apiUrl}}/uploads/defect_attachment/{{item.file}}" target="_blank"><span>{{item.name}}</span></a>
+                                    <a download="{{item.name}}" href="{{apiUrl}}/uploads/task_attachment/{{item.file}}" target="_blank"><span>{{item.name}}</span></a>
                                 </li>
                             </ul>
                         </div>

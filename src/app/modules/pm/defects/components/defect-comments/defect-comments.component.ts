@@ -88,6 +88,8 @@ export class DefectCommentsComponent implements OnInit {
         let that = this;
         this.dropzoneObj = new Dropzone(this.commentdropzone.nativeElement, {
             url: 'https://httpbin.org/post',
+            timeout: 180000,
+            maxFilesize: 500,
             maxFiles: 5,
             clickable: true,
             createImageThumbnails: true,

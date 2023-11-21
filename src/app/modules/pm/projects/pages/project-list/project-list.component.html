@@ -73,13 +73,10 @@
                                                 <!-- <ng-container *ngIf="getCheckPermission(project, 'view') else elseBlock1;">
                                                     <a [routerLink]="['/projects/detail', project.id]" tooltip="{{'common.view' | translate}}">{{project.generated_id}}</a>
                                                 </ng-container> -->
-                                                {{project.project_version}}
+                                                <a [routerLink]="['/projects/detail', project.id]" tooltip="{{'common.view' | translate}}">{{project.project_version}}</a>
                                             </td>
                                             <td>
-                                                <ng-container *ngIf="getCheckPermission(project, 'edit') else elseBlock2;">
-                                                    <inline-edit-input (updateValue)="saveProjectDetail(i, 'project_name', $event);" [elementFor]="'projects.inline_edit.project_name' | translate" [fieldValue]="project.project_name" [isRequired]="'true'" [name]="'project_name'" [type]="'text'"></inline-edit-input>
-                                                </ng-container>
-                                                <ng-template #elseBlock2>{{project.project_name}}</ng-template>
+                                                <a [routerLink]="['/projects/detail', project.id]" tooltip="{{'common.view' | translate}}">{{project.project_name}}</a>
                                             </td>
                                             <td class="duration">
                                                 <p class="m-0">{{'projects.columns.start' | translate}}:

@@ -10,6 +10,8 @@ import {AuthenticationService} from '../../../../../core/services/authentication
 import {ProjectService} from '../../../../../core/services/project.service';
 import {TaskService} from '../../../../../core/services/task.service';
 import {CustomFieldsService} from '../../../../../core/services/custom-fields.service';
+import {DefectService} from '../../../../../core/services/defect.service';
+
 
 @Component({
     selector: 'app-task-copy',
@@ -48,6 +50,7 @@ export class TaskCopyComponent implements OnInit {
         private toastr: ToastrService,
         private projectService: ProjectService,
         private taskService: TaskService,
+        private defectService: DefectService,
         private customFieldsService: CustomFieldsService,
         private authenticationService: AuthenticationService
     ) {
@@ -65,13 +68,20 @@ export class TaskCopyComponent implements OnInit {
         this.getProjects();
     }
 
-    getTaskById(taskId) {
-        this.taskService.getById(taskId).subscribe(data => {
+    // getTaskById(taskId) {
+    //     this.taskService.getById(taskId).subscribe(data => {
+    //         this.task = data;
+    //         this.setDateFormat();
+    //         this.loadForms();
+    //     });
+
+    // }
+    getTaskById(defectId) {
+        this.defectService.getById(defectId).subscribe(data => {
             this.task = data;
             this.setDateFormat();
             this.loadForms();
         });
-
     }
 
     setDateFormat() {
@@ -91,37 +101,38 @@ export class TaskCopyComponent implements OnInit {
 
     loadForms() {
         // Project users
-        this.users = this.task.project1.users;
-        for (let i = 0; i < this.users.length; i++) {
-            this.userIds.push(this.users[i].id);
-        }
+        // this.users = this.task.project1.users;
+        // for (let i = 0; i < this.users.length; i++) {
+        //     this.userIds.push(this.users[i].id);
+        // }
 
         // Project Version
-        this.projectVersions = this.task.project1.project_version.split(',');
+        // this.projectVersions = this.task.project1.project_version.split(',');
 
         this.copyTaskForm = this.formBuilder.group({
-            name: [this.task.name, Validators.required],
+            name: [this.task.defect_name, Validators.required],
             generated_id: ['T0...', [Validators.required]],
             project_id: [this.task.project_id, Validators.required],
             project_version: [this.task.project_version],
-            planned_start_date: [this.task.planned_start_date],
-            planned_end_date: [this.task.planned_end_date],
-            task_start_date: [this.task.task_start_date],
-            task_end_date: [this.task.task_end_date],
-            assign_to: [this.task.assign_to],
-            status: [this.task.status, Validators.required],
-            priority: [this.task.priority, Validators.required],
-            estimated_hours: [this.task.estimated_hours, Validators.pattern(/^[0-9]+\:[0-5][0-9]$/)],
-            progress: [parseInt(this.task.progress)],
+            planned_start_date: [null],
+            planned_end_date: [null],
+            task_start_date: [null],
+            task_end_date: [null],
+            assign_to: [null],
+            status: [1, Validators.required],
+            priority: [1, Validators.required],
+            estimated_hours: ['', Validators.pattern(/^[0-9]+\:[0-5][0-9]$/)],
+            progress: [0],
             description: [this.task.description],
-            users: [this.userIds],
+            notes: [this.task.notes],
+            defect_id: [this.task.id],
+            users: [null],
             custom_field: this.formBuilder.array([]),
             custom_fields: [null],
         });
 
         this.getGeneratedId();
         this.getCustomFieldByForm();
-
         this.isPageLoaded = true;
     }
 
@@ -170,6 +181,7 @@ export class TaskCopyComponent implements OnInit {
     getProjects() {
         this.projectService.getProject().subscribe(data => {
             this.projects = data;
+            this.users = data[0].users;
         });
     }
 
@@ -235,8 +247,7 @@ export class TaskCopyComponent implements OnInit {
         this.copyTaskForm.value.planned_end_date = this.datepipe.transform(this.copyTaskForm.value.planned_end_date, 'yyyy-MM-dd');
         this.copyTaskForm.value.task_start_date = this.datepipe.transform(this.copyTaskForm.value.task_start_date, 'yyyy-MM-dd');
         this.copyTaskForm.value.task_end_date = this.datepipe.transform(this.copyTaskForm.value.task_end_date, 'yyyy-MM-dd');
-
-        this.taskService.create(this.copyTaskForm.value).subscribe(data => {
+        this.taskService.copyDefectToTask(this.copyTaskForm.value).subscribe(data => {
             this.toastr.success(this.translate.instant('tasks.messages.copy'), this.translate.instant('tasks.title'));
             this.router.navigate(['tasks']);
         });

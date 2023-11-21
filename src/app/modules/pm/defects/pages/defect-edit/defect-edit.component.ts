@@ -171,7 +171,7 @@ export class DefectEditComponent implements OnInit {
         } else if (defect.assign_member == this.loginUser.id || defect.create_user_id == this.loginUser.id) {
             return true;
         } else {
-            this.router.navigate(['defects']);
+            this.router.navigate(['requirements']);
         }
     }
 
@@ -199,9 +199,9 @@ export class DefectEditComponent implements OnInit {
             this.loadForms();
             this.getTeams();
 
-            setTimeout(() => {
-                this.loadDropzone();
-            });
+            // setTimeout(() => {
+            //     this.loadDropzone();
+            // });
         });
     }
 
@@ -295,7 +295,7 @@ export class DefectEditComponent implements OnInit {
 
         this.defectService.update(this.editDefectForm.value).subscribe(data => {
             this.toastr.success(this.translate.instant('defects.messages.update'), this.translate.instant('defects.title'));
-            this.router.navigate(['defects']);
+            this.router.navigate(['requirements']);
         });
     }
 

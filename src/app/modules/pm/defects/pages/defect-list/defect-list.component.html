@@ -6,7 +6,7 @@
                 <div class="card-header pl-0 pr-0 border-bottom">
                     <h4 class="main-title mt-2"><span>{{'defects.title' | translate}}</span></h4>
                     <!-- Filter buttons -->
-                    <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex">
+                    <!-- <div *ngIf="isPageLoaded" class="d-flex flex-column flex-lg-row d-lg-inline-flex">
                         <div class=" pr-0">
                             <div class="btn-group mr-2 mb-2">
                                 <label (click)="filterByStatus(statusfilterId, defectFilterKey)" [(ngModel)]="defectFilterKey" btnRadio="all" class="btn btn-secondary btn-toggle m-0" role="button" tabindex="0">{{'common.status.all' | translate}}</label>
@@ -50,10 +50,10 @@
                                 </span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card-buttons">
-                        <a [routerLink]="['/defects/kanban']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a>
-                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/defects/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+                        <!-- <a [routerLink]="['/defects/kanban']" class="btn btn-create mb-0" tooltip="{{'common.switch_to_kanban' | translate}}"><i class="fa fa-trello"></i><span>{{'common.kanban' | translate}}</span></a> -->
+                        <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/requirements/create']" class="btn btn-create mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <!-- Card content -->
@@ -69,11 +69,12 @@
                                         <tr>
                                             <th>{{'defects.columns.id' | translate}}</th>
                                             <th>{{'defects.columns.defect_name' | translate}}</th>
-                                            <th>{{'defects.columns.start_date' | translate}}</th>
+                                            <!-- <th>{{'defects.columns.start_date' | translate}}</th>
                                             <th>{{'defects.columns.end_date' | translate}}</th>
                                             <th>{{'defects.columns.actual_hours' | translate}}</th>
                                             <th>{{'defects.columns.assigned' | translate}}</th>
-                                            <th>{{'defects.columns.severity' | translate}}</th>
+                                            <th>{{'defects.columns.severity' | translate}}</th> -->
+                                            <th>{{'defects.columns.description' | translate}}</th>
                                             <th>{{'defects.columns.status' | translate}}</th>
                                             <th>{{'defects.columns.actions' | translate}}</th>
                                         </tr>
@@ -81,7 +82,7 @@
                                         <tbody *ngIf="defects?.length != 0">
                                         <tr *ngFor="let defect of defects; index as i">
                                             <td>
-                                                <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
+                                                <a [routerLink]="['/requirements/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
                                             </td>
                                             <td>
                                                 <ng-container *ngIf="getCheckPermission(defect); else elseBlock">
@@ -89,7 +90,7 @@
                                                 </ng-container>
                                                 <ng-template #elseBlock>{{defect.defect_name}}</ng-template>
                                             </td>
-                                            <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <!-- <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
                                             <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
                                             <td>{{defect.actual_hours}}</td>
                                             <td class="people-lists">
@@ -109,6 +110,9 @@
                                                 <ng-container *ngFor="let severity of ('defects.severities' | translate)">
                                                     <span *ngIf="severity.id == defect.severity" class="{{severity.class}}">{{severity.label}}</span>
                                                 </ng-container>
+                                            </td> -->
+                                            <td>
+                                                <ng-template >{{defect.description}}</ng-template>
                                             </td>
                                             <td class="status-dropdown">
                                                 <div class="overdue-td">
@@ -141,8 +145,13 @@
                                                         <i class="fa fa-ellipsis-v"></i></button>
                                                     <ul *dropdownMenu aria-labelledby="button-basic-1" class="dropdown-menu animated fadeIn" id="dropdown-basic-1" role="menu">
                                                         <li *ngIf="getCheckPermission(defect)" role="menuitem">
-                                                            <a [routerLink]="['/defects/edit', defect.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
+                                                            <a [routerLink]="['/requirements/edit', defect.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.edit' | translate}}"><i class="fa fa-pencil-square-o"></i></a>
                                                         </li>
+                                                        <div *ngIf="defect.status == 5">
+                                                            <li *ngxPermissionsOnly="['admin', 'super_admin', 'leader']" role="menuitem">
+                                                                <a [routerLink]="['/tasks/copy', defect.id]" class="dropdown-item btn btn-edit btn-raised" tooltip="{{'common.copy_to_task' | translate}}"><i class="fa fa-clone"></i></a>
+                                                            </li>
+                                                        </div>
                                                         <li *ngIf="getCheckPermission(defect)" role="menuitem">
                                                             <a (click)="deleteDefect(defect.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
                                                         </li>
@@ -153,7 +162,7 @@
                                         </tbody>
                                         <tfoot *ngIf="defects?.length == 0" class="tfoot_dt">
                                         <tr>
-                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
                                         </tr>
                                         </tfoot>
                                     </table>

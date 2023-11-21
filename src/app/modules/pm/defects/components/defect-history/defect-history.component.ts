@@ -38,20 +38,22 @@ export class DefectHistoryComponent implements OnInit {
             serverSide: false,
             processing: false,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [0],
-            buttons: [{
-                extend: 'csv',
-                title: this.translate.instant('histories.title'),
-                className: 'btn btn-datatable-gredient',
-            }, {
-                extend: 'excel',
-                title: this.translate.instant('histories.title'),
-                className: 'btn btn-datatable-gredient',
-            }, {
-                extend: 'pdf',
-                title: this.translate.instant('histories.title'),
-                className: 'btn btn-datatable-gredient',
-            }],
+            // order: [0],
+            buttons: [
+                //     {
+                //     extend: 'csv',
+                //     title: this.translate.instant('histories.title'),
+                //     className: 'btn btn-datatable-gredient',
+                // }, {
+                //     extend: 'excel',
+                //     title: this.translate.instant('histories.title'),
+                //     className: 'btn btn-datatable-gredient',
+                // }, {
+                //     extend: 'pdf',
+                //     title: this.translate.instant('histories.title'),
+                //     className: 'btn btn-datatable-gredient',
+                // }
+            ],
             language: {
                 'sEmptyTable': this.translate.instant('common.datatable.sEmptyTable'),
                 'sInfo': this.translate.instant('common.datatable.sInfo'),
