@@ -74,7 +74,9 @@
                                             <th>{{'defects.columns.actual_hours' | translate}}</th>
                                             <th>{{'defects.columns.assigned' | translate}}</th>
                                             <th>{{'defects.columns.severity' | translate}}</th> -->
-                                            <th>{{'defects.columns.description' | translate}}</th>
+                                            <th>{{'projects.columns.project_name' | translate}}</th>
+                                            <th>{{'defects.columns.create_date' | translate}}</th>
+                                            <th>{{'tasks.title' | translate}}</th>
                                             <th>{{'defects.columns.status' | translate}}</th>
                                             <th>{{'defects.columns.actions' | translate}}</th>
                                         </tr>
@@ -82,7 +84,7 @@
                                         <tbody *ngIf="defects?.length != 0">
                                         <tr *ngFor="let defect of defects; index as i">
                                             <td>
-                                                <a [routerLink]="['/requirements/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a>
+                                                <a [routerLink]="['/requirements/detail', defect.id]" tooltip="{{'common.view' | translate}}"><i class="fa fa-eye"></i>{{defect.generated_id}}</a>
                                             </td>
                                             <td>
                                                 <ng-container *ngIf="getCheckPermission(defect); else elseBlock">
@@ -90,6 +92,7 @@
                                                 </ng-container>
                                                 <ng-template #elseBlock>{{defect.defect_name}}</ng-template>
                                             </td>
+
                                             <!-- <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
                                             <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
                                             <td>{{defect.actual_hours}}</td>
@@ -112,7 +115,14 @@
                                                 </ng-container>
                                             </td> -->
                                             <td>
-                                                <ng-template >{{defect.description}}</ng-template>
+                                                {{defect.project_name}}
+                                            </td>
+
+                                            <td>{{defect.created_at | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <td>
+                                                <span class="badge badge-light btn btn-raised btn-secondary">
+                                                    {{defect.tasks}}/{{defect.tasks_completed}}
+                                                </span>
                                             </td>
                                             <td class="status-dropdown">
                                                 <div class="overdue-td">
@@ -162,7 +172,7 @@
                                         </tbody>
                                         <tfoot *ngIf="defects?.length == 0" class="tfoot_dt">
                                         <tr>
-                                            <td class="no-data-available text-center" colspan="5">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
                                         </tr>
                                         </tfoot>
                                     </table>

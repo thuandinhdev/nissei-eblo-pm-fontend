@@ -96,52 +96,52 @@ export class TaskListComponent implements OnInit {
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
             // order: [0],
-            // columns: [
-            //     {
-            //         'sortable': true,
-            //         'width': '7%',
-            //         'target': [0]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'target': [1]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '8%',
-            //         'target': [2]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '8%',
-            //         'target': [3]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '8%',
-            //         'target': [4]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '10%',
-            //         'target': [5]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '10%',
-            //         'target': [6]
-            //     },
-            //     {
-            //         'sortable': true,
-            //         'width': '10%',
-            //         'target': [7]
-            //     },
-            //     {
-            //         'sortable': false,
-            //         'width': '5%',
-            //         'target': [8]
-            //     }
-            // ],
+            columns: [
+                {
+                    'sortable': true,
+                    'width': '7%',
+                    'target': [0]
+                },
+                {
+                    'sortable': true,
+                    'target': [1]
+                },
+                {
+                    'sortable': true,
+                    'width': '8%',
+                    'target': [2]
+                },
+                {
+                    'sortable': true,
+                    'width': '8%',
+                    'target': [3]
+                },
+                {
+                    'sortable': true,
+                    'width': '8%',
+                    'target': [4]
+                },
+                {
+                    'sortable': true,
+                    'width': '10%',
+                    'target': [5]
+                },
+                {
+                    'sortable': true,
+                    'width': '10%',
+                    'target': [6]
+                },
+                {
+                    'sortable': true,
+                    'width': '10%',
+                    'target': [7]
+                },
+                {
+                    'sortable': false,
+                    'width': '5%',
+                    'target': [8]
+                }
+            ],
             buttons: [
                 // {
                 //     extend: 'csv',

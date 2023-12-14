@@ -11,7 +11,7 @@
                     <tr class="display_all">
                         <th>{{'projects.columns.id' | translate}}</th>
                         <th>{{'projects.columns.project_name' | translate}}</th>
-                        <th>{{'projects.columns.version' | translate}}</th>
+                        <th>{{'projects.columns.code' | translate}}</th>
                         <th>{{'projects.columns.start' | translate}}</th>
                         <th>{{'projects.columns.end' | translate}}</th>
                         <th>{{'projects.columns.hours' | translate}}</th>
@@ -19,9 +19,9 @@
                         <th>{{'projects.columns.creator' | translate}}</th>
                         <th>{{'projects.columns.assigned_To' | translate}}</th>
                         <th>{{'projects.columns.status' | translate}}</th>
-                        <th>{{'projects.columns.billing' | translate}}</th>
+                        <!-- <th>{{'projects.columns.billing' | translate}}</th> -->
                         <th>{{'projects.columns.budget' | translate}}</th>
-                        <th>{{'projects.columns.client' | translate}}</th>
+                        <!-- <th>{{'projects.columns.client' | translate}}</th> -->
                     </tr>
                     </thead>
                     <tbody *ngIf="projects?.length != 0">
@@ -62,19 +62,19 @@
                                 <span *ngIf="status.id == project.status" class="badge {{status.class}}">{{status.label}}</span>
                             </ng-container>
                         </td>
-                        <td>
+                        <!-- <td>
                             <ng-container *ngIf="project.billing_type; else elseBlock2;">
                                 <ng-container *ngFor="let type of ('projects.billing_types' | translate)">
                                     <span *ngIf="type.id == project.billing_type" class="badge badge-secondary">{{type.label}}</span>
                                 </ng-container>
                             </ng-container>
                             <ng-template #elseBlock2>-</ng-template>
-                        </td>
+                        </td> -->
                         <td>
                             <ng-container *ngIf="project.price_rate else elseBlock3;">{{project.price_rate}}</ng-container>
                             <ng-template #elseBlock3>-</ng-template>
                         </td>
-                        <td class="people-lists">
+                        <!-- <td class="people-lists">
                             <ng-container *ngIf="project.client_id; else elseBlock5;">
                                 <a [routerLink]="['/users/profile', project.client_id]" class="btn btn-profile-info rounded-circle text-dark" tooltip="{{project.client_firstname}} {{project.client_lastname}}">
                                     <img *ngIf="project.client_avatar" alt="Profile" class="img-sm rounded-circle" src="{{apiUrl}}/uploads/profile/{{project.client_avatar}}"/>
@@ -82,7 +82,7 @@
                                 </a>
                             </ng-container>
                             <ng-template #elseBlock5>-</ng-template>
-                        </td>
+                        </td> -->
                     </tr>
                     </tbody>
                     <tfoot>
@@ -117,20 +117,20 @@
                         <th>
                             <input class="form-control" name="status" placeholder="{{'projects.columns.status' | translate}}" type="text"/>
                         </th>
-                        <th>
+                        <!-- <th>
                             <input class="form-control" name="billing" placeholder="{{'projects.columns.billing' | translate}}" type="text"/>
-                        </th>
+                        </th> -->
                         <th>
                             <input class="form-control" name="budget" placeholder="{{'projects.columns.budget' | translate}}" type="text"/>
                         </th>
-                        <th>
+                        <!-- <th>
                             <input class="form-control" name="client" placeholder="{{'projects.columns.client' | translate}}" type="text"/>
-                        </th>
+                        </th> -->
                     </tr>
                     </tfoot>
                     <tfoot *ngIf="projects?.length == 0" class="tfoot_dt">
                     <tr>
-                        <td class="text-center" colspan="13">
+                        <td class="text-center" colspan="11">
                             <img src="assets/img/norecord-img.png" width="50">
                             <p class="mt-1">{{ 'common.empty_message.projects' | translate }}</p>
                         </td>

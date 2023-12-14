@@ -43,8 +43,8 @@ export class EditTimesheetModalComponent implements OnInit {
     loadForm() {
         this.editTimesheetForm = this.formBuilder.group({
             id: [this.timesheet.id],
-            start_time: [new Date(this.timesheet.start_time), Validators.required],
-            end_time: [new Date(this.timesheet.end_time), Validators.required],
+            date: [new Date(this.timesheet.start_time), Validators.required],
+            hour: [this.timesheet.hour_time, Validators.required],
             note: [this.timesheet.note],
         });
     }
@@ -59,8 +59,10 @@ export class EditTimesheetModalComponent implements OnInit {
             return;
         }
 
-        this.editTimesheetForm.value.start_time = moment(this.editTimesheetForm.value.start_time).format('YYYY-MM-DD HH:mm:ss');
-        this.editTimesheetForm.value.end_time = moment(this.editTimesheetForm.value.end_time).format('YYYY-MM-DD HH:mm:ss');
+        this.editTimesheetForm.value.start_time = moment(this.editTimesheetForm.value.date).format('YYYY-MM-DD') + " 00:00:00";
+        this.editTimesheetForm.value.end_time = moment(this.editTimesheetForm.value.date).format('YYYY-MM-DD' + " "+this.editTimesheetForm.value.hour + ":00");
+        // this.editTimesheetForm.value.start_time = moment(this.editTimesheetForm.value.start_time).format('YYYY-MM-DD HH:mm:ss');
+        // this.editTimesheetForm.value.end_time = moment(this.editTimesheetForm.value.end_time).format('YYYY-MM-DD HH:mm:ss');
 
         // --
         // Check dates

@@ -56,8 +56,11 @@ defect_status_key_value[1] = 'common.status.open';
 defect_status_key_value[3] = 'common.status.in_progress';
 defect_status_key_value[4] = 'common.status.open';
 defect_status_key_value[5] = 'common.status.solved';
-defect_status_key_value[6] = 'common.status.reopen';
-defect_status_key_value[7] = 'common.status.deferred';
+// defect_status_key_value[6] = 'common.status.reopen';
+defect_status_key_value[6] = 'common.status.fixes';
+defect_status_key_value[7] = 'common.status.request-to-japan';
+defect_status_key_value[8] = 'common.status.finish';
+
 
 export const defect_status_key_class = [];
 defect_status_key_class[1] = 'assigned';

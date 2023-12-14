@@ -64,6 +64,7 @@
                                         <tr>
                                             <th>{{'tasks.columns.id' | translate}}</th>
                                             <th>{{'tasks.columns.task_name' | translate}}</th>
+                                            <th>{{'projects.columns.project_name' | translate}}</th>
                                             <th>{{'tasks.columns.start_date' | translate}}</th>
                                             <th>{{'tasks.columns.end_date' | translate}}</th>
                                             <th>{{'tasks.columns.hours' | translate}}</th>
@@ -83,6 +84,9 @@
                                                     <inline-edit-input (updateValue)="saveTaskDetail(i, 'name', $event);" [elementFor]="'tasks.inline_edit.task_name' | translate" [fieldValue]="task.name" [isRequired]="'true'" [name]="'name'" [type]="'text'"></inline-edit-input>
                                                 </ng-container>
                                                 <ng-template #elseBlock1>{{task.name}}</ng-template>
+                                            </td>
+                                            <td>
+                                                {{task.project_name}}
                                             </td>
                                             <td>{{task.task_start_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
                                             <td>{{task.task_end_date | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
@@ -154,7 +158,7 @@
                                         </tbody>
                                         <tfoot *ngIf="tasks?.length == 0" class="tfoot_dt">
                                         <tr>
-                                            <td class="no-data-available text-center" colspan="8">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            <td class="no-data-available text-center" colspan="9">{{'common.datatable.sEmptyTable' | translate}}</td>
                                         </tr>
                                         </tfoot>
                                     </table>

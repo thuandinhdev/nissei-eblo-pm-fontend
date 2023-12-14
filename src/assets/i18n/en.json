@@ -856,6 +856,7 @@
 			"severity": "Severity",
 			"start_date": "Start Date",
 			"status": "Status",
+			"create_date": "Create Date",
             "description": "Description",
 			"type": "Type"
 		},
@@ -983,6 +984,20 @@
 				"class": "solved",
 				"id": 5,
 				"label": "Solved"
+			},{
+				"class": "fixes",
+				"id": 6,
+				"label": "Fixes"
+			},
+			{
+				"class": "request-to-japan",
+				"id": 7,
+				"label": "Request to japan"
+			},
+			{
+				"class": "finish",
+				"id": 8,
+				"label": "Finish"
 			}
 		],
 		"title": "Requirement",
@@ -3470,16 +3485,6 @@
 				"class": "fixes",
 				"id": 8,
 				"label": "Fixes"
-			},
-			{
-				"class": "request-to-japan",
-				"id": 10,
-				"label": "Request to japan"
-			},
-			{
-				"class": "finish",
-				"id": 11,
-				"label": "Finish"
 			}
 		],
 		"status1": [
@@ -3577,11 +3582,6 @@
 				"class": "completed",
 				"id": 6,
 				"label": "Completed"
-			},
-            {
-				"class": "request-to-japan",
-				"id": 10,
-				"label": "Request to japan"
 			}
 		],
         "status8": [
@@ -3618,23 +3618,6 @@
                 "class": "fixes",
 				"id": 8,
 				"label": "Fixes"
-			},
-            {
-				"class": "request-to-japan",
-				"id": 10,
-				"label": "Request to japan"
-			},
-			{
-				"class": "finish",
-				"id": 11,
-				"label": "Finish"
-			}
-		],
-        "status11": [
-			{
-				"class": "finish",
-				"id": 11,
-				"label": "Finish"
 			}
 		],
 		"title": "Tasks",
@@ -3786,6 +3769,7 @@
 			"photo": "Photo",
 			"project_name": "Project",
 			"start_time": "Start Time",
+			"date": "Date",
 			"time_h": "Hours",
 			"user": "User"
 		},
@@ -3794,17 +3778,24 @@
 				"message1": "Please select a valid start time.",
 				"message2": "Please select a valid end time.",
 				"message3": "Please select proper date and time for timesheet.",
-				"message4": "Please enter a valid note."
+				"message4": "Please enter a valid note.",
+                "message5": "Please select a valid date.",
+				"message6": "Please enter a valid endhour."
 			},
 			"fields": {
 				"end_time": "End Time",
+				"date": "date",
+				"hour": "hour",
 				"note": "Note",
 				"start_time": "Start Time"
 			},
 			"placeholders": {
 				"placeholder1": "Select Start Time",
 				"placeholder2": "Select End Time",
-				"placeholder3": "Enter Note"
+				"placeholder3": "Enter Note",
+				"placeholder4": "Select Date",
+				"placeholder5": "Enter Hour"
+
 			},
 			"title1": "Create Timesheet",
 			"title2": "Update Timesheet"

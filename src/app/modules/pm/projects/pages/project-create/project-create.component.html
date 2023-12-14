@@ -131,13 +131,13 @@
                                 <h4 class="form-section">
                                     <i class="ft-box"></i> {{'projects.headings.head3' | translate}}</h4>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="type">{{'projects.create.fields.billing_type' | translate }}</label>
                                             <ng-select [items]="('projects.billing_types' | translate)" [searchable]="true" [selectOnTab]="true" bindLabel="label" bindValue="id" formControlName="billing_type" labelForId="billing_type" placeholder="{{'projects.create.placeholders.placeholder9' | translate }}"></ng-select>
                                         </div>
-                                    </div>
-                                    <div *ngIf="createProjectForm.get('billing_type').value == 1 || createProjectForm.get('billing_type').value == 2 || createProjectForm.get('billing_type').value == null" class="col-md-6">
+                                    </div> -->
+                                    <div *ngIf="createProjectForm.get('billing_type').value == 1 || createProjectForm.get('billing_type').value == 2 || createProjectForm.get('billing_type').value == null" class="col-md-12">
                                         <div class="form-group fixed_rate">
                                             <label *ngIf="createProjectForm.get('billing_type').value == 1 || createProjectForm.get('billing_type').value == null" for="price_rate">{{'projects.create.fields.fixed_price' | translate }}</label>
                                             <label *ngIf="createProjectForm.get('billing_type').value == 2" for="price_rate">{{'projects.create.fields.hourly_rate' | translate }}</label>

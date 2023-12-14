@@ -2,8 +2,8 @@
     <div class="card-header border-bottom mb-3">
         <h4 class="card-title mt-2">{{'defects.title' | translate}}</h4>
         <div class="card-buttons">
-            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_view']" [routerLink]="['/defects']" class="btn btn-rounded  mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>&nbsp;&nbsp;
-            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/defects/create']" class="btn btn-rounded  mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_view']" [routerLink]="['/requirements']" class="btn btn-rounded  mb-0" tooltip="{{'common.lists' | translate}}"><i class="fa fa-list"></i></a>&nbsp;&nbsp;
+            <a *ngxPermissionsOnly="['admin', 'super_admin', 'defects_create']" [routerLink]="['/requirements/create']" class="btn btn-rounded  mb-0" tooltip="{{'common.create' | translate}}"><i class="fa fa-plus"></i></a>
         </div>
     </div>
     <div [perfectScrollbar]="scrollConfig" class="card-body sidebar-content">
@@ -13,7 +13,7 @@
                     <div class="feed-element-body">
                         <div class=" justify-content-center justify-content-lg-between">
                             <h6>
-                                <a [routerLink]="['/defects/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a><span> - {{defect.defect_name}}</span>
+                                <a [routerLink]="['/requirements/detail', defect.id]" tooltip="{{'common.view' | translate}}">{{defect.generated_id}}</a><span> - {{defect.defect_name}}</span>
                             </h6>
 
                         </div>

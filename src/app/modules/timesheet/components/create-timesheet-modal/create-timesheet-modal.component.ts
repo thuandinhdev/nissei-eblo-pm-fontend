@@ -44,8 +44,10 @@ export class CreateTimesheetModalComponent implements OnInit {
             project_id: [this.params.project_id],
             module_id: [this.params.module_id, Validators.required],
             module_related_id: [this.params.module_related_id],
-            start_time: [new Date(), Validators.required],
-            end_time: [new Date(), Validators.required],
+            date: [new Date(), Validators.required],
+            hour: [null, Validators.required],
+            // start_time: [new Date(), Validators.required],
+            // end_time: [new Date(), Validators.required],
             note: [null],
         });
     }
@@ -59,9 +61,10 @@ export class CreateTimesheetModalComponent implements OnInit {
         if (this.createTimesheetForm.invalid) {
             return;
         }
-
-        this.createTimesheetForm.value.start_time = moment(this.createTimesheetForm.value.start_time).format('YYYY-MM-DD HH:mm:ss');
-        this.createTimesheetForm.value.end_time = moment(this.createTimesheetForm.value.end_time).format('YYYY-MM-DD HH:mm:ss');
+        this.createTimesheetForm.value.start_time = moment(this.createTimesheetForm.value.date).format('YYYY-MM-DD') + " 00:00:00";
+        this.createTimesheetForm.value.end_time = moment(this.createTimesheetForm.value.date).format('YYYY-MM-DD' + " "+this.createTimesheetForm.value.hour + ":00");
+        // this.createTimesheetForm.value.start_time = moment(this.createTimesheetForm.value.start_time).format('YYYY-MM-DD HH:mm:ss');
+        // this.createTimesheetForm.value.end_time = moment(this.createTimesheetForm.value.end_time).format('YYYY-MM-DD HH:mm:ss');
 
         // Check dates.
         if ((this.createTimesheetForm.value.start_time == this.createTimesheetForm.value.end_time) || (this.createTimesheetForm.value.start_time > this.createTimesheetForm.value.end_time)) {

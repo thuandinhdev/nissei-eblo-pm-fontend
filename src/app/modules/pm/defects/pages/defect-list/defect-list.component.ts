@@ -93,7 +93,7 @@ export class DefectListComponent implements OnInit {
             serverSide: true,
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            // order: [0],
+            order: [0, 'DESC'],
             columns: [
                 {
                     'sortable': true,
@@ -111,6 +111,12 @@ export class DefectListComponent implements OnInit {
                 {
                     'sortable': true,
                     'target': [3]
+                },{
+                    'sortable': true,
+                    'target': [4]
+                },{
+                    'sortable': true,
+                    'target': [5]
                 },
                 // {
                 //     'sortable': true,
@@ -134,7 +140,7 @@ export class DefectListComponent implements OnInit {
                 // },
                 {
                     'sortable': false,
-                    'target': [4],
+                    'target': [6],
                     'width': '5%'
                 }
             ],

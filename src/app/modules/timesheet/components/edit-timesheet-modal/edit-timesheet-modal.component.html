@@ -9,6 +9,32 @@
         <div class="form-body">
             <div class="row">
                 <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.date.errors }" class="form-group">
+                        <label for="date">{{'timesheet.create.fields.date' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input #dp1="bsDatepicker" [bsConfig]="datepickerConfig" bsDatepicker class="form-control"
+                             formControlName="date" id="date" placeholder="{{'timesheet.create.placeholders.placeholder4' | translate}}" type="text"/>
+                            <div class="form-control-position"><i class="ft-calendar"></i></div>
+                        </div>
+                        <div *ngIf="isFormSubmitted && timesheetControl.date.errors" class="invalid-feedback">
+                            <div *ngIf="timesheetControl.date.errors.required">{{'timesheet.create.error_messages.message5' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.hour.errors }" class="form-group">
+                        <label for="hour">{{'timesheet.create.fields.hour' | translate}}
+                            <span class="text-danger">&nbsp;*</span></label>
+                        <div class="position-relative has-icon-left">
+                            <input  aria-describedby="inputGroupPrepend2" class="form-control" formControlName="hour" id="hour" placeholder="{{'timesheet.create.placeholders.placeholder5' | translate}}"/>
+                        </div>
+                        <div *ngIf="isFormSubmitted && timesheetControl.hour.errors" class="invalid-feedback">
+                            <div *ngIf="timesheetControl.hour.errors.required">{{'timesheet.create.error_messages.message6' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
                     <div [ngClass]="{ 'is-invalid': isFormSubmitted && timesheetControl.start_time.errors }" class="form-group">
                         <label for="start_time">{{'timesheet.create.fields.start_time' | translate}}
                             <span class="text-danger">&nbsp;*</span></label>
@@ -35,7 +61,7 @@
                             <div *ngIf="timesheetControl.end_time.errors.required">{{'timesheet.create.error_messages.message2' | translate}}</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="note">{{'timesheet.create.fields.note' | translate}}</label>

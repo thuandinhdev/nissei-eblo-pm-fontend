@@ -17,7 +17,7 @@
                                 <a class="dropdown-item btn btn-download btn-raised" download="{{file.file_name}}" href="{{apiUrl}}/uploads/project_attachment/{{file.file_hash}}" target="_blank" tooltip="{{'common.download' | translate}}"><i class="fa fa-download"></i></a>
                             </li>
                             <li *ngIf="permission" role="menuitem">
-                                <a (click)="attachmentDelete(attachment.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
+                                <a (click)="attachmentDelete(file.id)" class="dropdown-item btn btn-delete btn-raised" tooltip="{{'common.delete' | translate}}"><i class="fa fa-trash-o"></i></a>
                             </li>
                         </ul>
                     </div>

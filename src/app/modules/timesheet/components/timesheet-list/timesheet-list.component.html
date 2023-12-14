@@ -24,8 +24,8 @@
                                             <th class="width-50">{{'timesheet.columns.photo' | translate}}</th>
                                             <th class="width-50">{{'timesheet.columns.user' | translate}}</th>
                                             <th>{{'timesheet.columns.note' | translate}}</th>
-                                            <th class="width-110">{{'timesheet.columns.start_time' | translate}}</th>
-                                            <th class="width-110">{{'timesheet.columns.end_time' | translate}}</th>
+                                            <th class="width-110">{{'timesheet.columns.date' | translate}}</th>
+                                            <!-- <th class="width-110">{{'timesheet.columns.end_time' | translate}}</th> -->
                                             <th class="width-50">{{'timesheet.columns.time_h' | translate}}</th>
                                             <th class="width-50">{{'timesheet.columns.actions' | translate}}</th>
                                         </tr>
@@ -45,8 +45,8 @@
                                                 </ng-container>
                                                 <ng-template #elseBlock>{{timesheet.note}}</ng-template>
                                             </td>
-                                            <td>{{timesheet.start_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
-                                            <td>{{timesheet.end_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td>
+                                            <td>{{timesheet.start_time | dateTimeFormatFilter: loginUser.settings.date_format}}</td>
+                                            <!-- <td>{{timesheet.end_time | dateTimeFormatFilter: loginUser.settings.date_time_format}}</td> -->
                                             <td>{{timesheet.hour_time}}</td>
                                             <td class="actions-dropdown">
                                                 <div class="btn-group" dropdown>
@@ -66,7 +66,7 @@
                                         </tbody>
                                         <tfoot *ngIf="timesheets?.length == 0">
                                         <tr>
-                                            <td class="no-data-available text-center" colspan="7">{{'common.datatable.sEmptyTable' | translate}}</td>
+                                            <td class="no-data-available text-center" colspan="6">{{'common.datatable.sEmptyTable' | translate}}</td>
                                         </tr>
                                         </tfoot>
                                     </table>
